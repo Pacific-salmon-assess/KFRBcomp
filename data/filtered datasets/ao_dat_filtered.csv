@@ -1,0 +1,6 @@
+,index,species,location,ts.length,ts.start,ts.end,m.spawners,sd.spawners,lat,lon
+1,1,Sockeye,Shuswap Complex_Late,57,1950,2006,333611.9474,553532.8365,49.1173,-123.1913
+2,2,Sockeye,Shuswap_Early Summer,27,1980,2006,31075.59259,39163.82047,49.1173,-123.1913
+3,3,Sockeye,Takla/Trembleur/Stuart_Summer,57,1950,2006,76490.29825,174617.5211,49.1173,-123.1913
+4,4,Sockeye,Takla/Trembleur_Early Stuart,57,1950,2006,43768.40351,62231.22959,49.1173,-123.1913
+5,5,Sockeye,Osoyoos,23,1985,2007,18700.56522,11708.95854,46.2444,-123.5921

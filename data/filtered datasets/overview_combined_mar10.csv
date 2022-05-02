@@ -1,0 +1,326 @@
+﻿index,species,location,ts.length,ts.start,ts.end,region,pse
+1,Chinook,Ayakulik,33,1977,2009,AK,0
+2,Chinook,Chickamin,20,1985,2004,AK,0
+3,Chinook,Chignik,29,1980,2008,AK,0
+4,Chinook,Goodnews,21,1981,2001,AK,0
+5,Chinook,Karluk,34,1976,2009,AK,0
+6,Chinook,Nushagak,40,1966,2005,AK,0
+7,Chinook,Situk,22,1977,1998,AK,0
+8,Chinook,Stikine,21,1977,1997,AK,0
+9,Chinook,Unuk,21,1982,2004,AK,0
+10,Chinook,Bella Coola-Bentinck,27,1985,2011,BC,1
+11,Chinook,Dean River,27,1985,2011,BC,1
+12,Chinook,Kalum-Late,26,1981,2006,BC,1
+13,Chinook,Lower Skeena,23,1981,2007,BC,1
+14,Chinook,Middle Skeena-Large Lakes,31,1981,2011,BC,1
+15,Chinook,Middle Skeena-Mainstem Tributaries,30,1981,2011,BC,1
+16,Chinook,North & Central Coast-Early,27,1985,2011,BC,1
+17,Chinook,Portland Sound-Observatory Inlet-Lower Nass,26,1986,2011,BC,1
+18,Chinook,Rivers Inlet,32,1980,2011,BC,1
+19,Chinook,Upper Nass,26,1986,2011,BC,1
+20,Chinook,Wannock,32,1980,2011,BC,1
+21,Chinook,Bear Valley Creek,52,1957,2008,WA-OR,0
+22,Chinook,Big Creek,52,1957,2008,WA-OR,0
+23,Chinook,Camas Creek,42,1960,2008,WA-OR,0
+24,Chinook,Catherine Creek,53,1955,2007,WA-OR,0
+25,Chinook,Cedar River,46,1965,2010,WA-OR,0
+26,Chinook,Clackamas River,29,1974,2002,WA-OR,0
+27,Chinook,Coweeman River,45,1964,2008,WA-OR,0
+28,Chinook,East Fork Salmon River,52,1957,2008,WA-OR,0
+29,Chinook,East Fork South Fork Salmon River,52,1957,2008,WA-OR,0
+30,Chinook,Elochoman River,45,1964,2008,WA-OR,0
+31,Chinook,Entiat River,48,1960,2007,WA-OR,0
+32,Chinook,Grande Ronde River Upper Mainstem,53,1955,2007,WA-OR,0
+33,Chinook,Grays and Chinook Rivers,45,1964,2008,WA-OR,0
+34,Chinook,Green River,44,1968,2011,WA-OR,0
+35,Chinook,Imnaha River Mainstem,52,1956,2007,WA-OR,0
+36,Chinook,Kalama River,45,1964,2008,WA-OR,0
+37,Chinook,Lemhi River,52,1957,2008,WA-OR,0
+38,Chinook,Lewis River Fall-run,45,1964,2008,WA-OR,0
+39,Chinook,Lewis River Late fall,44,1964,2007,WA-OR,0
+40,Chinook,Loon Creek,38,1957,2008,WA-OR,0
+41,Chinook,Lower Cowlitz River,44,1964,2007,WA-OR,0
+42,Chinook,Lower Sauk River,59,1952,2010,WA-OR,0
+43,Chinook,Lower Skagit River,59,1952,2010,WA-OR,0
+44,Chinook,Marsh Creek,52,1957,2008,WA-OR,0
+45,Chinook,McKenzie River,39,1970,2008,WA-OR,0
+46,Chinook,Methow River,49,1960,2008,WA-OR,0
+47,Chinook,Middle Fork Salmon River Lower Mainstem,31,1957,2008,WA-OR,0
+48,Chinook,Middle Fork Salmon River Upper Mainstem,29,1957,2008,WA-OR,0
+49,Chinook,Mid-Hood Canal,42,1968,2010,WA-OR,0
+50,Chinook,Minam River,52,1956,2007,WA-OR,0
+51,Chinook,Nisqually River,43,1968,2010,WA-OR,0
+52,Chinook,North Fork Stillaguamish River,37,1974,2010,WA-OR,0
+53,Chinook,Puyallup River,44,1968,2011,WA-OR,0
+54,Chinook,Salmon River Lower Mainstem,45,1957,2008,WA-OR,0
+55,Chinook,Salmon River Upper Mainstem,52,1957,2008,WA-OR,0
+56,Chinook,Secesh River,52,1957,2008,WA-OR,0
+57,Chinook,Skokomish River,43,1968,2010,WA-OR,0
+58,Chinook,Skykomish River,46,1965,2010,WA-OR,0
+59,Chinook,Snoqualmie River,46,1965,2010,WA-OR,0
+60,Chinook,South Fork Salmon River,52,1957,2008,WA-OR,0
+61,Chinook,South Fork Stillaguamish River,37,1974,2010,WA-OR,0
+62,Chinook,Suiattle River,52,1952,2003,WA-OR,0
+63,Chinook,Sulphur Creek,52,1957,2008,WA-OR,0
+64,Chinook,Toutle River,32,1964,2008,WA-OR,0
+65,Chinook,Tucannon River,27,1980,2006,WA-OR,0
+66,Chinook,Upper Gorge Tributaries,40,1964,2003,WA-OR,0
+67,Chinook,Upper Sauk River,59,1952,2010,WA-OR,0
+68,Chinook,Upper Skagit River,59,1952,2010,WA-OR,0
+69,Chinook,Valley Creek,52,1957,2008,WA-OR,0
+70,Chinook,Wallowa/Lostine Rivers,49,1959,2007,WA-OR,0
+71,Chinook,Wenaha River,45,1963,2007,WA-OR,0
+72,Chinook,Wenatchee River,48,1960,2007,WA-OR,0
+73,Chinook,White River,47,1965,2011,WA-OR,0
+74,Chinook,White Salmon River,39,1965,2003,WA-OR,0
+75,Chinook,Yankee Fork,42,1960,2008,WA-OR,0
+76,Chum,Alitak,30,1978,2007,AK,0
+77,Chum,Andreafsky,30,1972,2001,AK,0
+78,Chum,Anvik,22,1972,1993,AK,0
+79,Chum,Central Chig,46,1962,2007,AK,0
+80,Chum,E Chig,46,1962,2007,AK,0
+81,Chum,E Kod,30,1978,2007,AK,0
+82,Chum,East Alsek,21,1960,1987,AK,0
+83,Chum,E-NW AKPen,46,1962,2007,AK,0
+84,Chum,Kamishak,34,1971,2006,AK,0
+85,Chum,Kotzebue,36,1962,1997,AK,0
+86,Chum,Kwiniuk Inlet,31,1965,1995,AK,0
+87,Chum,Mainland Kod,30,1978,2007,AK,0
+88,Chum,N AKPen,46,1962,2007,AK,0
+89,Chum,NE Kod,30,1978,2007,AK,0
+90,Chum,Norton Sound,22,1974,1995,AK,0
+91,Chum,Nushagak,25,1980,2005,AK,0
+92,Chum,NW Kod,30,1978,2007,AK,0
+93,Chum,Outer CIn,37,1970,2006,AK,0
+94,Chum,Perryville,46,1962,2007,AK,0
+95,Chum,PWS,40,1965,2004,AK,0
+96,Chum,S CIn,37,1970,2006,AK,0
+97,Chum,SE-SC AKPen,46,1962,2007,AK,0
+98,Chum,SW Kod,30,1978,2007,AK,0
+99,Chum,SW-Unimak,46,1962,2007,AK,0
+100,Chum,Upper CIn,31,1971,2007,AK,0
+101,Chum,W Chig,46,1962,2007,AK,0
+102,Chum,W-NW AKPen,46,1962,2007,AK,0
+103,Chum,Yukon,28,1974,2001,AK,0
+104,Chum,Area 1,27,1980,2006,BC,0
+105,Chum,Area 10,27,1980,2006,BC,0
+106,Chum,Area 2E,27,1980,2006,BC,0
+107,Chum,Area 2W,27,1980,2006,BC,0
+108,Chum,Area 3,25,1982,2006,BC,0
+109,Chum,Area 4,25,1982,2006,BC,0
+110,Chum,Area 5,25,1982,2006,BC,0
+111,Chum,Area 6,27,1980,2006,BC,0
+112,Chum,Area 7,27,1980,2006,BC,0
+113,Chum,Area 8,27,1980,2006,BC,0
+114,Chum,Area 9,27,1980,2006,BC,0
+115,Chum,BC South (no Fraser),50,1953,2002,BC,0
+116,Chum,Bella Coola-Dean Rivers,59,1954,2012,BC,1
+117,Chum,Douglas-Gardner,59,1954,2012,BC,1
+118,Chum,East Haida Gwaii,55,1954,2008,BC,1
+119,Chum,Fraser,34,1959,1992,BC,0
+120,Chum,Hecate Lowlands,59,1954,2012,BC,1
+121,Chum,Lower Skeena,49,1958,2012,BC,1
+122,Chum,Mussel-Kynoch,59,1954,2012,BC,1
+123,Chum,North Haida Gwaii,49,1954,2002,BC,1
+124,Chum,Northwest Vancouver Island,49,1956,2010,BC,1
+125,Chum,Portland Canal-Observatory,59,1954,2012,BC,1
+126,Chum,Portland Inlet,58,1954,2011,BC,1
+127,Chum,Rivers Inlet,54,1954,2007,BC,1
+128,Chum,Skidegate,57,1954,2010,BC,1
+129,Chum,Smith Inlet,56,1954,2009,BC,1
+130,Chum,Southwest & West Vancouver Island,48,1956,2010,BC,1
+131,Chum,Spiller-Fitz-Hugh-Burke,59,1954,2012,BC,1
+132,Chum,West Haida Gwaii,56,1954,2009,BC,1
+133,Chum,Bellingham,38,1968,2005,WA-OR,0
+134,Chum,Grays Harbour,36,1969,2005,WA-OR,0
+135,Chum,Hood Canal,38,1968,2005,WA-OR,0
+136,Chum,Port Susan,38,1968,2005,WA-OR,0
+137,Chum,S Sound Fall,38,1968,2005,WA-OR,0
+138,Chum,S Sound Summer,37,1968,2004,WA-OR,0
+139,Chum,S Sound Winter,38,1968,2005,WA-OR,0
+140,Chum,Skagit,38,1968,2005,WA-OR,0
+141,Chum,Willapa Bay,38,1968,2005,WA-OR,0
+142,Coho,Berners River,28,1979,2010,AK,0
+143,Coho,Buskin River,24,1989,2012,AK,0
+144,Coho,Bella Coola-Dean Rivers,60,1954,2013,BC,1
+145,Coho,Brim-Wahoo,45,1959,2013,BC,1
+146,Coho,Douglas Channel-Kitimat Arm,44,1959,2013,BC,1
+147,Coho,East Haida Gwaii,60,1954,2013,BC,1
+148,Coho,Haida Gwaii-Graham Island Lowlands,45,1954,2008,BC,1
+149,Coho,Hecate Strait Mainland,60,1954,2013,BC,1
+150,Coho,Lower Nass,54,1959,2013,BC,1
+151,Coho,Lower Skeena,57,1954,2013,BC,1
+152,Coho,Middle Skeena,60,1954,2013,BC,1
+153,Coho,Mussel-Kynoch,57,1954,2010,BC,1
+154,Coho,Northern Coastal Streams,60,1954,2013,BC,1
+155,Coho,Portland Sound-Observatory Inlet-Portland Canal,37,1954,2010,BC,1
+156,Coho,Smith Inlet,25,1955,2010,BC,1
+157,Coho,Upper Nass,43,1970,2013,BC,1
+158,Coho,Upper Skeena,21,1958,2013,BC,1
+159,Coho,West Haida Gwaii,34,1964,2005,BC,1
+160,Coho,Clackamas River,43,1968,2010,WA-OR,0
+161,Coho,Clackamas River Early,42,1973,2014,WA-OR,0
+162,Coho,Clackamas River Late,39,1973,2011,WA-OR,0
+163,Coho,OCN Lakes,45,1970,2014,WA-OR,0
+164,Coho,OCN Rivers,45,1970,2014,WA-OR,0
+165,Coho,Sandy River,34,1974,2010,WA-OR,0
+166,Pink,Central Chig_even,24,1962,2008,AK,0
+167,Pink,Central Chig_odd,24,1963,2009,AK,0
+168,Pink,Chignik Bay_even,22,1962,2008,AK,0
+169,Pink,Chignik Bay_odd,21,1963,2009,AK,0
+170,Pink,E Chig_even,24,1962,2008,AK,0
+171,Pink,E Chig_odd,24,1963,2009,AK,0
+172,Pink,Moses-Norton_even,23,1964,2008,AK,0
+173,Pink,Moses-Norton_odd,24,1963,2009,AK,0
+174,Pink,N SEAK Inside_even,25,1960,2008,AK,0
+175,Pink,N SEAK Inside_odd,24,1961,2007,AK,0
+176,Pink,N SEAK Outside_even,25,1960,2008,AK,0
+177,Pink,N SEAK Outside_odd,24,1961,2007,AK,0
+178,Pink,Nome_odd,20,1971,2009,AK,0
+179,Pink,Nushagak,23,1958,2002,AK,0
+180,Pink,NW AKPen_even,23,1962,2008,AK,0
+181,Pink,NW AKPen_odd,24,1963,2009,AK,0
+182,Pink,Perryville_even,24,1962,2008,AK,0
+183,Pink,Perryville_odd,24,1963,2009,AK,0
+184,Pink,PWS_even,25,1960,2008,AK,0
+185,Pink,PWS_odd,25,1961,2009,AK,0
+186,Pink,S SEAK_even,25,1960,2008,AK,0
+187,Pink,S SEAK_odd,24,1961,2007,AK,0
+188,Pink,SE-SC AKPen_even,24,1962,2008,AK,0
+189,Pink,SE-SC AKPen_odd,24,1963,2009,AK,0
+190,Pink,SW-Unimak_even,24,1962,2008,AK,0
+191,Pink,SW-Unimak_odd,24,1963,2009,AK,0
+192,Pink,W Chig_even,24,1962,2008,AK,0
+193,Pink,W Chig_odd,24,1963,2009,AK,0
+194,Pink,BC South (no Fraser)_even,28,1954,2008,BC,0
+195,Pink,BC South (no Fraser)_odd,28,1953,2007,BC,0
+196,Pink,Fraser,21,1961,2001,BC,0
+197,Pink,Dungeness,25,1959,2007,WA-OR,0
+198,Pink,Hood Canal,25,1959,2007,WA-OR,0
+199,Pink,Nooksack,25,1959,2007,WA-OR,0
+200,Pink,Puyallup,25,1959,2007,WA-OR,0
+201,Pink,Skagit,25,1959,2007,WA-OR,0
+202,Pink,Snohomish,25,1959,2007,WA-OR,0
+203,Pink,Stillaguamish,25,1959,2007,WA-OR,0
+204,Pink (even),East Haida Gwaii (even),31,1954,2014,BC,1
+205,Pink (even),Georgia Strait (even),31,1954,2014,BC,1
+206,Pink (even),Hecate Lowlands (even),31,1954,2014,BC,1
+207,Pink (even),Hecate Strait-Fjords (even),31,1954,2014,BC,1
+208,Pink (even),Middle-Upper Skeena (even),31,1954,2014,BC,1
+209,Pink (even),Nass-Skeena Estuary (even),31,1954,2014,BC,1
+210,Pink (even),North Haida Gwaii (even),30,1954,2012,BC,1
+211,Pink (even),Southern Fjords (even),31,1954,2014,BC,1
+212,Pink (even),West Haida Gwaii (even),31,1954,2014,BC,1
+213,Pink (odd),East Haida Gwaii (odd),31,1955,2015,BC,1
+214,Pink (odd),East Howe Sound-Burrard Inlet (odd),29,1957,2013,BC,1
+215,Pink (odd),East Vancouver Island-Johnstone Strait (odd),29,1957,2013,BC,1
+216,Pink (odd),Fraser River (odd),30,1959,2017,BC,1
+217,Pink (odd),Georgia Strait (odd),29,1957,2013,BC,1
+218,Pink (odd),Hecate Strait-Fjords (odd),31,1955,2015,BC,1
+219,Pink (odd),Hecate Strait-Lowlands (odd),31,1955,2015,BC,1
+220,Pink (odd),Homathko-Klinaklini-Smith-Rivers-Bella Coola-Dean (odd),30,1955,2013,BC,1
+221,Pink (odd),Lower Skeena River (odd),31,1955,2015,BC,1
+222,Pink (odd),Middle-Upper Skeena (odd),31,1955,2015,BC,1
+223,Pink (odd),Nahwitti (odd),29,1957,2013,BC,1
+224,Pink (odd),Nass-Portland-Observatory (odd),31,1955,2015,BC,1
+225,Pink (odd),Nass-Skeena Estuary (odd),31,1955,2015,BC,1
+226,Pink (odd),Southern Fjords (odd),29,1957,2013,BC,1
+227,Sockeye,Ayakulik,45,1966,2010,AK,0
+228,Sockeye,Bear,30,1981,2010,AK,0
+229,Sockeye,Black Lake,46,1965,2010,AK,0
+230,Sockeye,Chignik Lake,46,1965,2010,AK,0
+231,Sockeye,Chilkoot,36,1976,2011,AK,0
+232,Sockeye,Coghill,47,1962,2008,AK,0
+233,Sockeye,Copper,50,1961,2010,AK,0
+234,Sockeye,Early Karluk,30,1981,2010,AK,0
+235,Sockeye,Early Upper Station,42,1969,2010,AK,0
+236,Sockeye,Egegik,49,1963,2011,AK,0
+237,Sockeye,Eshamy,35,1964,2006,AK,0
+238,Sockeye,Frazer,44,1966,2009,AK,0
+239,Sockeye,Goodnews,29,1981,2009,AK,0
+240,Sockeye,Igushik,50,1963,2012,AK,0
+241,Sockeye,Kasilof,43,1968,2010,AK,0
+242,Sockeye,Kenai,43,1968,2010,AK,0
+243,Sockeye,Kvichak,50,1963,2012,AK,0
+244,Sockeye,Late Karluk,31,1981,2011,AK,0
+245,Sockeye,Late Upper Station,41,1970,2010,AK,0
+246,Sockeye,Naknek,50,1963,2012,AK,0
+247,Sockeye,Nelson,30,1981,2010,AK,0
+248,Sockeye,Nushagak,50,1963,2012,AK,0
+249,Sockeye,Redoubt,29,1982,2010,AK,0
+250,Sockeye,Togiak,56,1956,2011,AK,0
+251,Sockeye,Ugashik,50,1963,2012,AK,0
+252,Sockeye,Wood,50,1963,2012,AK,0
+253,Sockeye,Alastair,48,1960,2011,BC,1
+254,Sockeye,Anderson-Seton-Early Summer,44,1968,2011,BC,1
+255,Sockeye,Atnarko,25,1987,2011,BC,0
+256,Sockeye,Awun,49,1957,2012,BC,1
+257,Sockeye,Birkenhead,61,1950,2011,BC,0
+258,Sockeye,Bloomfield,44,1954,2008,BC,1
+259,Sockeye,Bowron,62,1950,2011,BC,0
+260,Sockeye,Canoona,30,1975,2008,BC,1
+261,Sockeye,Chilko,62,1950,2011,BC,0
+262,Sockeye,Cultus,49,1950,1999,BC,0
+263,Sockeye,Curtis Inlet,27,1960,2002,BC,1
+264,Sockeye,Damdochax,21,1982,2011,BC,1
+265,Sockeye,Devon,39,1960,2002,BC,1
+266,Sockeye,Early Stuart,62,1950,2011,BC,0
+267,Sockeye,Evelyn,46,1954,2011,BC,1
+268,Sockeye,Fennell,46,1963,2011,BC,0
+269,Sockeye,Francois-Fraser-Summer,62,1950,2011,BC,1
+270,Sockeye,Gates,44,1968,2011,BC,0
+271,Sockeye,Great Central,35,1977,2011,BC,1
+272,Sockeye,Harrison,62,1950,2011,BC,0
+273,Sockeye,Harrison-Upstream Migrating-Late,46,1966,2011,BC,1
+274,Sockeye,Hartley Bay,28,1955,2011,BC,1
+275,Sockeye,Kadjusdis River,29,1954,2006,BC,1
+276,Sockeye,Kainet Creek,35,1956,2011,BC,1
+277,Sockeye,Kamloops-Early Summer,62,1950,2011,BC,1
+278,Sockeye,Kitlope,48,1954,2011,BC,1
+279,Sockeye,Kitsumkalum,45,1960,2011,BC,1
+280,Sockeye,Koeye,25,1954,2000,BC,1
+281,Sockeye,Lakelse,42,1960,2011,BC,1
+282,Sockeye,Late Shuswap,59,1950,2010,BC,0
+283,Sockeye,Late Stuart,62,1950,2011,BC,0
+284,Sockeye,Lillooet-Harrison-Late,61,1950,2011,BC,1
+285,Sockeye,Long,55,1954,2008,BC,1
+286,Sockeye,Lowe/Simpson/Weir,26,1960,1995,BC,1
+287,Sockeye,Marian/Eden,41,1954,2012,BC,1
+288,Sockeye,Mary Cove Creek,33,1954,1996,BC,1
+289,Sockeye,Mcdonell/Dennis/Aldrich,29,1960,2009,BC,1
+290,Sockeye,Mercer,34,1954,2012,BC,1
+291,Sockeye,Meziadin,31,1982,2012,BC,1
+292,Sockeye,Mikado,33,1960,2001,BC,1
+293,Sockeye,Morice/Atna,40,1960,2011,BC,1
+294,Sockeye,Nadina,39,1973,2011,BC,0
+295,Sockeye,Namu,23,1954,2011,BC,1
+296,Sockeye,Nass (Meziadin),39,1972,2010,BC,0
+297,Sockeye,Nimpkish,43,1970,2012,BC,1
+298,Sockeye,North Barriere-Early Summer (de novo),45,1967,2011,BC,1
+299,Sockeye,Northern Coastal Fjords (river-type),52,1960,2011,BC,1
+300,Sockeye,Osoyoos,23,1985,2007,BC,0
+301,Sockeye,Owikeno,58,1954,2011,BC,1
+302,Sockeye,Owikeno Lake,24,1987,2010,BC,0
+303,Sockeye,Pitt,62,1950,2011,BC,0
+304,Sockeye,Portage,57,1951,2011,BC,0
+305,Sockeye,Prudhomme,49,1960,2011,BC,1
+306,Sockeye,Quesnel,62,1950,2011,BC,0
+307,Sockeye,Raft,62,1950,2011,BC,0
+308,Sockeye,Scotch,40,1965,2011,BC,0
+309,Sockeye,Seton-Late (de novo),58,1953,2011,BC,1
+310,Sockeye,Seymour,61,1950,2010,BC,0
+311,Sockeye,Shawatlan,37,1960,2002,BC,1
+312,Sockeye,Shuswap Complex_Late,57,1950,2006,BC,0
+313,Sockeye,Shuswap_Early Summer,27,1980,2006,BC,0
+314,Sockeye,Skidegate,56,1956,2012,BC,1
+315,Sockeye,Sproat,35,1977,2011,BC,1
+316,Sockeye,Stellako,62,1950,2011,BC,0
+317,Sockeye,Stephens,38,1960,2011,BC,1
+318,Sockeye,Swan/Club,24,1960,2011,BC,1
+319,Sockeye,Takla/Trembleur/Stuart_Summer,57,1950,2006,BC,0
+320,Sockeye,Takla/Trembleur_Early Stuart,57,1950,2006,BC,0
+321,Sockeye,Tankeeah River,37,1954,2008,BC,1
+322,Sockeye,Weaver,46,1966,2011,BC,0
+323,Sockeye,Yakoun,50,1957,2012,BC,1
+324,Sockeye,Yeo,27,1954,2008,BC,1
+325,Sockeye,Washington,44,1968,2011,WA-OR,0

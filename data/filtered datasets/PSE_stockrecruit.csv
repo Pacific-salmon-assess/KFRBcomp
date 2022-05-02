@@ -1,0 +1,117 @@
+"","index","species","location","ts.length","ts.start","ts.end"
+"1",1,"Chinook","Bella Coola-Bentinck",27,1985,2011
+"2",2,"Chinook","Dean River",27,1985,2011
+"3",3,"Chinook","Kalum-Late",26,1981,2006
+"4",4,"Chinook","Lower Skeena",23,1981,2007
+"5",5,"Chinook","Middle Skeena-Large Lakes",31,1981,2011
+"6",6,"Chinook","Middle Skeena-Mainstem Tributaries",30,1981,2011
+"7",7,"Chinook","North & Central Coast-Early",27,1985,2011
+"8",8,"Chinook","Portland Sound-Observatory Inlet-Lower Nass",26,1986,2011
+"9",9,"Chinook","Rivers Inlet",32,1980,2011
+"10",10,"Chinook","Upper Nass",26,1986,2011
+"11",11,"Chinook","Wannock",32,1980,2011
+"12",12,"Chum","Bella Coola-Dean Rivers",59,1954,2012
+"13",13,"Chum","Douglas-Gardner",59,1954,2012
+"14",14,"Chum","East Haida Gwaii",55,1954,2008
+"15",15,"Chum","Hecate Lowlands",59,1954,2012
+"17",17,"Chum","Lower Skeena",49,1958,2012
+"18",18,"Chum","Mussel-Kynoch",59,1954,2012
+"19",19,"Chum","North Haida Gwaii",49,1954,2002
+"20",20,"Chum","Northwest Vancouver Island",49,1956,2010
+"21",21,"Chum","Portland Canal-Observatory",59,1954,2012
+"22",22,"Chum","Portland Inlet",58,1954,2011
+"23",23,"Chum","Rivers Inlet",54,1954,2007
+"24",24,"Chum","Skidegate",57,1954,2010
+"25",25,"Chum","Smith Inlet",56,1954,2009
+"26",26,"Chum","Southwest & West Vancouver Island",48,1956,2010
+"27",27,"Chum","Spiller-Fitz-Hugh-Burke",59,1954,2012
+"28",28,"Chum","West Haida Gwaii",56,1954,2009
+"29",29,"Coho","Bella Coola-Dean Rivers",60,1954,2013
+"30",30,"Coho","Brim-Wahoo",45,1959,2013
+"31",31,"Coho","Douglas Channel-Kitimat Arm",44,1959,2013
+"32",32,"Coho","East Haida Gwaii",60,1954,2013
+"34",34,"Coho","Haida Gwaii-Graham Island Lowlands",45,1954,2008
+"35",35,"Coho","Hecate Strait Mainland",60,1954,2013
+"37",37,"Coho","Lower Nass",54,1959,2013
+"38",38,"Coho","Lower Skeena",57,1954,2013
+"40",40,"Coho","Middle Skeena",60,1954,2013
+"41",41,"Coho","Mussel-Kynoch",57,1954,2010
+"43",43,"Coho","Northern Coastal Streams",60,1954,2013
+"44",44,"Coho","Portland Sound-Observatory Inlet-Portland Canal",37,1954,2010
+"45",45,"Coho","Smith Inlet",25,1955,2010
+"47",47,"Coho","Upper Nass",43,1970,2013
+"48",48,"Coho","Upper Skeena",21,1958,2013
+"49",49,"Coho","West Haida Gwaii",34,1964,2005
+"50",50,"Lake sockeye","Alastair",48,1960,2011
+"51",51,"Lake sockeye","Anderson-Seton-Early Summer",44,1968,2011
+"53",53,"Lake sockeye","Awun",49,1957,2012
+"59",59,"Lake sockeye","Bloomfield",44,1954,2008
+"60",60,"Lake sockeye","Bowron-Early Summer",62,1950,2011
+"61",61,"Lake sockeye","Canoona",30,1975,2008
+"62",62,"Lake sockeye","Chilko-Summer",62,1950,2011
+"63",63,"Lake sockeye","Curtis Inlet",27,1960,2002
+"64",64,"Lake sockeye","Damdochax",21,1982,2011
+"66",66,"Lake sockeye","Devon",39,1960,2002
+"67",67,"Lake sockeye","Evelyn",46,1954,2011
+"68",68,"Lake sockeye","Francois-Fraser-Summer",62,1950,2011
+"71",71,"Lake sockeye","Great Central",35,1977,2011
+"72",72,"Lake sockeye","Harrison-Upstream Migrating-Late",46,1966,2011
+"73",73,"Lake sockeye","Hartley Bay",28,1955,2011
+"74",74,"Lake sockeye","Kadjusdis River",29,1954,2006
+"75",75,"Lake sockeye","Kainet Creek",35,1956,2011
+"76",76,"Lake sockeye","Kamloops-Early Summer",62,1950,2011
+"78",78,"Lake sockeye","Kitlope",48,1954,2011
+"79",79,"Lake sockeye","Kitsumkalum",45,1960,2011
+"80",80,"Lake sockeye","Koeye",25,1954,2000
+"82",82,"Lake sockeye","Lakelse",42,1960,2011
+"83",83,"Lake sockeye","Lillooet-Harrison-Late",61,1950,2011
+"84",84,"Lake sockeye","Long",55,1954,2008
+"85",85,"Lake sockeye","Lowe/Simpson/Weir",26,1960,1995
+"86",86,"Lake sockeye","Marian/Eden",41,1954,2012
+"87",87,"Lake sockeye","Mary Cove Creek",33,1954,1996
+"88",88,"Lake sockeye","Mcdonell/Dennis/Aldrich",29,1960,2009
+"89",89,"Lake sockeye","Mercer",34,1954,2012
+"90",90,"Lake sockeye","Meziadin",31,1982,2012
+"91",91,"Lake sockeye","Mikado",33,1960,2001
+"92",92,"Lake sockeye","Morice/Atna",40,1960,2011
+"94",94,"Lake sockeye","Nadina-Francois-Early Summer",39,1973,2011
+"95",95,"Lake sockeye","Namu",23,1954,2011
+"97",97,"Lake sockeye","Nimpkish",43,1970,2012
+"98",98,"Lake sockeye","North Barriere-Early Summer (de novo)",45,1967,2011
+"99",99,"Lake sockeye","Northern Coastal Fjords (river-type)",52,1960,2011
+"100",100,"Lake sockeye","Owikeno",58,1954,2011
+"101",101,"Lake sockeye","Pitt-Early Summer",62,1950,2011
+"103",103,"Lake sockeye","Prudhomme",49,1960,2011
+"105",105,"Lake sockeye","Seton-Late (de novo)",58,1953,2011
+"106",106,"Lake sockeye","Shawatlan",37,1960,2002
+"107",107,"Lake sockeye","Skidegate",56,1956,2012
+"108",108,"Lake sockeye","Sproat",35,1977,2011
+"109",109,"Lake sockeye","Stephens",38,1960,2011
+"110",110,"Lake sockeye","Swan/Club",24,1960,2011
+"112",112,"Lake sockeye","Tankeeah River",37,1954,2008
+"114",114,"Lake sockeye","Yakoun",50,1957,2012
+"115",115,"Lake sockeye","Yeo",27,1954,2008
+"116",116,"Pink (even)","East Haida Gwaii (even)",31,1954,2014
+"117",117,"Pink (even)","Georgia Strait (even)",31,1954,2014
+"118",118,"Pink (even)","Hecate Lowlands (even)",31,1954,2014
+"119",119,"Pink (even)","Hecate Strait-Fjords (even)",31,1954,2014
+"120",120,"Pink (even)","Middle-Upper Skeena (even)",31,1954,2014
+"121",121,"Pink (even)","Nass-Skeena Estuary (even)",31,1954,2014
+"122",122,"Pink (even)","North Haida Gwaii (even)",30,1954,2012
+"123",123,"Pink (even)","Southern Fjords (even)",31,1954,2014
+"124",124,"Pink (even)","West Haida Gwaii (even)",31,1954,2014
+"125",125,"Pink (odd)","East Haida Gwaii (odd)",31,1955,2015
+"126",126,"Pink (odd)","East Howe Sound-Burrard Inlet (odd)",29,1957,2013
+"127",127,"Pink (odd)","East Vancouver Island-Johnstone Strait (odd)",29,1957,2013
+"128",128,"Pink (odd)","Fraser River (odd)",30,1959,2017
+"129",129,"Pink (odd)","Georgia Strait (odd)",29,1957,2013
+"130",130,"Pink (odd)","Hecate Strait-Fjords (odd)",31,1955,2015
+"131",131,"Pink (odd)","Hecate Strait-Lowlands (odd)",31,1955,2015
+"132",132,"Pink (odd)","Homathko-Klinaklini-Smith-Rivers-Bella Coola-Dean (odd)",30,1955,2013
+"133",133,"Pink (odd)","Lower Skeena River (odd)",31,1955,2015
+"134",134,"Pink (odd)","Middle-Upper Skeena (odd)",31,1955,2015
+"135",135,"Pink (odd)","Nahwitti (odd)",29,1957,2013
+"136",136,"Pink (odd)","Nass-Portland-Observatory (odd)",31,1955,2015
+"137",137,"Pink (odd)","Nass-Skeena Estuary (odd)",31,1955,2015
+"138",138,"Pink (odd)","Southern Fjords (odd)",29,1957,2013
+"139",139,"River sockeye","Harrison River (river-type)",61,1950,2010

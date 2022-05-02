@@ -1,0 +1,918 @@
+"","stock.id","species","stock","region","sub.region","broodyear","spawners","recruits","use","odd_even","logR_S"
+"3",201,"Pink","Puyallup","Inside WA","Inside WA",1959,14000,35300,1,"odd",0.924825634323992
+"5",201,"Pink","Puyallup","Inside WA","Inside WA",1961,10000,115311,1,"odd",2.44504773302611
+"7",201,"Pink","Puyallup","Inside WA","Inside WA",1963,10221,35628,1,"odd",1.24868741822268
+"9",201,"Pink","Puyallup","Inside WA","Inside WA",1965,25131,40277,1,"odd",0.471678442587453
+"11",201,"Pink","Puyallup","Inside WA","Inside WA",1967,22038,22868,1,"odd",0.0369703173361396
+"13",201,"Pink","Puyallup","Inside WA","Inside WA",1969,16003,63066,1,"odd",1.37140559240542
+"15",201,"Pink","Puyallup","Inside WA","Inside WA",1971,40000,31597,1,"odd",-0.235817274736705
+"17",201,"Pink","Puyallup","Inside WA","Inside WA",1973,12194,35512,1,"odd",1.06892664004611
+"19",201,"Pink","Puyallup","Inside WA","Inside WA",1975,11800,55191,1,"odd",1.54270036504014
+"21",201,"Pink","Puyallup","Inside WA","Inside WA",1977,29429,102377,1,"odd",1.24668149526692
+"23",201,"Pink","Puyallup","Inside WA","Inside WA",1979,29481,34017,1,"odd",0.143114411609413
+"25",201,"Pink","Puyallup","Inside WA","Inside WA",1981,12115,25341,1,"odd",0.73797928314498
+"27",201,"Pink","Puyallup","Inside WA","Inside WA",1983,11600,53773,1,"odd",1.53376638434612
+"29",201,"Pink","Puyallup","Inside WA","Inside WA",1985,34100,45780,1,"odd",0.29454993023495
+"31",201,"Pink","Puyallup","Inside WA","Inside WA",1987,34400,108869,1,"odd",1.15208876020472
+"33",201,"Pink","Puyallup","Inside WA","Inside WA",1989,49850,23354,1,"odd",-0.758250220754324
+"35",201,"Pink","Puyallup","Inside WA","Inside WA",1991,14000,12837,1,"odd",-0.0867257035124691
+"37",201,"Pink","Puyallup","Inside WA","Inside WA",1993,10069,25396,1,"odd",0.925130284374726
+"39",201,"Pink","Puyallup","Inside WA","Inside WA",1995,17596,3231,1,"odd",-1.69487991664411
+"41",201,"Pink","Puyallup","Inside WA","Inside WA",1997,2732,4731,1,"odd",0.549102654940467
+"43",201,"Pink","Puyallup","Inside WA","Inside WA",1999,4653,17155,1,"odd",1.3047775034479
+"45",201,"Pink","Puyallup","Inside WA","Inside WA",2001,16577,197211,1,"odd",2.47625802910317
+"47",201,"Pink","Puyallup","Inside WA","Inside WA",2003,191515,290622,1,"odd",0.417057319172828
+"49",201,"Pink","Puyallup","Inside WA","Inside WA",2005,287230,428039,1,"odd",0.398931024382465
+"51",201,"Pink","Puyallup","Inside WA","Inside WA",2007,417767,1324533,1,"odd",1.15389136262143
+"54",202,"Pink","Hood Canal","Inside WA","Inside WA",1959,30500,44388,1,"odd",0.375242479024951
+"56",202,"Pink","Hood Canal","Inside WA","Inside WA",1961,36800,901536,1,"odd",3.19860213011543
+"58",202,"Pink","Hood Canal","Inside WA","Inside WA",1963,503000,217872,1,"odd",-0.83668243571752
+"60",202,"Pink","Hood Canal","Inside WA","Inside WA",1965,160000,465405,1,"odd",1.06773417902315
+"62",202,"Pink","Hood Canal","Inside WA","Inside WA",1967,269000,58604,1,"odd",-1.52390842596277
+"64",202,"Pink","Hood Canal","Inside WA","Inside WA",1969,42000,138686,1,"odd",1.19454276666821
+"66",202,"Pink","Hood Canal","Inside WA","Inside WA",1971,104000,70592,1,"odd",-0.387474075510335
+"68",202,"Pink","Hood Canal","Inside WA","Inside WA",1973,46500,18401,1,"odd",-0.927047301629073
+"70",202,"Pink","Hood Canal","Inside WA","Inside WA",1975,12500,79795,1,"odd",1.85373220154289
+"72",202,"Pink","Hood Canal","Inside WA","Inside WA",1977,44000,74372,1,"odd",0.524889892999555
+"74",202,"Pink","Hood Canal","Inside WA","Inside WA",1979,37100,12013,1,"odd",-1.12762757287415
+"76",202,"Pink","Hood Canal","Inside WA","Inside WA",1981,6450,29222,1,"odd",1.51084171944221
+"78",202,"Pink","Hood Canal","Inside WA","Inside WA",1983,25000,91739,1,"odd",1.3000717638708
+"80",202,"Pink","Hood Canal","Inside WA","Inside WA",1985,63800,77341,1,"odd",0.192471025664651
+"82",202,"Pink","Hood Canal","Inside WA","Inside WA",1987,62100,114944,1,"odd",0.615699064300247
+"84",202,"Pink","Hood Canal","Inside WA","Inside WA",1989,60800,166259,1,"odd",1.00595702443692
+"86",202,"Pink","Hood Canal","Inside WA","Inside WA",1991,118200,38696,1,"odd",-1.11664186945132
+"88",202,"Pink","Hood Canal","Inside WA","Inside WA",1993,35326,36148,1,"odd",0.0230023853064577
+"90",202,"Pink","Hood Canal","Inside WA","Inside WA",1995,31286,9477,1,"odd",-1.19430290265152
+"92",202,"Pink","Hood Canal","Inside WA","Inside WA",1997,8299,12673,1,"odd",0.423338720483616
+"94",202,"Pink","Hood Canal","Inside WA","Inside WA",1999,9475,99061,1,"odd",2.34707907103263
+"96",202,"Pink","Hood Canal","Inside WA","Inside WA",2001,98261,38242,1,"odd",-0.943692815699161
+"98",202,"Pink","Hood Canal","Inside WA","Inside WA",2003,37462,17603,1,"odd",-0.755257743809865
+"100",202,"Pink","Hood Canal","Inside WA","Inside WA",2005,17442,29564,1,"odd",0.527676314117846
+"102",202,"Pink","Hood Canal","Inside WA","Inside WA",2007,28964,11501,1,"odd",-0.92361969141613
+"105",203,"Pink","Snohomish","Inside WA","Inside WA",1959,85000,89431,1,"odd",0.0508161217352572
+"107",203,"Pink","Snohomish","Inside WA","Inside WA",1961,50168,982874,1,"odd",2.97510355964707
+"109",203,"Pink","Snohomish","Inside WA","Inside WA",1963,275042,326297,1,"odd",0.170884196286076
+"111",203,"Pink","Snohomish","Inside WA","Inside WA",1965,185015,227062,1,"odd",0.204786205069599
+"113",203,"Pink","Snohomish","Inside WA","Inside WA",1967,95013,108427,1,"odd",0.132063411137895
+"115",203,"Pink","Snohomish","Inside WA","Inside WA",1969,70009,192834,1,"odd",1.01320590996325
+"117",203,"Pink","Snohomish","Inside WA","Inside WA",1971,125000,207801,1,"odd",0.508267153670785
+"119",203,"Pink","Snohomish","Inside WA","Inside WA",1973,110000,126342,1,"odd",0.138512149852033
+"121",203,"Pink","Snohomish","Inside WA","Inside WA",1975,65751,236157,1,"odd",1.2786219580117
+"123",203,"Pink","Snohomish","Inside WA","Inside WA",1977,125990,397190,1,"odd",1.14821221689792
+"125",203,"Pink","Snohomish","Inside WA","Inside WA",1979,180724,201209,1,"odd",0.10737316323322
+"127",203,"Pink","Snohomish","Inside WA","Inside WA",1981,90096,264327,1,"odd",1.07631120452053
+"129",203,"Pink","Snohomish","Inside WA","Inside WA",1983,198283,555572,1,"odd",1.03030291048501
+"131",203,"Pink","Snohomish","Inside WA","Inside WA",1985,302192,240925,1,"odd",-0.226576895216139
+"133",203,"Pink","Snohomish","Inside WA","Inside WA",1987,152418,324143,1,"odd",0.754558029932915
+"135",203,"Pink","Snohomish","Inside WA","Inside WA",1989,80149,272505,1,"odd",1.22376956018745
+"137",203,"Pink","Snohomish","Inside WA","Inside WA",1991,174000,110944,1,"odd",-0.450029729711916
+"139",203,"Pink","Snohomish","Inside WA","Inside WA",1993,100000,118148,1,"odd",0.166767889867188
+"141",203,"Pink","Snohomish","Inside WA","Inside WA",1995,101600,120046,1,"odd",0.166831467517546
+"143",203,"Pink","Snohomish","Inside WA","Inside WA",1997,103537,238351,1,"odd",0.833815340408291
+"145",203,"Pink","Snohomish","Inside WA","Inside WA",1999,237057,1132896,1,"odd",1.56423184656421
+"147",203,"Pink","Snohomish","Inside WA","Inside WA",2001,1073369,1561630,1,"odd",0.374927847407961
+"149",203,"Pink","Snohomish","Inside WA","Inside WA",2003,1392568,498797,1,"odd",-1.02670560429011
+"151",203,"Pink","Snohomish","Inside WA","Inside WA",2005,482245,1185255,1,"odd",0.899260936626896
+"153",203,"Pink","Snohomish","Inside WA","Inside WA",2007,1143695,2403012,1,"odd",0.742458701480003
+"156",204,"Pink","Dungeness","Inside WA","Inside WA",1959,40000,82702,1,"odd",0.726364331420142
+"158",204,"Pink","Dungeness","Inside WA","Inside WA",1961,70000,638063,1,"odd",2.20994178250186
+"160",204,"Pink","Dungeness","Inside WA","Inside WA",1963,400000,99766,1,"odd",-1.38863710319837
+"162",204,"Pink","Dungeness","Inside WA","Inside WA",1965,75000,201085,1,"odd",0.986239590704002
+"164",204,"Pink","Dungeness","Inside WA","Inside WA",1967,95000,20071,1,"odd",-1.55460090442318
+"166",204,"Pink","Dungeness","Inside WA","Inside WA",1969,14400,61248,1,"odd",1.44770298924853
+"168",204,"Pink","Dungeness","Inside WA","Inside WA",1971,46000,71212,1,"odd",0.437019947053521
+"170",204,"Pink","Dungeness","Inside WA","Inside WA",1973,47000,35802,1,"odd",-0.272143843942059
+"172",204,"Pink","Dungeness","Inside WA","Inside WA",1975,24300,64885,1,"odd",0.982140121842691
+"174",204,"Pink","Dungeness","Inside WA","Inside WA",1977,35700,115840,1,"odd",1.17705923985181
+"176",204,"Pink","Dungeness","Inside WA","Inside WA",1979,50100,4987,1,"odd",-2.30718648152683
+"178",204,"Pink","Dungeness","Inside WA","Inside WA",1981,2900,5692,1,"odd",0.674350943235178
+"180",204,"Pink","Dungeness","Inside WA","Inside WA",1983,4888,6590,1,"odd",0.298770126645122
+"182",204,"Pink","Dungeness","Inside WA","Inside WA",1985,4730,2309,1,"odd",-0.717110672131483
+"184",204,"Pink","Dungeness","Inside WA","Inside WA",1987,1906,15710,1,"odd",2.10929064703552
+"186",204,"Pink","Dungeness","Inside WA","Inside WA",1989,10902,13918,1,"odd",0.244236707780569
+"188",204,"Pink","Dungeness","Inside WA","Inside WA",1991,9895,1857,1,"odd",-1.67306729668396
+"190",204,"Pink","Dungeness","Inside WA","Inside WA",1993,1695,9534,1,"odd",1.72718161595022
+"192",204,"Pink","Dungeness","Inside WA","Inside WA",1995,8252,5634,1,"odd",-0.381635925754824
+"194",204,"Pink","Dungeness","Inside WA","Inside WA",1997,4935,7312,1,"odd",0.393164161266404
+"196",204,"Pink","Dungeness","Inside WA","Inside WA",1999,7306,81470,1,"odd",2.41153892594946
+"198",204,"Pink","Dungeness","Inside WA","Inside WA",2001,80344,15433,1,"odd",-1.64980934217234
+"200",204,"Pink","Dungeness","Inside WA","Inside WA",2003,15116,8747,1,"odd",-0.547043001049525
+"202",204,"Pink","Dungeness","Inside WA","Inside WA",2005,8667,6352,1,"odd",-0.310752986207373
+"204",204,"Pink","Dungeness","Inside WA","Inside WA",2007,6223,44184,1,"odd",1.96011062701181
+"207",205,"Pink","Stillaguamish","Inside WA","Inside WA",1959,125000,222830,1,"odd",0.578095411596576
+"209",205,"Pink","Stillaguamish","Inside WA","Inside WA",1961,125000,2287066,1,"odd",2.90671131507102
+"211",205,"Pink","Stillaguamish","Inside WA","Inside WA",1963,640000,326268,1,"odd",-0.673749046824963
+"213",205,"Pink","Stillaguamish","Inside WA","Inside WA",1965,185000,250930,1,"odd",0.304818190695804
+"215",205,"Pink","Stillaguamish","Inside WA","Inside WA",1967,105000,116156,1,"odd",0.100973765064347
+"217",205,"Pink","Stillaguamish","Inside WA","Inside WA",1969,75000,308532,1,"odd",1.41433745214453
+"219",205,"Pink","Stillaguamish","Inside WA","Inside WA",1971,200000,66120,1,"odd",-1.10684609359521
+"221",205,"Pink","Stillaguamish","Inside WA","Inside WA",1973,35000,57699,1,"odd",0.499891780851926
+"223",205,"Pink","Stillaguamish","Inside WA","Inside WA",1975,30000,71236,1,"odd",0.864800926951604
+"225",205,"Pink","Stillaguamish","Inside WA","Inside WA",1977,38000,296768,1,"odd",2.05536452904261
+"227",205,"Pink","Stillaguamish","Inside WA","Inside WA",1979,135000,46163,1,"odd",-1.07309616701594
+"229",205,"Pink","Stillaguamish","Inside WA","Inside WA",1981,18000,168102,1,"odd",2.23419918012758
+"231",205,"Pink","Stillaguamish","Inside WA","Inside WA",1983,126100,377234,1,"odd",1.09579044158416
+"233",205,"Pink","Stillaguamish","Inside WA","Inside WA",1985,200000,188124,1,"odd",-0.0612160466736424
+"235",205,"Pink","Stillaguamish","Inside WA","Inside WA",1987,119000,339922,1,"odd",1.04959268641507
+"237",205,"Pink","Stillaguamish","Inside WA","Inside WA",1989,70400,136527,1,"odd",0.662329134098544
+"239",205,"Pink","Stillaguamish","Inside WA","Inside WA",1991,86000,122038,1,"odd",0.34998517539119
+"241",205,"Pink","Stillaguamish","Inside WA","Inside WA",1993,110000,246959,1,"odd",0.808741965154546
+"243",205,"Pink","Stillaguamish","Inside WA","Inside WA",1995,208000,102695,1,"odd",-0.705774649443706
+"245",205,"Pink","Stillaguamish","Inside WA","Inside WA",1997,88572,225711,1,"odd",0.935439639321805
+"247",205,"Pink","Stillaguamish","Inside WA","Inside WA",1999,224486,817218,1,"odd",1.2920925446966
+"249",205,"Pink","Stillaguamish","Inside WA","Inside WA",2001,774279,206823,1,"odd",-1.32006891873545
+"251",205,"Pink","Stillaguamish","Inside WA","Inside WA",2003,184433,121925,1,"odd",-0.413880152300413
+"253",205,"Pink","Stillaguamish","Inside WA","Inside WA",2005,117879,248664,1,"odd",0.746443912987307
+"255",205,"Pink","Stillaguamish","Inside WA","Inside WA",2007,239896,1186319,1,"odd",1.59840501863094
+"258",206,"Pink","Skagit","Inside WA","Inside WA",1959,200000,666288,1,"odd",1.20340464295283
+"260",206,"Pink","Skagit","Inside WA","Inside WA",1961,400000,5008208,1,"odd",2.52736889835578
+"262",206,"Pink","Skagit","Inside WA","Inside WA",1963,1190000,286529,1,"odd",-1.42386883343286
+"264",206,"Pink","Skagit","Inside WA","Inside WA",1965,150000,259609,1,"odd",0.548541358853842
+"266",206,"Pink","Skagit","Inside WA","Inside WA",1967,100000,154488,1,"odd",0.434946237430333
+"268",206,"Pink","Skagit","Inside WA","Inside WA",1969,100000,502008,1,"odd",1.61344586983164
+"270",206,"Pink","Skagit","Inside WA","Inside WA",1971,300555,510748,1,"odd",0.530245552366163
+"272",206,"Pink","Skagit","Inside WA","Inside WA",1973,251181,206471,1,"odd",-0.19601382808705
+"274",206,"Pink","Skagit","Inside WA","Inside WA",1975,103135,927005,1,"odd",2.19592014964401
+"276",206,"Pink","Skagit","Inside WA","Inside WA",1977,504924,1109206,1,"odd",0.786991800130657
+"278",206,"Pink","Skagit","Inside WA","Inside WA",1979,300384,393868,1,"odd",0.270954171629101
+"280",206,"Pink","Skagit","Inside WA","Inside WA",1981,100268,553965,1,"odd",1.70925490666473
+"282",206,"Pink","Skagit","Inside WA","Inside WA",1983,470128,1294798,1,"odd",1.01310497935908
+"284",206,"Pink","Skagit","Inside WA","Inside WA",1985,710030,1137568,1,"odd",0.471340706594287
+"286",206,"Pink","Skagit","Inside WA","Inside WA",1987,593535,1396007,1,"odd",0.855275113126642
+"288",206,"Pink","Skagit","Inside WA","Inside WA",1989,401300,681726,1,"odd",0.529918540312816
+"290",206,"Pink","Skagit","Inside WA","Inside WA",1991,351000,738137,1,"odd",0.743343220762586
+"292",206,"Pink","Skagit","Inside WA","Inside WA",1993,530000,1596373,1,"odd",1.10261245343101
+"294",206,"Pink","Skagit","Inside WA","Inside WA",1995,857000,121226,1,"odd",-1.95578134651686
+"296",206,"Pink","Skagit","Inside WA","Inside WA",1997,60000,352636,1,"odd",1.77109180122536
+"298",206,"Pink","Skagit","Inside WA","Inside WA",1999,320000,1102825,1,"odd",1.23730935266729
+"300",206,"Pink","Skagit","Inside WA","Inside WA",2001,894061,801701,1,"odd",-0.109038285110454
+"302",206,"Pink","Skagit","Inside WA","Inside WA",2003,567080,80328,1,"odd",-1.9543821346723
+"304",206,"Pink","Skagit","Inside WA","Inside WA",2005,60000,312336,1,"odd",1.64973496919864
+"306",206,"Pink","Skagit","Inside WA","Inside WA",2007,300000,1556928,1,"odd",1.646687453334
+"309",207,"Pink","Nooksack","Inside WA","Inside WA",1959,30000,197698,1,"odd",1.88554323212536
+"311",207,"Pink","Nooksack","Inside WA","Inside WA",1961,100000,591699,1,"odd",1.7778278736475
+"313",207,"Pink","Nooksack","Inside WA","Inside WA",1963,150000,33721,1,"odd",-1.49251450541182
+"315",207,"Pink","Nooksack","Inside WA","Inside WA",1965,12500,69430,1,"odd",1.71459040645693
+"317",207,"Pink","Nooksack","Inside WA","Inside WA",1967,20000,42663,1,"odd",0.757599760504678
+"319",207,"Pink","Nooksack","Inside WA","Inside WA",1969,15000,104304,1,"odd",1.93925951107997
+"321",207,"Pink","Nooksack","Inside WA","Inside WA",1971,40000,149130,1,"odd",1.31593895466075
+"323",207,"Pink","Nooksack","Inside WA","Inside WA",1973,75000,107173,1,"odd",0.356956237705264
+"325",207,"Pink","Nooksack","Inside WA","Inside WA",1975,36000,48009,1,"odd",0.287869554875853
+"327",207,"Pink","Nooksack","Inside WA","Inside WA",1977,25000,176743,1,"odd",1.95582087516383
+"329",207,"Pink","Nooksack","Inside WA","Inside WA",1979,31406,76096,1,"odd",0.884996743605555
+"331",207,"Pink","Nooksack","Inside WA","Inside WA",1981,15000,90925,1,"odd",1.80198478977084
+"333",207,"Pink","Nooksack","Inside WA","Inside WA",1983,60000,42862,1,"odd",-0.336358909709617
+"335",207,"Pink","Nooksack","Inside WA","Inside WA",1985,23000,42325,1,"odd",0.609883712090049
+"337",207,"Pink","Nooksack","Inside WA","Inside WA",1987,37003,198072,1,"odd",1.67763161052008
+"339",207,"Pink","Nooksack","Inside WA","Inside WA",1989,136000,54490,1,"odd",-0.914637687141045
+"341",207,"Pink","Nooksack","Inside WA","Inside WA",1991,24002,58215,1,"odd",0.88600589327973
+"343",207,"Pink","Nooksack","Inside WA","Inside WA",1993,56004,247062,1,"odd",1.48421620051977
+"345",207,"Pink","Nooksack","Inside WA","Inside WA",1995,220020,31053,1,"odd",-1.95802302924157
+"347",207,"Pink","Nooksack","Inside WA","Inside WA",1997,26000,97446,1,"odd",1.32120184039904
+"349",207,"Pink","Nooksack","Inside WA","Inside WA",1999,95000,244059,1,"odd",0.943533107741649
+"351",207,"Pink","Nooksack","Inside WA","Inside WA",2001,226000,61158,1,"odd",-1.30707431985796
+"353",207,"Pink","Nooksack","Inside WA","Inside WA",2003,51011,17693,1,"odd",-1.05887221461103
+"355",207,"Pink","Nooksack","Inside WA","Inside WA",2005,13627,20357,1,"odd",0.401371714317225
+"357",207,"Pink","Nooksack","Inside WA","Inside WA",2007,18994,55265,1,"odd",1.06801665694216
+"360",208,"Pink","Fraser","Fraser River","BC South",1961,1094000,2320000,1,"odd",0.751726481678429
+"362",208,"Pink","Fraser","Fraser River","BC South",1963,1953000,12963000,1,"odd",1.89273249372336
+"364",208,"Pink","Fraser","Fraser River","BC South",1965,1191000,3931000,1,"odd",1.19410055606656
+"366",208,"Pink","Fraser","Fraser River","BC South",1967,1831000,9763000,1,"odd",1.67373746455116
+"368",208,"Pink","Fraser","Fraser River","BC South",1969,1529000,6801000,1,"odd",1.49245573324658
+"370",208,"Pink","Fraser","Fraser River","BC South",1971,1804000,4894000,1,"odd",0.998003543380048
+"372",208,"Pink","Fraser","Fraser River","BC South",1973,1754000,8209000,1,"odd",1.54333221941614
+"374",208,"Pink","Fraser","Fraser River","BC South",1975,1367000,14404000,1,"odd",2.35488738804482
+"376",208,"Pink","Fraser","Fraser River","BC South",1977,2388000,18685000,1,"odd",2.05726486740709
+"378",208,"Pink","Fraser","Fraser River","BC South",1979,3561000,15346000,1,"odd",1.46081344945983
+"380",208,"Pink","Fraser","Fraser River","BC South",1981,4488000,19104000,1,"odd",1.4484905689898
+"382",208,"Pink","Fraser","Fraser River","BC South",1983,4632000,7172000,1,"odd",0.437195815472192
+"384",208,"Pink","Fraser","Fraser River","BC South",1985,6461000,16484000,1,"odd",0.936606108900542
+"386",208,"Pink","Fraser","Fraser River","BC South",1987,3224000,22180000,1,"odd",1.92856815727784
+"388",208,"Pink","Fraser","Fraser River","BC South",1989,7189000,16983000,1,"odd",0.859660763720898
+"390",208,"Pink","Fraser","Fraser River","BC South",1991,12949000,12904000,1,"odd",-0.00348122426379523
+"392",208,"Pink","Fraser","Fraser River","BC South",1993,10768000,8176000,1,"odd",-0.275375739441023
+"394",208,"Pink","Fraser","Fraser River","BC South",1995,7175000,3586000,1,"odd",-0.693565386462744
+"396",208,"Pink","Fraser","Fraser River","BC South",1997,2842000,21174000,1,"odd",2.00826598424628
+"398",208,"Pink","Fraser","Fraser River","BC South",1999,3422000,26000000,1,"odd",2.02787136255148
+"400",208,"Pink","Fraser","Fraser River","BC South",2001,19725000,10000000,1,"odd",-0.679301773737892
+"401",209,"Pink","BC South (no Fraser)","BC South","BC South",1953,774700,810000,1,"odd",0.0445583900286276
+"403",209,"Pink","BC South (no Fraser)","BC South","BC South",1955,810000,1134900,1,"odd",0.337265572640609
+"405",209,"Pink","BC South (no Fraser)","BC South","BC South",1957,1134900,2475602,1,"odd",0.779939057442744
+"407",209,"Pink","BC South (no Fraser)","BC South","BC South",1959,966876,2911893,1,"odd",1.10248840854933
+"409",209,"Pink","BC South (no Fraser)","BC South","BC South",1961,1093450,3695214,1,"odd",1.21770063347374
+"411",209,"Pink","BC South (no Fraser)","BC South","BC South",1963,1703102,1044764,1,"odd",-0.488660271600016
+"413",209,"Pink","BC South (no Fraser)","BC South","BC South",1965,618775,1092892,1,"odd",0.568840955574374
+"415",209,"Pink","BC South (no Fraser)","BC South","BC South",1967,346110,332153,1,"odd",-0.0411609374730201
+"417",209,"Pink","BC South (no Fraser)","BC South","BC South",1969,214050,1589721,1,"odd",2.00510417552825
+"419",209,"Pink","BC South (no Fraser)","BC South","BC South",1971,925850,2187305,1,"odd",0.859713236917341
+"421",209,"Pink","BC South (no Fraser)","BC South","BC South",1973,1167313,2243271,1,"odd",0.653230542143886
+"423",209,"Pink","BC South (no Fraser)","BC South","BC South",1975,1553480,758891,1,"odd",-0.716394697525547
+"425",209,"Pink","BC South (no Fraser)","BC South","BC South",1977,271014,709977,1,"odd",0.963062095082508
+"427",209,"Pink","BC South (no Fraser)","BC South","BC South",1979,285677,1987123,1,"odd",1.93958134103042
+"429",209,"Pink","BC South (no Fraser)","BC South","BC South",1981,1101723,2814116,1,"odd",0.937772862329021
+"431",209,"Pink","BC South (no Fraser)","BC South","BC South",1983,1578116,1968397,1,"odd",0.220987775433025
+"433",209,"Pink","BC South (no Fraser)","BC South","BC South",1985,942297,947566,1,"odd",0.00557608001454647
+"435",209,"Pink","BC South (no Fraser)","BC South","BC South",1987,470566,1626840,1,"odd",1.24045853638986
+"437",209,"Pink","BC South (no Fraser)","BC South","BC South",1989,448840,809628,1,"odd",0.589908406118726
+"439",209,"Pink","BC South (no Fraser)","BC South","BC South",1991,419862,1387174,1,"odd",1.19509777720197
+"441",209,"Pink","BC South (no Fraser)","BC South","BC South",1993,668427,461637,1,"odd",-0.37014832291768
+"443",209,"Pink","BC South (no Fraser)","BC South","BC South",1995,305978,639179,1,"odd",0.736671336402472
+"445",209,"Pink","BC South (no Fraser)","BC South","BC South",1997,436875,829321,1,"odd",0.640960180709669
+"447",209,"Pink","BC South (no Fraser)","BC South","BC South",1999,827921,2550996,1,"odd",1.12532141092268
+"449",209,"Pink","BC South (no Fraser)","BC South","BC South",2001,2166806,762241,1,"odd",-1.0447466941915
+"451",209,"Pink","BC South (no Fraser)","BC South","BC South",2003,503333,825962,1,"odd",0.495296788731122
+"453",209,"Pink","BC South (no Fraser)","BC South","BC South",2005,747203,801891,1,"odd",0.0706357865095779
+"455",209,"Pink","BC South (no Fraser)","BC South","BC South",2007,784977,3106413,1,"odd",1.37556954532716
+"800",221,"Pink","S SEAK","SEAK","SEAK",1961,3051815,11375279,1,"odd",1.31570599641328
+"802",221,"Pink","S SEAK","SEAK","SEAK",1963,6239135,11499633,1,"odd",0.611473570838919
+"804",221,"Pink","S SEAK","SEAK","SEAK",1965,5789175,4335653,1,"odd",-0.289117561126345
+"806",221,"Pink","S SEAK","SEAK","SEAK",1967,3694113,5491593,1,"odd",0.396477905911091
+"808",221,"Pink","S SEAK","SEAK","SEAK",1969,4292453,13509162,1,"odd",1.14650975752165
+"810",221,"Pink","S SEAK","SEAK","SEAK",1971,7249918,10606553,1,"odd",0.380481859195831
+"812",221,"Pink","S SEAK","SEAK","SEAK",1973,6048048,11491835,1,"odd",0.641901207846163
+"814",221,"Pink","S SEAK","SEAK","SEAK",1975,8158853,23897761,1,"odd",1.07468117717014
+"816",221,"Pink","S SEAK","SEAK","SEAK",1977,12599508,15575736,1,"odd",0.212056553197711
+"818",221,"Pink","S SEAK","SEAK","SEAK",1979,8585955,25227802,1,"odd",1.07781891164973
+"820",221,"Pink","S SEAK","SEAK","SEAK",1981,11702868,47769995,1,"odd",1.40656378276383
+"822",221,"Pink","S SEAK","SEAK","SEAK",1983,16308113,55599110,1,"odd",1.22650447988663
+"824",221,"Pink","S SEAK","SEAK","SEAK",1985,24886955,15904992,1,"odd",-0.447710748392594
+"826",221,"Pink","S SEAK","SEAK","SEAK",1987,11273663,64093613,1,"odd",1.73787542035026
+"828",221,"Pink","S SEAK","SEAK","SEAK",1989,18330133,57573643,1,"odd",1.14451855848151
+"830",221,"Pink","S SEAK","SEAK","SEAK",1991,14076368,55400184,1,"odd",1.37008555213892
+"832",221,"Pink","S SEAK","SEAK","SEAK",1993,16181233,60780765,1,"odd",1.32342125986807
+"834",221,"Pink","S SEAK","SEAK","SEAK",1995,19465300,30225545,1,"odd",0.440054034547127
+"836",221,"Pink","S SEAK","SEAK","SEAK",1997,14927440,67046610,1,"odd",1.50218691916171
+"838",221,"Pink","S SEAK","SEAK","SEAK",1999,28189610,79477238,1,"odd",1.0365171958619
+"840",221,"Pink","S SEAK","SEAK","SEAK",2001,27465698,53720970,1,"odd",0.670865547446613
+"842",221,"Pink","S SEAK","SEAK","SEAK",2003,24443423,52353479,1,"odd",0.761657209871479
+"844",221,"Pink","S SEAK","SEAK","SEAK",2005,23489198,58255286,1,"odd",0.908294179209887
+"846",221,"Pink","S SEAK","SEAK","SEAK",2007,26478430,44429724,1,"odd",0.517578265628744
+"851",222,"Pink","N SEAK Outside","SEAK","SEAK",1961,875088,3349217,1,"odd",1.34215741342718
+"853",222,"Pink","N SEAK Outside","SEAK","SEAK",1963,2049505,1566842,1,"odd",-0.268536171899183
+"855",222,"Pink","N SEAK Outside","SEAK","SEAK",1965,948288,626930,1,"odd",-0.413823361929085
+"857",222,"Pink","N SEAK Outside","SEAK","SEAK",1967,500073,1189566,1,"odd",0.866589725936628
+"859",222,"Pink","N SEAK Outside","SEAK","SEAK",1969,1052220,665671,1,"odd",-0.457861942418092
+"861",222,"Pink","N SEAK Outside","SEAK","SEAK",1971,573925,1150367,1,"odd",0.695337575119158
+"863",222,"Pink","N SEAK Outside","SEAK","SEAK",1973,891608,1826656,1,"odd",0.717215677735916
+"865",222,"Pink","N SEAK Outside","SEAK","SEAK",1975,1260848,6468894,1,"odd",1.63522064062466
+"867",222,"Pink","N SEAK Outside","SEAK","SEAK",1977,4270718,5872272,1,"odd",0.318459648777461
+"869",222,"Pink","N SEAK Outside","SEAK","SEAK",1979,4060198,6424193,1,"odd",0.458839278882307
+"871",222,"Pink","N SEAK Outside","SEAK","SEAK",1981,3676025,5645863,1,"odd",0.429091059229724
+"873",222,"Pink","N SEAK Outside","SEAK","SEAK",1983,3089278,10032670,1,"odd",1.17790936129467
+"875",222,"Pink","N SEAK Outside","SEAK","SEAK",1985,4401620,1483886,1,"odd",-1.08730833259268
+"877",222,"Pink","N SEAK Outside","SEAK","SEAK",1987,1055085,2014204,1,"odd",0.646602747727121
+"879",222,"Pink","N SEAK Outside","SEAK","SEAK",1989,1103323,2178632,1,"odd",0.6803706217722
+"881",222,"Pink","N SEAK Outside","SEAK","SEAK",1991,1804080,2128693,1,"odd",0.165457409803926
+"883",222,"Pink","N SEAK Outside","SEAK","SEAK",1993,1071388,5134410,1,"odd",1.56700993491548
+"885",222,"Pink","N SEAK Outside","SEAK","SEAK",1995,3379848,7595470,1,"odd",0.80972127888119
+"887",222,"Pink","N SEAK Outside","SEAK","SEAK",1997,4837720,8007840,1,"odd",0.503977526435355
+"889",222,"Pink","N SEAK Outside","SEAK","SEAK",1999,5364505,7936232,1,"odd",0.391634496278695
+"891",222,"Pink","N SEAK Outside","SEAK","SEAK",2001,5932160,7398788,1,"odd",0.220927806747036
+"893",222,"Pink","N SEAK Outside","SEAK","SEAK",2003,5506903,11292515,1,"odd",0.718137720681663
+"895",222,"Pink","N SEAK Outside","SEAK","SEAK",2005,6271490,10038371,1,"odd",0.470400884136998
+"897",222,"Pink","N SEAK Outside","SEAK","SEAK",2007,5765000,5912584,1,"odd",0.0252778071842686
+"902",223,"Pink","N SEAK Inside","SEAK","SEAK",1961,5142980,19905504,1,"odd",1.35336359839867
+"904",223,"Pink","N SEAK Inside","SEAK","SEAK",1963,7304115,8948648,1,"odd",0.203064571457229
+"906",223,"Pink","N SEAK Inside","SEAK","SEAK",1965,4402965,4681142,1,"odd",0.0612639196398177
+"908",223,"Pink","N SEAK Inside","SEAK","SEAK",1967,2372728,7035923,1,"odd",1.08698853505377
+"910",223,"Pink","N SEAK Inside","SEAK","SEAK",1969,3564400,8563571,1,"odd",0.876521539301999
+"912",223,"Pink","N SEAK Inside","SEAK","SEAK",1971,5640305,5182151,1,"odd",-0.084717921018168
+"914",223,"Pink","N SEAK Inside","SEAK","SEAK",1973,3557618,1537448,1,"odd",-0.838967320803908
+"916",223,"Pink","N SEAK Inside","SEAK","SEAK",1975,1486515,4413971,1,"odd",1.08834028358597
+"918",223,"Pink","N SEAK Inside","SEAK","SEAK",1977,4083868,8558649,1,"odd",0.739897772068436
+"920",223,"Pink","N SEAK Inside","SEAK","SEAK",1979,6538365,7074903,1,"odd",0.0788665989740673
+"922",223,"Pink","N SEAK Inside","SEAK","SEAK",1981,4447430,8808287,1,"odd",0.683366581649387
+"924",223,"Pink","N SEAK Inside","SEAK","SEAK",1983,5307143,26463995,1,"odd",1.60673148087899
+"926",223,"Pink","N SEAK Inside","SEAK","SEAK",1985,10873548,12183728,1,"odd",0.113768240164704
+"928",223,"Pink","N SEAK Inside","SEAK","SEAK",1987,6977443,20096174,1,"odd",1.05784693140783
+"930",223,"Pink","N SEAK Inside","SEAK","SEAK",1989,7371055,27237043,1,"odd",1.30701707793785
+"932",223,"Pink","N SEAK Inside","SEAK","SEAK",1991,9187708,26396047,1,"odd",1.05534776035394
+"934",223,"Pink","N SEAK Inside","SEAK","SEAK",1993,9386440,12765594,1,"odd",0.307487488497911
+"936",223,"Pink","N SEAK Inside","SEAK","SEAK",1995,7925135,23293970,1,"odd",1.07815517447577
+"938",223,"Pink","N SEAK Inside","SEAK","SEAK",1997,12469155,61411893,1,"odd",1.594345518699
+"940",223,"Pink","N SEAK Inside","SEAK","SEAK",1999,25094123,26186616,1,"odd",0.0426147652537534
+"942",223,"Pink","N SEAK Inside","SEAK","SEAK",2001,13178575,35144673,1,"odd",0.980880651405874
+"944",223,"Pink","N SEAK Inside","SEAK","SEAK",2003,13847370,41940069,1,"odd",1.10814634777497
+"946",223,"Pink","N SEAK Inside","SEAK","SEAK",2005,16703888,20600744,1,"odd",0.209685684951298
+"948",223,"Pink","N SEAK Inside","SEAK","SEAK",2007,11854573,19358942,1,"odd",0.490440731283688
+"1020",226,"Pink","PWS","PWS","PWS",1961,6304415,9182247,1,"odd",0.376021764315564
+"1022",226,"Pink","PWS","PWS","PWS",1963,3886869,5258510,1,"odd",0.302243767440838
+"1024",226,"Pink","PWS","PWS","PWS",1965,2798039,5041076,1,"odd",0.588700736686913
+"1026",226,"Pink","PWS","PWS","PWS",1967,2414736,5988470,1,"odd",0.908245989432304
+"1028",226,"Pink","PWS","PWS","PWS",1969,1159891,10500614,1,"odd",2.20310769645829
+"1030",226,"Pink","PWS","PWS","PWS",1971,3189650,5568948,1,"odd",0.557294974251485
+"1032",226,"Pink","PWS","PWS","PWS",1973,3512070,8081131,1,"odd",0.833326230747801
+"1034",226,"Pink","PWS","PWS","PWS",1975,3628326,8649844,1,"odd",0.868769901212717
+"1036",226,"Pink","PWS","PWS","PWS",1977,4351110,22753414,1,"odd",1.65428421510882
+"1038",226,"Pink","PWS","PWS","PWS",1979,8319888,23613324,1,"odd",1.04316233578548
+"1040",226,"Pink","PWS","PWS","PWS",1981,6210777,15307092,1,"odd",0.9020302415222
+"1042",226,"Pink","PWS","PWS","PWS",1983,5742850,24321751,1,"odd",1.44341545007368
+"1044",226,"Pink","PWS","PWS","PWS",1985,6731643,15628835,1,"odd",0.842298360887623
+"1046",226,"Pink","PWS","PWS","PWS",1987,3934108,7046989,1,"odd",0.582916260831633
+"1048",226,"Pink","PWS","PWS","PWS",1989,3536915,10766782,1,"odd",1.11321077530811
+"1050",226,"Pink","PWS","PWS","PWS",1991,4947798,3532463,1,"odd",-0.336947267768055
+"1052",226,"Pink","PWS","PWS","PWS",1993,3055161,6156249,1,"odd",0.700635371775766
+"1054",226,"Pink","PWS","PWS","PWS",1995,3412225,5244801,1,"odd",0.429872729049136
+"1056",226,"Pink","PWS","PWS","PWS",1997,4078807,14003294,1,"odd",1.2334880439567
+"1058",226,"Pink","PWS","PWS","PWS",1999,7060958,12589343,1,"odd",0.578269926070839
+"1060",226,"Pink","PWS","PWS","PWS",2001,5735052,12659282,1,"odd",0.79179388337582
+"1062",226,"Pink","PWS","PWS","PWS",2003,8161502,25874686,1,"odd",1.15383689558128
+"1064",226,"Pink","PWS","PWS","PWS",2005,13578314,14344498,1,"odd",0.0548924927928129
+"1066",226,"Pink","PWS","PWS","PWS",2007,4326643,6240186,1,"odd",0.366218036990305
+"1068",226,"Pink","PWS","PWS","PWS",2009,5245478,16975186,1,"odd",1.17438625856536
+"1350",235,"Pink","Chignik Bay","Chignik","Chignik",1963,20700,42500,1,"odd",0.719370375659048
+"1352",235,"Pink","Chignik Bay","Chignik","Chignik",1965,11000,33100,1,"odd",1.10163800958465
+"1354",235,"Pink","Chignik Bay","Chignik","Chignik",1967,5700,41200,1,"odd",1.97797208151498
+"1356",235,"Pink","Chignik Bay","Chignik","Chignik",1969,11700,70800,1,"odd",1.80027015889596
+"1358",235,"Pink","Chignik Bay","Chignik","Chignik",1971,5500,24900,1,"odd",1.51011971123224
+"1360",235,"Pink","Chignik Bay","Chignik","Chignik",1973,2200,28600,1,"odd",2.56494935746154
+"1362",235,"Pink","Chignik Bay","Chignik","Chignik",1975,1200,63900,1,"odd",3.97499780458953
+"1364",235,"Pink","Chignik Bay","Chignik","Chignik",1977,3000,313600,1,"odd",4.64950599980814
+"1366",235,"Pink","Chignik Bay","Chignik","Chignik",1979,1200,122780,1,"odd",4.6280725792054
+"1368",235,"Pink","Chignik Bay","Chignik","Chignik",1981,1400,28284,1,"odd",3.00582403712078
+"1376",235,"Pink","Chignik Bay","Chignik","Chignik",1989,13500,88363,1,"odd",1.87876364454566
+"1378",235,"Pink","Chignik Bay","Chignik","Chignik",1991,12200,57909,1,"odd",1.55743686117464
+"1380",235,"Pink","Chignik Bay","Chignik","Chignik",1993,2000,287439,1,"odd",4.96786348325235
+"1382",235,"Pink","Chignik Bay","Chignik","Chignik",1995,180500,98861,1,"odd",-0.602015954630696
+"1384",235,"Pink","Chignik Bay","Chignik","Chignik",1997,59400,96301,1,"odd",0.483184476597557
+"1386",235,"Pink","Chignik Bay","Chignik","Chignik",1999,37300,94842,1,"odd",0.933219022473543
+"1388",235,"Pink","Chignik Bay","Chignik","Chignik",2001,19700,199939,1,"odd",2.31739368428213
+"1390",235,"Pink","Chignik Bay","Chignik","Chignik",2003,143897,231438,1,"odd",0.475214253216952
+"1392",235,"Pink","Chignik Bay","Chignik","Chignik",2005,160000,250134,1,"odd",0.446822959031729
+"1394",235,"Pink","Chignik Bay","Chignik","Chignik",2007,62464,106542,1,"odd",0.533948882814125
+"1396",235,"Pink","Chignik Bay","Chignik","Chignik",2009,28973,63055,1,"odd",0.777642999585929
+"1402",236,"Pink","Central Chig","Chignik","Chignik",1963,92600,135300,1,"odd",0.379205393524609
+"1404",236,"Pink","Central Chig","Chignik","Chignik",1965,65800,44500,1,"odd",-0.391130649159077
+"1406",236,"Pink","Central Chig","Chignik","Chignik",1967,18500,71000,1,"odd",1.34490914495704
+"1408",236,"Pink","Central Chig","Chignik","Chignik",1969,69600,95300,1,"odd",0.314265243319782
+"1410",236,"Pink","Central Chig","Chignik","Chignik",1971,74800,50500,1,"odd",-0.392844548699117
+"1412",236,"Pink","Central Chig","Chignik","Chignik",1973,50200,57700,1,"odd",0.13924214681637
+"1414",236,"Pink","Central Chig","Chignik","Chignik",1975,26400,319900,1,"odd",2.4946444368032
+"1416",236,"Pink","Central Chig","Chignik","Chignik",1977,199900,581400,1,"odd",1.06762174661842
+"1418",236,"Pink","Central Chig","Chignik","Chignik",1979,297000,286523,1,"odd",-0.0359133266379987
+"1420",236,"Pink","Central Chig","Chignik","Chignik",1981,76500,18861,1,"odd",-1.40019444276346
+"1422",236,"Pink","Central Chig","Chignik","Chignik",1983,11000,23487,1,"odd",0.758551803795516
+"1424",236,"Pink","Central Chig","Chignik","Chignik",1985,7400,73469,1,"odd",2.29538354833175
+"1426",236,"Pink","Central Chig","Chignik","Chignik",1987,65700,215021,1,"odd",1.18563677228587
+"1428",236,"Pink","Central Chig","Chignik","Chignik",1989,215000,375067,1,"odd",0.556466648550427
+"1430",236,"Pink","Central Chig","Chignik","Chignik",1991,201100,365937,1,"odd",0.598658890658953
+"1432",236,"Pink","Central Chig","Chignik","Chignik",1993,160900,1185245,1,"odd",1.99692172925569
+"1434",236,"Pink","Central Chig","Chignik","Chignik",1995,715500,1198175,1,"odd",0.515573245805371
+"1436",236,"Pink","Central Chig","Chignik","Chignik",1997,594600,1038508,1,"odd",0.557651436140891
+"1438",236,"Pink","Central Chig","Chignik","Chignik",1999,374300,1101838,1,"odd",1.07967735855147
+"1440",236,"Pink","Central Chig","Chignik","Chignik",2001,460400,665246,1,"odd",0.368061220214843
+"1442",236,"Pink","Central Chig","Chignik","Chignik",2003,576510,572891,1,"odd",-0.00629721386922368
+"1444",236,"Pink","Central Chig","Chignik","Chignik",2005,473400,904721,1,"odd",0.647685911796928
+"1446",236,"Pink","Central Chig","Chignik","Chignik",2007,291800,447785,1,"odd",0.428244570418011
+"1448",236,"Pink","Central Chig","Chignik","Chignik",2009,130700,448807,1,"odd",1.23368833060463
+"1454",237,"Pink","E Chig","Chignik","Chignik",1963,126200,90500,1,"odd",-0.332518099401232
+"1456",237,"Pink","E Chig","Chignik","Chignik",1965,64800,78700,1,"odd",0.194337552065128
+"1458",237,"Pink","E Chig","Chignik","Chignik",1967,56100,47700,1,"odd",-0.162204414634355
+"1460",237,"Pink","E Chig","Chignik","Chignik",1969,46000,52000,1,"odd",0.122602322092332
+"1462",237,"Pink","E Chig","Chignik","Chignik",1971,23000,15300,1,"odd",-0.40764138753076
+"1464",237,"Pink","E Chig","Chignik","Chignik",1973,12800,23500,1,"odd",0.607555250224542
+"1466",237,"Pink","E Chig","Chignik","Chignik",1975,23500,76200,1,"odd",1.17636104154249
+"1468",237,"Pink","E Chig","Chignik","Chignik",1977,76000,486700,1,"odd",1.85691457655308
+"1470",237,"Pink","E Chig","Chignik","Chignik",1979,194300,327993,1,"odd",0.523588910309602
+"1472",237,"Pink","E Chig","Chignik","Chignik",1981,154700,54117,1,"odd",-1.05033938818537
+"1474",237,"Pink","E Chig","Chignik","Chignik",1983,46300,218670,1,"odd",1.55242178297004
+"1476",237,"Pink","E Chig","Chignik","Chignik",1985,212100,217679,1,"odd",0.0259636389945005
+"1478",237,"Pink","E Chig","Chignik","Chignik",1987,215600,881000,1,"odd",1.40763278690134
+"1480",237,"Pink","E Chig","Chignik","Chignik",1989,881000,152979,1,"odd",-1.75075696886602
+"1482",237,"Pink","E Chig","Chignik","Chignik",1991,125000,577455,1,"odd",1.53031677997964
+"1484",237,"Pink","E Chig","Chignik","Chignik",1993,524700,1407872,1,"odd",0.987007952801931
+"1486",237,"Pink","E Chig","Chignik","Chignik",1995,1399300,1360047,1,"odd",-0.0284528536051829
+"1488",237,"Pink","E Chig","Chignik","Chignik",1997,1287700,655671,1,"odd",-0.674953821531315
+"1490",237,"Pink","E Chig","Chignik","Chignik",1999,615100,1567638,1,"odd",0.935540450695123
+"1492",237,"Pink","E Chig","Chignik","Chignik",2001,1470200,1408327,1,"odd",-0.0429959708683546
+"1494",237,"Pink","E Chig","Chignik","Chignik",2003,1408060,512371,1,"odd",-1.01091917743453
+"1496",237,"Pink","E Chig","Chignik","Chignik",2005,512350,609179,1,"odd",0.173104163743175
+"1498",237,"Pink","E Chig","Chignik","Chignik",2007,565800,738631,1,"odd",0.266557813967274
+"1500",237,"Pink","E Chig","Chignik","Chignik",2009,462840,558288,1,"odd",0.187493536256656
+"1506",238,"Pink","W Chig","Chignik","Chignik",1963,305000,497600,1,"odd",0.489484764817558
+"1508",238,"Pink","W Chig","Chignik","Chignik",1965,152000,131500,1,"odd",-0.144873669228457
+"1510",238,"Pink","W Chig","Chignik","Chignik",1967,104400,907000,1,"odd",2.1619127746666
+"1512",238,"Pink","W Chig","Chignik","Chignik",1969,422000,554200,1,"odd",0.272520318392866
+"1514",238,"Pink","W Chig","Chignik","Chignik",1971,268800,62400,1,"odd",-1.46040233327361
+"1516",238,"Pink","W Chig","Chignik","Chignik",1973,62400,149100,1,"odd",0.871051946395311
+"1518",238,"Pink","W Chig","Chignik","Chignik",1975,141700,734500,1,"odd",1.6454778489173
+"1520",238,"Pink","W Chig","Chignik","Chignik",1977,355500,929600,1,"odd",0.961229136854351
+"1522",238,"Pink","W Chig","Chignik","Chignik",1979,185000,682905,1,"odd",1.30599993257813
+"1524",238,"Pink","W Chig","Chignik","Chignik",1981,249300,200338,1,"odd",-0.218651050424576
+"1526",238,"Pink","W Chig","Chignik","Chignik",1983,36000,148077,1,"odd",1.41421347028462
+"1528",238,"Pink","W Chig","Chignik","Chignik",1985,67500,226001,1,"odd",1.20841182616277
+"1530",238,"Pink","W Chig","Chignik","Chignik",1987,38300,57900,1,"odd",0.413267488392349
+"1532",238,"Pink","W Chig","Chignik","Chignik",1989,57900,516064,1,"odd",2.18751340421916
+"1534",238,"Pink","W Chig","Chignik","Chignik",1991,96800,731405,1,"odd",2.02232034761392
+"1536",238,"Pink","W Chig","Chignik","Chignik",1993,45800,1346418,1,"odd",3.38091892065105
+"1538",238,"Pink","W Chig","Chignik","Chignik",1995,554700,424303,1,"odd",-0.267979604408898
+"1540",238,"Pink","W Chig","Chignik","Chignik",1997,306300,909311,1,"odd",1.08812215603761
+"1542",238,"Pink","W Chig","Chignik","Chignik",1999,137900,687537,1,"odd",1.60658686147514
+"1544",238,"Pink","W Chig","Chignik","Chignik",2001,263000,443889,1,"odd",0.523420498999251
+"1546",238,"Pink","W Chig","Chignik","Chignik",2003,117650,278452,1,"odd",0.861531577454576
+"1548",238,"Pink","W Chig","Chignik","Chignik",2005,257500,1265331,1,"odd",1.59206930690985
+"1550",238,"Pink","W Chig","Chignik","Chignik",2007,113000,841990,1,"odd",2.0083803189749
+"1552",238,"Pink","W Chig","Chignik","Chignik",2009,130100,455001,1,"odd",1.25199623123227
+"1558",239,"Pink","Perryville","Chignik","Chignik",1963,162000,726800,1,"odd",1.50105500128963
+"1560",239,"Pink","Perryville","Chignik","Chignik",1965,82000,160500,1,"odd",0.671574695305817
+"1562",239,"Pink","Perryville","Chignik","Chignik",1967,155300,1480800,1,"odd",2.25497903110465
+"1564",239,"Pink","Perryville","Chignik","Chignik",1969,218600,257100,1,"odd",0.162221538529406
+"1566",239,"Pink","Perryville","Chignik","Chignik",1971,45000,31500,1,"odd",-0.356674943938732
+"1568",239,"Pink","Perryville","Chignik","Chignik",1973,31500,45300,1,"odd",0.363319486657401
+"1570",239,"Pink","Perryville","Chignik","Chignik",1975,45300,160000,1,"odd",1.26186678274484
+"1572",239,"Pink","Perryville","Chignik","Chignik",1977,115400,452700,1,"odd",1.36682530036791
+"1574",239,"Pink","Perryville","Chignik","Chignik",1979,181300,340312,1,"odd",0.629709726127562
+"1576",239,"Pink","Perryville","Chignik","Chignik",1981,116000,178378,1,"odd",0.430314703049557
+"1578",239,"Pink","Perryville","Chignik","Chignik",1983,64500,277665,1,"odd",1.45975012727803
+"1580",239,"Pink","Perryville","Chignik","Chignik",1985,235200,101039,1,"odd",-0.84492963510168
+"1582",239,"Pink","Perryville","Chignik","Chignik",1987,65700,267400,1,"odd",1.40364673917728
+"1584",239,"Pink","Perryville","Chignik","Chignik",1989,267400,815375,1,"odd",1.11490246544842
+"1586",239,"Pink","Perryville","Chignik","Chignik",1991,343500,1097471,1,"odd",1.16157660924761
+"1588",239,"Pink","Perryville","Chignik","Chignik",1993,448400,1263124,1,"odd",1.03565760527228
+"1590",239,"Pink","Perryville","Chignik","Chignik",1995,582100,232545,1,"odd",-0.917558499591255
+"1592",239,"Pink","Perryville","Chignik","Chignik",1997,221500,343160,1,"odd",0.437774221219574
+"1594",239,"Pink","Perryville","Chignik","Chignik",1999,179700,193412,1,"odd",0.0735338348746134
+"1596",239,"Pink","Perryville","Chignik","Chignik",2001,150200,130854,1,"odd",-0.13788554146689
+"1598",239,"Pink","Perryville","Chignik","Chignik",2003,99500,190743,1,"odd",0.650769328078952
+"1600",239,"Pink","Perryville","Chignik","Chignik",2005,188600,207447,1,"odd",0.0952475151589742
+"1602",239,"Pink","Perryville","Chignik","Chignik",2007,184000,142454,1,"odd",-0.255916617031225
+"1604",239,"Pink","Perryville","Chignik","Chignik",2009,116450,366263,1,"odd",1.14588965825154
+"1608",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1963,886500,3121300,1,"odd",1.25872373517448
+"1610",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1965,789900,380400,1,"odd",-0.730683024499138
+"1612",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1967,327300,2769000,1,"odd",2.13536434166383
+"1614",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1969,1906200,1699982,1,"odd",-0.114494068750568
+"1616",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1971,488000,122248,1,"odd",-1.38426363755019
+"1618",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1973,85700,387852,1,"odd",1.50977099795257
+"1620",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1975,357800,3332005,1,"odd",2.23135533281123
+"1622",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1977,2168500,6964648,1,"odd",1.16681138325506
+"1624",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1979,2125100,6071419,1,"odd",1.04977349031055
+"1626",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1981,1875000,2884632,1,"odd",0.430788676075866
+"1628",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1983,639200,4553351,1,"odd",1.96340132993851
+"1630",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1985,1229300,2447836,1,"odd",0.688759467250707
+"1632",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1987,1304400,6758046,1,"odd",1.64499063008346
+"1634",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1989,1179300,9799100,1,"odd",2.11736950261079
+"1636",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1991,2268400,9722753,1,"odd",1.45539407166511
+"1638",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1993,2232200,15767364,1,"odd",1.95495458794207
+"1640",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1995,4404450,4849767,1,"odd",0.0963152690813194
+"1642",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1997,4021375,10265462,1,"odd",0.937161172814832
+"1644",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1999,3363080,4785628,1,"odd",0.352760039002956
+"1646",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",2001,2040120,6643254,1,"odd",1.1805932740335
+"1648",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",2003,3674120,9914090,1,"odd",0.992643329420217
+"1650",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",2005,4271270,6980959,1,"odd",0.491275092980528
+"1652",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",2007,1805873,5403117,1,"odd",1.09593187789335
+"1654",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",2009,1669900,5757375,1,"odd",1.23771789726879
+"1658",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1963,431400,720200,1,"odd",0.512493217259719
+"1660",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1965,245500,122400,1,"odd",-0.69600257715635
+"1662",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1967,118200,834000,1,"odd",1.95385529738675
+"1664",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1969,568700,428509,1,"odd",-0.283041312994906
+"1666",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1971,214700,27173,1,"odd",-2.06701787164198
+"1668",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1973,25100,219643,1,"odd",2.16913565489391
+"1670",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1975,194300,789045,1,"odd",1.40141999705662
+"1672",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1977,509300,2074953,1,"odd",1.4046565479153
+"1674",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1979,504400,817159,1,"odd",0.482464086277389
+"1676",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1981,431800,738315,1,"odd",0.536408044722358
+"1678",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1983,212000,1384850,1,"odd",1.87676083483511
+"1680",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1985,384500,284238,1,"odd",-0.302131873565028
+"1682",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1987,236100,2202749,1,"odd",2.23320596067729
+"1684",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1989,691600,3125159,1,"odd",1.50823268706702
+"1686",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1991,678400,3111334,1,"odd",1.52306976763434
+"1688",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1993,757900,6762894,1,"odd",2.18865473311646
+"1690",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1995,2001850,2091497,1,"odd",0.0438083245107659
+"1692",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1997,1221900,3162652,1,"odd",0.951003891799405
+"1694",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1999,1652230,2152314,1,"odd",0.264417651846806
+"1696",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",2001,925016,2908340,1,"odd",1.14552671600338
+"1698",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",2003,1837100,4012782,1,"odd",0.781296525027662
+"1700",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",2005,1894364,1583116,1,"odd",-0.179488105349509
+"1702",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",2007,874340,3336417,1,"odd",1.33918343964006
+"1704",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",2009,1397100,1018590,1,"odd",-0.315979341650554
+"1708",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1963,4400,2900,1,"odd",-0.416893803931787
+"1710",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1965,900,1000,1,"odd",0.105360515657826
+"1712",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1967,700,4400,1,"odd",1.83827948486295
+"1714",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1969,4400,8776,1,"odd",0.690416182048714
+"1716",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1971,8500,234,1,"odd",-3.59250032712071
+"1718",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1973,200,609,1,"odd",1.11350090116186
+"1720",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1975,600,6400,1,"odd",2.36712361413162
+"1722",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1977,6400,12677,1,"odd",0.683491337590963
+"1724",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1979,9300,14763,1,"odd",0.462109650392741
+"1726",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1981,5700,5218,1,"odd",-0.0883519881259678
+"1728",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1983,3900,3352,1,"odd",-0.151419370515764
+"1730",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1985,1400,1946,1,"odd",0.3293037471426
+"1732",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1987,1100,5095,1,"odd",1.53294948687036
+"1734",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1989,1900,4609,1,"odd",0.886157027565976
+"1736",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1991,1200,756,1,"odd",-0.462035459596559
+"1738",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1993,700,6584,1,"odd",2.2413174073135
+"1740",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1995,5200,9936,1,"odd",0.647505899603741
+"1742",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1997,4800,15672,1,"odd",1.18325976272839
+"1744",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1999,14500,11057,1,"odd",-0.271084937866264
+"1746",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",2001,6900,1504,1,"odd",-1.52339318607557
+"1748",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",2003,800,10686,1,"odd",2.59207802484979
+"1750",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",2005,8738,152767,1,"odd",2.86123255429222
+"1752",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",2007,15750,349253,1,"odd",3.0989562226639
+"1754",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",2009,74400,110895,1,"odd",0.399127865838127
+"1757",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1958,4000000,400000,1,"even",-2.30258509299405
+"1759",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1960,100000,1380438,1,"even",2.62498593310954
+"1761",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1962,500014,2406317,1,"even",1.5712165437741
+"1763",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1964,908500,3779490,1,"even",1.42554947103988
+"1765",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1966,1442424,3866266,1,"even",0.985964151681906
+"1767",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1968,2161116,570414,1,"even",-1.33201762094021
+"1769",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1970,152580,126489,1,"even",-0.187533700797185
+"1771",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1972,58536,945929,1,"even",2.78252556379942
+"1773",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1974,532316,1575868,1,"even",1.08532421260008
+"1775",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1976,836278,13510120,1,"even",2.78223321953213
+"1777",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1978,9161784,4952291,1,"even",-0.61519062175668
+"1779",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1980,2749746,2950498,1,"even",0.070465425887312
+"1781",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1982,1611226,5960515,1,"even",1.30816150684748
+"1783",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1984,2833362,339306,1,"even",-2.12231691630638
+"1785",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1986,72189,738500,1,"even",2.32533342225043
+"1787",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1988,494610,855557,1,"even",0.547983145574622
+"1789",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1990,801430,378777,1,"even",-0.749449990579549
+"1791",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1992,188675,199109,1,"even",0.0538264552929441
+"1793",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1994,191772,823993,1,"even",1.45785486833678
+"1795",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1996,821312,139210,1,"even",-1.77491947722152
+"1797",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",1998,132402,173594,1,"even",0.270876490287983
+"1799",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",2000,135285,317895,1,"even",0.854337475290866
+"1801",243,"Pink","Nushagak","Bristol Bay","Bristol Bay",2002,317661,582216,1,"even",0.605856736476912
+"1846",245,"Pink","Nome","AYK","AYK",1971,7765,20369,1,"odd",0.964387680631353
+"1848",245,"Pink","Nome","AYK","AYK",1973,14940,42226,1,"odd",1.03899396536122
+"1850",245,"Pink","Nome","AYK","AYK",1975,33796,59365,1,"odd",0.563362374827157
+"1852",245,"Pink","Nome","AYK","AYK",1977,56527,25830,1,"odd",-0.783181793004418
+"1854",245,"Pink","Nome","AYK","AYK",1979,13617,18811,1,"odd",0.323122792968445
+"1856",245,"Pink","Nome","AYK","AYK",1981,10025,198304,1,"odd",2.98471923358706
+"1858",245,"Pink","Nome","AYK","AYK",1983,189910,24887,1,"odd",-2.03220469694448
+"1860",245,"Pink","Nome","AYK","AYK",1985,22770,3101,1,"odd",-1.99371923995734
+"1862",245,"Pink","Nome","AYK","AYK",1987,1850,58808,1,"odd",3.45909226098155
+"1864",245,"Pink","Nome","AYK","AYK",1989,57761,36729,1,"odd",-0.452747173694205
+"1866",245,"Pink","Nome","AYK","AYK",1991,36535,262453,1,"odd",1.97180131313851
+"1868",245,"Pink","Nome","AYK","AYK",1993,261580,268188,1,"odd",0.0249480630562796
+"1870",245,"Pink","Nome","AYK","AYK",1995,267852,36105,1,"odd",-2.00400322926173
+"1872",245,"Pink","Nome","AYK","AYK",1997,35930,179924,1,"odd",1.61096193838166
+"1874",245,"Pink","Nome","AYK","AYK",1999,179866,6620,1,"odd",-3.30211675926048
+"1876",245,"Pink","Nome","AYK","AYK",2001,6507,11863,1,"odd",0.600545792166119
+"1878",245,"Pink","Nome","AYK","AYK",2003,11356,925575,1,"odd",4.40066892739663
+"1880",245,"Pink","Nome","AYK","AYK",2005,920500,449528,1,"odd",-0.716718857266561
+"1882",245,"Pink","Nome","AYK","AYK",2007,448678,537025,1,"odd",0.179739167112789
+"1884",245,"Pink","Nome","AYK","AYK",2009,536538,122284,1,"odd",-1.47879118071603
+"1887",246,"Pink","Moses-Norton","AYK","AYK",1963,8134,10245,1,"odd",0.23073697420583
+"1889",246,"Pink","Moses-Norton","AYK","AYK",1965,8668,6006,1,"odd",-0.366879114112974
+"1891",246,"Pink","Moses-Norton","AYK","AYK",1967,3587,90032,1,"odd",3.22284896414078
+"1893",246,"Pink","Moses-Norton","AYK","AYK",1969,69471,26194,1,"odd",-0.975379022396725
+"1895",246,"Pink","Moses-Norton","AYK","AYK",1971,24134,91535,1,"odd",1.33309977815157
+"1897",246,"Pink","Moses-Norton","AYK","AYK",1973,79277,118098,1,"odd",0.398566739518231
+"1899",246,"Pink","Moses-Norton","AYK","AYK",1975,111181,70687,1,"odd",-0.452897823443392
+"1901",246,"Pink","Moses-Norton","AYK","AYK",1977,57184,232441,1,"odd",1.40236229040614
+"1903",246,"Pink","Moses-Norton","AYK","AYK",1979,178616,602910,1,"odd",1.21652968176026
+"1905",246,"Pink","Moses-Norton","AYK","AYK",1981,567472,318704,1,"odd",-0.576928636598372
+"1907",246,"Pink","Moses-Norton","AYK","AYK",1983,297742,33376,1,"odd",-2.18839026087809
+"1909",246,"Pink","Moses-Norton","AYK","AYK",1985,31537,6731,1,"odd",-1.54443773867103
+"1911",246,"Pink","Moses-Norton","AYK","AYK",1987,6147,27487,1,"odd",1.49774900770416
+"1913",246,"Pink","Moses-Norton","AYK","AYK",1989,27487,203064,1,"odd",1.99980803466127
+"1915",246,"Pink","Moses-Norton","AYK","AYK",1991,199509,77301,1,"odd",-0.948152455974015
+"1917",246,"Pink","Moses-Norton","AYK","AYK",1993,75285,48351,1,"odd",-0.442794007566316
+"1919",246,"Pink","Moses-Norton","AYK","AYK",1995,39829,47405,1,"odd",0.174132418195038
+"1921",246,"Pink","Moses-Norton","AYK","AYK",1997,44296,7905,1,"odd",-1.72339890885923
+"1923",246,"Pink","Moses-Norton","AYK","AYK",1999,4398,15016,1,"odd",1.22796640715164
+"1925",246,"Pink","Moses-Norton","AYK","AYK",2001,8423,40107,1,"odd",1.56058482333587
+"1927",246,"Pink","Moses-Norton","AYK","AYK",2003,33399,774122,1,"odd",3.14320352449291
+"1929",246,"Pink","Moses-Norton","AYK","AYK",2005,770401,139965,1,"odd",-1.70551876715598
+"1931",246,"Pink","Moses-Norton","AYK","AYK",2007,136575,250217,1,"odd",0.605454627086314
+"1933",246,"Pink","Moses-Norton","AYK","AYK",2009,245594,28123,1,"odd",-2.16709201912219
+"402",209,"Pink","BC South (no Fraser)","BC South","BC South",1954,568550,1505671,1,"even",0.973904664928004
+"404",209,"Pink","BC South (no Fraser)","BC South","BC South",1956,585625,2125741,1,"even",1.28919607346442
+"406",209,"Pink","BC South (no Fraser)","BC South","BC South",1958,754600,574348,1,"even",-0.272952323142126
+"408",209,"Pink","BC South (no Fraser)","BC South","BC South",1960,226950,1441336,1,"even",1.84859601132556
+"410",209,"Pink","BC South (no Fraser)","BC South","BC South",1962,684425,1480699,1,"even",0.771690482861304
+"412",209,"Pink","BC South (no Fraser)","BC South","BC South",1964,619750,4769730,1,"even",2.04072880759145
+"414",209,"Pink","BC South (no Fraser)","BC South","BC South",1966,1322575,5194673,1,"even",1.36805308351314
+"416",209,"Pink","BC South (no Fraser)","BC South","BC South",1968,1476875,3576126,1,"even",0.884351722630827
+"418",209,"Pink","BC South (no Fraser)","BC South","BC South",1970,1149655,1495889,1,"even",0.263258781572369
+"420",209,"Pink","BC South (no Fraser)","BC South","BC South",1972,713150,2713162,1,"even",1.33617824640217
+"422",209,"Pink","BC South (no Fraser)","BC South","BC South",1974,1122400,5569229,1,"even",1.60178737444441
+"424",209,"Pink","BC South (no Fraser)","BC South","BC South",1976,1677735,2439768,1,"even",0.374458283346449
+"426",209,"Pink","BC South (no Fraser)","BC South","BC South",1978,1089485,2607745,1,"even",0.872780755686021
+"428",209,"Pink","BC South (no Fraser)","BC South","BC South",1980,1405716,740024,1,"even",-0.641619442397709
+"430",209,"Pink","BC South (no Fraser)","BC South","BC South",1982,545824,598056,1,"even",0.0913878155926544
+"432",209,"Pink","BC South (no Fraser)","BC South","BC South",1984,358582,1931171,1,"even",1.68372446895287
+"434",209,"Pink","BC South (no Fraser)","BC South","BC South",1986,1358698,2868493,1,"even",0.747259916505235
+"436",209,"Pink","BC South (no Fraser)","BC South","BC South",1988,1874016,7518783,1,"even",1.389320568092
+"438",209,"Pink","BC South (no Fraser)","BC South","BC South",1990,3465219,3597871,1,"even",0.0375664475259763
+"440",209,"Pink","BC South (no Fraser)","BC South","BC South",1992,2375842,1504524,1,"even",-0.456875331868491
+"442",209,"Pink","BC South (no Fraser)","BC South","BC South",1994,1263668,2554228,1,"even",0.703731422360378
+"444",209,"Pink","BC South (no Fraser)","BC South","BC South",1996,2476033,2319421,1,"even",-0.0653400971166524
+"446",209,"Pink","BC South (no Fraser)","BC South","BC South",1998,2193380,6478855,1,"even",1.08310006418195
+"448",209,"Pink","BC South (no Fraser)","BC South","BC South",2000,5021355,1041069,1,"even",-1.57345174774343
+"450",209,"Pink","BC South (no Fraser)","BC South","BC South",2002,891317,1579978,1,"even",0.572466057654888
+"452",209,"Pink","BC South (no Fraser)","BC South","BC South",2004,1466179,646666,1,"even",-0.818585043486964
+"454",209,"Pink","BC South (no Fraser)","BC South","BC South",2006,586250,554342,1,"even",-0.0559644949622165
+"456",209,"Pink","BC South (no Fraser)","BC South","BC South",2008,537051,1409385,1,"even",0.96481565594321
+"799",221,"Pink","S SEAK","SEAK","SEAK",1960,1645698,18018178,1,"even",2.3932165268602
+"801",221,"Pink","S SEAK","SEAK","SEAK",1962,7277750,18498952,1,"even",0.932892333327226
+"803",221,"Pink","S SEAK","SEAK","SEAK",1964,7241005,24066918,1,"even",1.20107819147063
+"805",221,"Pink","S SEAK","SEAK","SEAK",1966,8505363,22660571,1,"even",0.97992954815716
+"807",221,"Pink","S SEAK","SEAK","SEAK",1968,7466695,11799014,1,"even",0.457563503829769
+"809",221,"Pink","S SEAK","SEAK","SEAK",1970,6428255,15278598,1,"even",0.865749908320693
+"811",221,"Pink","S SEAK","SEAK","SEAK",1972,6125953,9844298,1,"even",0.474358068153297
+"813",221,"Pink","S SEAK","SEAK","SEAK",1974,5623493,13648641,1,"even",0.886686955150159
+"815",221,"Pink","S SEAK","SEAK","SEAK",1976,8486705,28963338,1,"even",1.22753000196606
+"817",221,"Pink","S SEAK","SEAK","SEAK",1978,10538360,25022308,1,"even",0.864745813703709
+"819",221,"Pink","S SEAK","SEAK","SEAK",1980,12098035,23055870,1,"even",0.644877358075037
+"821",221,"Pink","S SEAK","SEAK","SEAK",1982,10094798,38863370,1,"even",1.34803192009508
+"823",221,"Pink","S SEAK","SEAK","SEAK",1984,19186855,73580617,1,"even",1.34415622592508
+"825",221,"Pink","S SEAK","SEAK","SEAK",1986,28561160,17230952,1,"even",-0.50534045141296
+"827",221,"Pink","S SEAK","SEAK","SEAK",1988,8176163,39534645,1,"even",1.57595440643538
+"829",221,"Pink","S SEAK","SEAK","SEAK",1990,12851393,32723774,1,"even",0.934649637246295
+"831",221,"Pink","S SEAK","SEAK","SEAK",1992,13714198,34227825,1,"even",0.914607263210834
+"833",221,"Pink","S SEAK","SEAK","SEAK",1994,13167560,83426596,1,"even",1.84621092637174
+"835",221,"Pink","S SEAK","SEAK","SEAK",1996,29750273,41128808,1,"even",0.323870492123372
+"837",221,"Pink","S SEAK","SEAK","SEAK",1998,17380043,25882720,1,"even",0.398252970631356
+"839",221,"Pink","S SEAK","SEAK","SEAK",2000,13505943,45432341,1,"even",1.21309439747257
+"841",221,"Pink","S SEAK","SEAK","SEAK",2002,22113080,41564106,1,"even",0.631067669620935
+"843",221,"Pink","S SEAK","SEAK","SEAK",2004,20639850,14086080,1,"even",-0.382036597440019
+"845",221,"Pink","S SEAK","SEAK","SEAK",2006,10818898,29374172,1,"even",0.998821365030416
+"847",221,"Pink","S SEAK","SEAK","SEAK",2008,15735923,28551949,1,"even",0.595779012135286
+"850",222,"Pink","N SEAK Outside","SEAK","SEAK",1960,344205,399494,1,"even",0.148961336210031
+"852",222,"Pink","N SEAK Outside","SEAK","SEAK",1962,334630,404449,1,"even",0.189500203139146
+"854",222,"Pink","N SEAK Outside","SEAK","SEAK",1964,328803,159136,1,"even",-0.725699604695664
+"856",222,"Pink","N SEAK Outside","SEAK","SEAK",1966,130035,111655,1,"even",-0.152389884901863
+"858",222,"Pink","N SEAK Outside","SEAK","SEAK",1968,51895,213220,1,"even",1.41310205010508
+"860",222,"Pink","N SEAK Outside","SEAK","SEAK",1970,145265,356042,1,"even",0.896489040797549
+"862",222,"Pink","N SEAK Outside","SEAK","SEAK",1972,306308,532619,1,"even",0.553215215112907
+"864",222,"Pink","N SEAK Outside","SEAK","SEAK",1974,470398,758496,1,"even",0.477758380333734
+"866",222,"Pink","N SEAK Outside","SEAK","SEAK",1976,652855,956662,1,"even",0.38209508947304
+"868",222,"Pink","N SEAK Outside","SEAK","SEAK",1978,794675,639867,1,"even",-0.21667288378162
+"870",222,"Pink","N SEAK Outside","SEAK","SEAK",1980,530225,2033582,1,"even",1.34425260433642
+"872",222,"Pink","N SEAK Outside","SEAK","SEAK",1982,1530970,3397864,1,"even",0.797245477457879
+"874",222,"Pink","N SEAK Outside","SEAK","SEAK",1984,2123058,1040062,1,"even",-0.713577175417398
+"876",222,"Pink","N SEAK Outside","SEAK","SEAK",1986,827743,484093,1,"even",-0.536425682713225
+"878",222,"Pink","N SEAK Outside","SEAK","SEAK",1988,417488,933788,1,"even",0.804993630373901
+"880",222,"Pink","N SEAK Outside","SEAK","SEAK",1990,745900,1747889,1,"even",0.851572510093915
+"882",222,"Pink","N SEAK Outside","SEAK","SEAK",1992,1315178,4296109,1,"even",1.18373771163821
+"884",222,"Pink","N SEAK Outside","SEAK","SEAK",1994,3300273,5736249,1,"even",0.552800320073522
+"886",222,"Pink","N SEAK Outside","SEAK","SEAK",1996,3878028,9561585,1,"even",0.90242673128892
+"888",222,"Pink","N SEAK Outside","SEAK","SEAK",1998,3708033,6389979,1,"even",0.544229434658685
+"890",222,"Pink","N SEAK Outside","SEAK","SEAK",2000,3832783,8748619,1,"even",0.825304688164624
+"892",222,"Pink","N SEAK Outside","SEAK","SEAK",2002,5741703,7728965,1,"even",0.297219103491745
+"894",222,"Pink","N SEAK Outside","SEAK","SEAK",2004,5469000,7438618,1,"even",0.307589294538026
+"896",222,"Pink","N SEAK Outside","SEAK","SEAK",2006,4895000,6163691,1,"even",0.230461510433002
+"898",222,"Pink","N SEAK Outside","SEAK","SEAK",2008,4325598,8820148,1,"even",0.71248825320132
+"901",223,"Pink","N SEAK Inside","SEAK","SEAK",1960,2603720,4036435,1,"even",0.438420684980523
+"903",223,"Pink","N SEAK Inside","SEAK","SEAK",1962,3612000,11443558,1,"even",1.1531653160281
+"905",223,"Pink","N SEAK Inside","SEAK","SEAK",1964,4236930,10570049,1,"even",0.91418548524848
+"907",223,"Pink","N SEAK Inside","SEAK","SEAK",1966,5811193,16161773,1,"even",1.02286287700762
+"909",223,"Pink","N SEAK Inside","SEAK","SEAK",1968,6339855,10316097,1,"even",0.486849593319084
+"911",223,"Pink","N SEAK Inside","SEAK","SEAK",1970,5139565,8678387,1,"even",0.523867236375203
+"913",223,"Pink","N SEAK Inside","SEAK","SEAK",1972,5490673,3817647,1,"even",-0.363416570283765
+"915",223,"Pink","N SEAK Inside","SEAK","SEAK",1974,3215913,1811216,1,"even",-0.574112855802026
+"917",223,"Pink","N SEAK Inside","SEAK","SEAK",1976,1773183,7315369,1,"even",1.41720124083657
+"919",223,"Pink","N SEAK Inside","SEAK","SEAK",1978,4695440,5396335,1,"even",0.139128194453897
+"921",223,"Pink","N SEAK Inside","SEAK","SEAK",1980,4073700,16962625,1,"even",1.42646071693987
+"923",223,"Pink","N SEAK Inside","SEAK","SEAK",1982,6193753,9193765,1,"even",0.394984333454171
+"925",223,"Pink","N SEAK Inside","SEAK","SEAK",1984,5460488,5443673,1,"even",-0.00308414619494862
+"927",223,"Pink","N SEAK Inside","SEAK","SEAK",1986,4512388,6666315,1,"even",0.39024073008817
+"929",223,"Pink","N SEAK Inside","SEAK","SEAK",1988,4702210,12470006,1,"even",0.975293629880011
+"931",223,"Pink","N SEAK Inside","SEAK","SEAK",1990,7031375,25200367,1,"even",1.27647628087895
+"933",223,"Pink","N SEAK Inside","SEAK","SEAK",1992,9700373,51319856,1,"even",1.66591339544162
+"935",223,"Pink","N SEAK Inside","SEAK","SEAK",1994,16114790,20793396,1,"even",0.254897952448247
+"937",223,"Pink","N SEAK Inside","SEAK","SEAK",1996,11730148,25125652,1,"even",0.761727036484705
+"939",223,"Pink","N SEAK Inside","SEAK","SEAK",1998,12279220,14877704,1,"even",0.191955313637703
+"941",223,"Pink","N SEAK Inside","SEAK","SEAK",2000,9562700,32670749,1,"even",1.22861003761558
+"943",223,"Pink","N SEAK Inside","SEAK","SEAK",2002,13681525,35156466,1,"even",0.943762173230384
+"945",223,"Pink","N SEAK Inside","SEAK","SEAK",2004,13030943,15687678,1,"even",0.185548803472611
+"947",223,"Pink","N SEAK Inside","SEAK","SEAK",2006,9891978,4114695,1,"even",-0.877159413331758
+"949",223,"Pink","N SEAK Inside","SEAK","SEAK",2008,3682113,14567041,1,"even",1.37527473886131
+"1019",226,"Pink","PWS","PWS","PWS",1960,3872483,12527895,1,"even",1.17406185461701
+"1021",226,"Pink","PWS","PWS","PWS",1962,5785579,9486942,1,"even",0.494547884695124
+"1023",226,"Pink","PWS","PWS","PWS",1964,5280046,6779607,1,"even",0.24998432586909
+"1025",226,"Pink","PWS","PWS","PWS",1966,4080189,5767850,1,"even",0.346156083224067
+"1027",226,"Pink","PWS","PWS","PWS",1968,3315682,5617393,1,"even",0.527204343275515
+"1029",226,"Pink","PWS","PWS","PWS",1970,2807397,1893028,1,"even",-0.394080056058817
+"1031",226,"Pink","PWS","PWS","PWS",1972,1838245,3195677,1,"even",0.552987646854693
+"1033",226,"Pink","PWS","PWS","PWS",1974,2746904,5061072,1,"even",0.611103859280884
+"1035",226,"Pink","PWS","PWS","PWS",1976,2042081,5335368,1,"even",0.960388474870146
+"1037",226,"Pink","PWS","PWS","PWS",1978,2165671,16058329,1,"even",2.00349741163099
+"1039",226,"Pink","PWS","PWS","PWS",1980,3139455,20246569,1,"even",1.86393612912184
+"1041",226,"Pink","PWS","PWS","PWS",1982,5301370,27866302,1,"even",1.65945286749134
+"1043",226,"Pink","PWS","PWS","PWS",1984,10234627,7404669,1,"even",-0.323666027679843
+"1045",226,"Pink","PWS","PWS","PWS",1986,2826646,3580072,1,"even",0.236292062153995
+"1047",226,"Pink","PWS","PWS","PWS",1988,2784300,15231063,1,"even",1.69934046563846
+"1049",226,"Pink","PWS","PWS","PWS",1990,3543306,2418285,1,"even",-0.382001578387149
+"1051",226,"Pink","PWS","PWS","PWS",1992,1555439,7297728,1,"even",1.5458052459343
+"1053",226,"Pink","PWS","PWS","PWS",1994,4040370,7269432,1,"even",0.587341887256787
+"1055",226,"Pink","PWS","PWS","PWS",1996,4252683,7925573,1,"even",0.622544542117072
+"1057",226,"Pink","PWS","PWS","PWS",1998,4071402,10487301,1,"even",0.946177684760889
+"1059",226,"Pink","PWS","PWS","PWS",2000,4756388,3025531,1,"even",-0.452401943393575
+"1061",226,"Pink","PWS","PWS","PWS",2002,2704063,8675473,1,"even",1.16574439211632
+"1063",226,"Pink","PWS","PWS","PWS",2004,5737165,5537896,1,"even",-0.0353505406527523
+"1065",226,"Pink","PWS","PWS","PWS",2006,3413995,3900803,1,"even",0.133299269564057
+"1067",226,"Pink","PWS","PWS","PWS",2008,2472530,7899360,1,"even",1.16153982562378
+"1349",235,"Pink","Chignik Bay","Chignik","Chignik",1962,30000,143600,1,"even",1.56583427495197
+"1351",235,"Pink","Chignik Bay","Chignik","Chignik",1964,20000,89600,1,"even",1.49962304642689
+"1353",235,"Pink","Chignik Bay","Chignik","Chignik",1966,71300,311600,1,"even",1.47482398657634
+"1355",235,"Pink","Chignik Bay","Chignik","Chignik",1968,81400,89900,1,"even",0.09932266846908
+"1357",235,"Pink","Chignik Bay","Chignik","Chignik",1970,43600,37400,1,"even",-0.153386445934502
+"1359",235,"Pink","Chignik Bay","Chignik","Chignik",1972,5800,37500,1,"even",1.86648301542399
+"1361",235,"Pink","Chignik Bay","Chignik","Chignik",1974,4000,121100,1,"even",3.41032228943916
+"1363",235,"Pink","Chignik Bay","Chignik","Chignik",1976,12300,147800,1,"even",2.48626074613573
+"1365",235,"Pink","Chignik Bay","Chignik","Chignik",1978,10700,183912,1,"even",2.84421364086835
+"1367",235,"Pink","Chignik Bay","Chignik","Chignik",1980,3000,85373,1,"even",3.34841760288696
+"1369",235,"Pink","Chignik Bay","Chignik","Chignik",1982,2400,288378,1,"even",4.78880338220684
+"1375",235,"Pink","Chignik Bay","Chignik","Chignik",1988,22400,100528,1,"even",1.5013753367996
+"1377",235,"Pink","Chignik Bay","Chignik","Chignik",1990,6000,233905,1,"even",3.66315558079029
+"1379",235,"Pink","Chignik Bay","Chignik","Chignik",1992,55800,135225,1,"even",0.885166188370225
+"1381",235,"Pink","Chignik Bay","Chignik","Chignik",1994,75800,44904,1,"even",-0.523571415008428
+"1383",235,"Pink","Chignik Bay","Chignik","Chignik",1996,43100,50454,1,"even",0.157539032969114
+"1385",235,"Pink","Chignik Bay","Chignik","Chignik",1998,24400,55467,1,"even",0.821205117017169
+"1387",235,"Pink","Chignik Bay","Chignik","Chignik",2000,27400,27170,1,"even",-0.00842958995576816
+"1389",235,"Pink","Chignik Bay","Chignik","Chignik",2002,16917,29678,1,"even",0.56208699709078
+"1391",235,"Pink","Chignik Bay","Chignik","Chignik",2004,27300,89820,1,"even",1.19092096546868
+"1393",235,"Pink","Chignik Bay","Chignik","Chignik",2006,27401,302285,1,"even",2.40079077189271
+"1395",235,"Pink","Chignik Bay","Chignik","Chignik",2008,69841,38703,1,"even",-0.590304113459883
+"1401",236,"Pink","Central Chig","Chignik","Chignik",1962,83900,203000,1,"even",0.883580365568627
+"1403",236,"Pink","Central Chig","Chignik","Chignik",1964,131100,80000,1,"even",-0.493933756095773
+"1405",236,"Pink","Central Chig","Chignik","Chignik",1966,62600,111500,1,"even",0.577259312794121
+"1407",236,"Pink","Central Chig","Chignik","Chignik",1968,66100,88600,1,"even",0.292963110753395
+"1409",236,"Pink","Central Chig","Chignik","Chignik",1970,60700,3900,1,"even",-2.74496714492985
+"1411",236,"Pink","Central Chig","Chignik","Chignik",1972,3100,31900,1,"even",2.3312038982997
+"1413",236,"Pink","Central Chig","Chignik","Chignik",1974,9800,82600,1,"even",2.13162729485041
+"1415",236,"Pink","Central Chig","Chignik","Chignik",1976,66000,162400,1,"even",0.900407685701152
+"1417",236,"Pink","Central Chig","Chignik","Chignik",1978,101200,208082,1,"even",0.720833475928651
+"1419",236,"Pink","Central Chig","Chignik","Chignik",1980,99400,106706,1,"even",0.0709252754915621
+"1421",236,"Pink","Central Chig","Chignik","Chignik",1982,26100,141250,1,"even",1.6885960556979
+"1423",236,"Pink","Central Chig","Chignik","Chignik",1984,94000,166027,1,"even",0.568855643462774
+"1425",236,"Pink","Central Chig","Chignik","Chignik",1986,121900,534770,1,"even",1.47863571143041
+"1427",236,"Pink","Central Chig","Chignik","Chignik",1988,216400,365577,1,"even",0.52434838034427
+"1429",236,"Pink","Central Chig","Chignik","Chignik",1990,131900,429550,1,"even",1.1806940893608
+"1431",236,"Pink","Central Chig","Chignik","Chignik",1992,223800,278049,1,"even",0.217044561273827
+"1433",236,"Pink","Central Chig","Chignik","Chignik",1994,178900,257817,1,"even",0.365423040407452
+"1435",236,"Pink","Central Chig","Chignik","Chignik",1996,237100,444632,1,"even",0.628764980677491
+"1437",236,"Pink","Central Chig","Chignik","Chignik",1998,210900,417517,1,"even",0.682941174540077
+"1439",236,"Pink","Central Chig","Chignik","Chignik",2000,146100,103335,1,"even",-0.346315181043385
+"1441",236,"Pink","Central Chig","Chignik","Chignik",2002,85755,257002,1,"even",1.09758947358206
+"1443",236,"Pink","Central Chig","Chignik","Chignik",2004,257000,115901,1,"even",-0.79633970645904
+"1445",236,"Pink","Central Chig","Chignik","Chignik",2006,36175,486948,1,"even",2.59978906868336
+"1447",236,"Pink","Central Chig","Chignik","Chignik",2008,117650,235658,1,"even",0.694667486272789
+"1453",237,"Pink","E Chig","Chignik","Chignik",1962,401700,1857200,1,"even",1.53111971478053
+"1455",237,"Pink","E Chig","Chignik","Chignik",1964,605700,688400,1,"even",0.127985250350483
+"1457",237,"Pink","E Chig","Chignik","Chignik",1966,302200,913700,1,"even",1.10641324016594
+"1459",237,"Pink","E Chig","Chignik","Chignik",1968,390300,470600,1,"even",0.187092802106693
+"1461",237,"Pink","E Chig","Chignik","Chignik",1970,201700,28800,1,"even",-1.94640605781827
+"1463",237,"Pink","E Chig","Chignik","Chignik",1972,15900,76800,1,"even",1.57488553092744
+"1465",237,"Pink","E Chig","Chignik","Chignik",1974,76200,257600,1,"even",1.2180465315376
+"1467",237,"Pink","E Chig","Chignik","Chignik",1976,228800,396100,1,"even",0.548818445122228
+"1469",237,"Pink","E Chig","Chignik","Chignik",1978,309300,898010,1,"even",1.06586952440663
+"1471",237,"Pink","E Chig","Chignik","Chignik",1980,425500,390574,1,"even",-0.0856474960464616
+"1473",237,"Pink","E Chig","Chignik","Chignik",1982,301500,544215,1,"even",0.590574373197853
+"1475",237,"Pink","E Chig","Chignik","Chignik",1984,486500,630335,1,"even",0.259014522464441
+"1477",237,"Pink","E Chig","Chignik","Chignik",1986,580700,2011766,1,"even",1.24253394989112
+"1479",237,"Pink","E Chig","Chignik","Chignik",1988,1005400,851974,1,"even",-0.16558474132672
+"1481",237,"Pink","E Chig","Chignik","Chignik",1990,811400,1501219,1,"even",0.615271572949859
+"1483",237,"Pink","E Chig","Chignik","Chignik",1992,1318100,876252,1,"even",-0.408292863918587
+"1485",237,"Pink","E Chig","Chignik","Chignik",1994,863300,1066801,1,"even",0.21165747444877
+"1487",237,"Pink","E Chig","Chignik","Chignik",1996,1059600,1339925,1,"even",0.234722163831401
+"1489",237,"Pink","E Chig","Chignik","Chignik",1998,1273200,821200,1,"even",-0.438522010263159
+"1491",237,"Pink","E Chig","Chignik","Chignik",2000,810700,777710,1,"even",-0.0415443679467327
+"1493",237,"Pink","E Chig","Chignik","Chignik",2002,777710,601900,1,"even",-0.256262385493204
+"1495",237,"Pink","E Chig","Chignik","Chignik",2004,601900,275415,1,"even",-0.781812267511465
+"1497",237,"Pink","E Chig","Chignik","Chignik",2006,195950,819400,1,"even",1.43071284046713
+"1499",237,"Pink","E Chig","Chignik","Chignik",2008,402880,271764,1,"even",-0.393704708242385
+"1505",238,"Pink","W Chig","Chignik","Chignik",1962,242000,277900,1,"even",0.138323610591772
+"1507",238,"Pink","W Chig","Chignik","Chignik",1964,165000,352500,1,"even",0.759105148351743
+"1509",238,"Pink","W Chig","Chignik","Chignik",1966,179300,446900,1,"even",0.913274475328319
+"1511",238,"Pink","W Chig","Chignik","Chignik",1968,151300,644700,1,"even",1.44952047152226
+"1513",238,"Pink","W Chig","Chignik","Chignik",1970,202000,23500,1,"even",-2.15126727625109
+"1515",238,"Pink","W Chig","Chignik","Chignik",1972,8600,90800,1,"even",2.35689708234779
+"1517",238,"Pink","W Chig","Chignik","Chignik",1974,77400,250000,1,"even",1.17247413726657
+"1519",238,"Pink","W Chig","Chignik","Chignik",1976,114200,752700,1,"even",1.88571544481858
+"1521",238,"Pink","W Chig","Chignik","Chignik",1978,333400,355960,1,"even",0.0654753946719678
+"1523",238,"Pink","W Chig","Chignik","Chignik",1980,139500,648308,1,"even",1.53630129080946
+"1525",238,"Pink","W Chig","Chignik","Chignik",1982,45900,361820,1,"even",2.06468173352662
+"1527",238,"Pink","W Chig","Chignik","Chignik",1984,188000,244593,1,"even",0.263153641861531
+"1529",238,"Pink","W Chig","Chignik","Chignik",1986,43800,1373782,1,"even",3.44568898196768
+"1531",238,"Pink","W Chig","Chignik","Chignik",1988,232400,180110,1,"even",-0.25489224962879
+"1533",238,"Pink","W Chig","Chignik","Chignik",1990,44300,667700,1,"even",2.71285429381273
+"1535",238,"Pink","W Chig","Chignik","Chignik",1992,38800,286241,1,"even",1.99841386669691
+"1537",238,"Pink","W Chig","Chignik","Chignik",1994,111600,321671,1,"even",1.05860823413552
+"1539",238,"Pink","W Chig","Chignik","Chignik",1996,220800,493587,1,"even",0.804441820726337
+"1541",238,"Pink","W Chig","Chignik","Chignik",1998,150400,236247,1,"even",0.451579456364789
+"1543",238,"Pink","W Chig","Chignik","Chignik",2000,130100,122419,1,"even",-0.060853798728801
+"1545",238,"Pink","W Chig","Chignik","Chignik",2002,85501,94340,1,"even",0.0983772060753649
+"1547",238,"Pink","W Chig","Chignik","Chignik",2004,94340,193764,1,"even",0.719735645831369
+"1549",238,"Pink","W Chig","Chignik","Chignik",2006,31800,1161942,1,"even",3.5983817324385
+"1551",238,"Pink","W Chig","Chignik","Chignik",2008,99460,247716,1,"even",0.91252737538986
+"1557",239,"Pink","Perryville","Chignik","Chignik",1962,155500,194600,1,"even",0.224300438132616
+"1559",239,"Pink","Perryville","Chignik","Chignik",1964,72000,178200,1,"even",0.906240396020654
+"1561",239,"Pink","Perryville","Chignik","Chignik",1966,90000,324800,1,"even",1.28339993795726
+"1563",239,"Pink","Perryville","Chignik","Chignik",1968,128700,444000,1,"even",1.23834044783014
+"1565",239,"Pink","Perryville","Chignik","Chignik",1970,72600,19800,1,"even",-1.29928298413026
+"1567",239,"Pink","Perryville","Chignik","Chignik",1972,7800,60200,1,"even",2.04354861861923
+"1569",239,"Pink","Perryville","Chignik","Chignik",1974,60200,194500,1,"even",1.17275981074373
+"1571",239,"Pink","Perryville","Chignik","Chignik",1976,89300,438300,1,"even",1.59090211954231
+"1573",239,"Pink","Perryville","Chignik","Chignik",1978,157500,189420,1,"even",0.184541313532268
+"1575",239,"Pink","Perryville","Chignik","Chignik",1980,74800,31723,1,"even",-0.857775915132365
+"1577",239,"Pink","Perryville","Chignik","Chignik",1982,13400,110641,1,"even",2.11103601868128
+"1579",239,"Pink","Perryville","Chignik","Chignik",1984,109800,341806,1,"even",1.13558279557721
+"1581",239,"Pink","Perryville","Chignik","Chignik",1986,180500,592547,1,"even",1.18869941698481
+"1583",239,"Pink","Perryville","Chignik","Chignik",1988,181300,133819,1,"even",-0.303664977158611
+"1585",239,"Pink","Perryville","Chignik","Chignik",1990,88400,548599,1,"even",1.82549578603652
+"1587",239,"Pink","Perryville","Chignik","Chignik",1992,190400,238796,1,"even",0.226482508602132
+"1589",239,"Pink","Perryville","Chignik","Chignik",1994,153900,454175,1,"even",1.08217954547998
+"1591",239,"Pink","Perryville","Chignik","Chignik",1996,395700,330090,1,"even",-0.181291003841448
+"1593",239,"Pink","Perryville","Chignik","Chignik",1998,222800,110633,1,"even",-0.700056090955558
+"1595",239,"Pink","Perryville","Chignik","Chignik",2000,98700,63469,1,"even",-0.441533348720204
+"1597",239,"Pink","Perryville","Chignik","Chignik",2002,62170,134320,1,"even",0.770352444488039
+"1599",239,"Pink","Perryville","Chignik","Chignik",2004,134320,83500,1,"even",-0.475378380912476
+"1601",239,"Pink","Perryville","Chignik","Chignik",2006,83500,482414,1,"even",1.75395603469392
+"1603",239,"Pink","Perryville","Chignik","Chignik",2008,173200,26510,1,"even",-1.8769249758274
+"1607",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1962,826100,2417000,1,"even",1.07356654913502
+"1609",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1964,902400,847700,1,"even",-0.0625310811294346
+"1611",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1966,627400,1391400,1,"even",0.796481417732963
+"1613",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1968,528100,2386410,1,"even",1.50825976389121
+"1615",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1970,1007900,135139,1,"even",-2.00932035899779
+"1617",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1972,81800,334551,1,"even",1.40851209070548
+"1619",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1974,238600,3120223,1,"even",2.57087124294452
+"1621",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1976,1084000,6134178,1,"even",1.73321818083851
+"1623",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1978,1966300,3929976,1,"even",0.69247971480892
+"1625",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1980,1410400,5638149,1,"even",1.38568246805247
+"1627",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1982,1533200,9059847,1,"even",1.77649517797081
+"1629",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1984,2526700,4252131,1,"even",0.520506165524871
+"1631",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1986,1185500,6336986,1,"even",1.67623863456834
+"1633",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1988,1636500,2752427,1,"even",0.51992325295967
+"1635",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1990,1018200,6632245,1,"even",1.87390699676347
+"1637",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1992,1781000,4844477,1,"even",1.00066428887215
+"1639",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1994,1700525,4181630,1,"even",0.899764095762783
+"1641",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1996,2668950,8421894,1,"even",1.14914960693765
+"1643",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",1998,2856255,4033331,1,"even",0.34508125921613
+"1645",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",2000,1688785,3575355,1,"even",0.750055136449179
+"1647",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",2002,2108450,11076199,1,"even",1.65884549153945
+"1649",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",2004,5969710,3980978,1,"even",-0.405170832257018
+"1651",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",2006,1648365,9321807,1,"even",1.73257260647797
+"1653",240,"Pink","SE-SC AKPen","AK Peninsula","AK Peninsula",2008,2332920,857212,1,"even",-1.00119071825238
+"1657",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1962,772700,1724700,1,"even",0.802917526357817
+"1659",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1964,534000,160500,1,"even",-1.20210189639012
+"1661",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1966,92000,573000,1,"even",1.8290971396657
+"1663",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1968,295200,543030,1,"even",0.609511474300254
+"1665",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1970,291000,36558,1,"even",-2.07442322667708
+"1667",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1972,29600,50450,1,"even",0.533208385469603
+"1669",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1974,45800,679186,1,"even",2.69661093117928
+"1671",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1976,372400,2224725,1,"even",1.78742004605326
+"1673",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1978,892400,5046788,1,"even",1.73259281774807
+"1675",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1980,1231200,1670931,1,"even",0.305391652579021
+"1677",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1982,759800,5961135,1,"even",2.0599609374168
+"1679",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1984,1824900,1204067,1,"even",-0.415820197833755
+"1681",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1986,531200,3367214,1,"even",1.84670237704268
+"1683",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1988,1203100,1192016,1,"even",-0.00925556768547702
+"1685",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1990,580200,5319722,1,"even",2.21580345364392
+"1687",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1992,1053400,4878437,1,"even",1.53280185360986
+"1689",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1994,1371200,1275475,1,"even",-0.0723676106105361
+"1691",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1996,978600,3812512,1,"even",1.35992058959667
+"1693",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",1998,1811810,1949170,1,"even",0.0730772953283425
+"1695",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",2000,1104200,2281570,1,"even",0.725742711615986
+"1697",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",2002,1654350,3541126,1,"even",0.761036573227169
+"1699",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",2004,2341700,1810183,1,"even",-0.257449216186483
+"1701",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",2006,1213885,4755345,1,"even",1.36544328859142
+"1703",241,"Pink","SW-Unimak","AK Peninsula","AK Peninsula",2008,1005450,391239,1,"even",-0.943871855028922
+"1707",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1962,4000,21800,1,"even",1.69561560867515
+"1709",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1964,15000,17700,1,"even",0.165514438477573
+"1711",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1966,1700,26500,1,"even",2.74651648193001
+"1713",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1968,26500,18945,1,"even",-0.335604688521612
+"1715",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1970,11100,1232,1,"even",-2.19830624320696
+"1717",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1972,1200,33306,1,"even",3.32341600414212
+"1719",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1974,23000,37385,1,"even",0.485775338522729
+"1721",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1976,37300,558182,1,"even",2.70569174742589
+"1723",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1978,90400,391929,1,"even",1.4668364335387
+"1725",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1980,94000,56785,1,"even",-0.504022575926394
+"1727",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1982,51700,42869,1,"even",-0.187308827511994
+"1729",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1984,33000,22785,1,"even",-0.370405136750634
+"1731",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1986,12900,58655,1,"even",1.51444551159006
+"1733",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1988,28500,22330,1,"even",-0.243973021422538
+"1735",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1990,22200,8919,1,"even",-0.911908456194163
+"1739",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1994,94700,219767,1,"even",0.841853894018162
+"1741",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1996,216600,145655,1,"even",-0.396811522880089
+"1743",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",1998,129500,53769,1,"even",-0.878983788222022
+"1745",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",2000,35900,15678,1,"even",-0.828478839727703
+"1747",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",2002,11900,96734,1,"even",2.09542654343951
+"1749",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",2004,85300,185930,1,"even",0.779195804294338
+"1751",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",2006,128915,28441,1,"even",-1.51132150639237
+"1753",242,"Pink","NW AKPen","AK Peninsula","AK Peninsula",2008,11900,21750,1,"even",0.603075357417209
+"1888",246,"Pink","Moses-Norton","AYK","AYK",1964,10043,42814,1,"even",1.44998927749383
+"1890",246,"Pink","Moses-Norton","AYK","AYK",1966,36629,146115,1,"even",1.38355370650026
+"1892",246,"Pink","Moses-Norton","AYK","AYK",1968,129052,383214,1,"even",1.08837815596253
+"1894",246,"Pink","Moses-Norton","AYK","AYK",1970,364661,149742,1,"even",-0.890054341689864
+"1896",246,"Pink","Moses-Norton","AYK","AYK",1972,138495,216978,1,"even",0.448961742019728
+"1898",246,"Pink","Moses-Norton","AYK","AYK",1974,201104,66512,1,"even",-1.1064398046722
+"1900",246,"Pink","Moses-Norton","AYK","AYK",1976,51927,144695,1,"even",1.02478919267788
+"1902",246,"Pink","Moses-Norton","AYK","AYK",1978,93325,1121189,1,"even",2.48605698352498
+"1904",246,"Pink","Moses-Norton","AYK","AYK",1980,1111200,710950,1,"even",-0.446593687597751
+"1906",246,"Pink","Moses-Norton","AYK","AYK",1982,692181,1317728,1,"even",0.64381683836141
+"1908",246,"Pink","Moses-Norton","AYK","AYK",1984,1288531,529448,1,"even",-0.88942313442195
+"1910",246,"Pink","Moses-Norton","AYK","AYK",1986,513613,430553,1,"even",-0.176399634632158
+"1912",246,"Pink","Moses-Norton","AYK","AYK",1988,415101,629097,1,"even",0.415763593733249
+"1914",246,"Pink","Moses-Norton","AYK","AYK",1990,628596,922363,1,"even",0.383450094404861
+"1916",246,"Pink","Moses-Norton","AYK","AYK",1992,916211,245803,1,"even",-1.31571628539057
+"1918",246,"Pink","Moses-Norton","AYK","AYK",1994,230409,1342124,1,"even",1.76215272210812
+"1920",246,"Pink","Moses-Norton","AYK","AYK",1996,1260144,1076132,1,"even",-0.157852869352196
+"1922",246,"Pink","Moses-Norton","AYK","AYK",1998,921563,804780,1,"even",-0.135502193424193
+"1924",246,"Pink","Moses-Norton","AYK","AYK",2000,750173,312394,1,"even",-0.876038634962434
+"1926",246,"Pink","Moses-Norton","AYK","AYK",2002,298000,968326,1,"even",1.17847532093408
+"1928",246,"Pink","Moses-Norton","AYK","AYK",2004,960468,139925,1,"even",-1.92631410089494
+"1930",246,"Pink","Moses-Norton","AYK","AYK",2006,134709,172136,1,"even",0.245167965722098
+"1932",246,"Pink","Moses-Norton","AYK","AYK",2008,144224,59312,1,"even",-0.888556000099861
