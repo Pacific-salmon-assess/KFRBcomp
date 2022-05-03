@@ -1,0 +1,39 @@
+---
+title: "Notes on Comparisons between Kalman Filter and Recursive Bayes methodologies "
+author: "Catarina Wor, Dan Greenberg"
+date:  "`r format(Sys.time(), '%B %Y')`"
+output: bookdown::html_document2
+bibliography: all.bib
+---
+
+# Introduction
+
+Variability  and declines in stock producvity is an increasing  fo managent of Pacific salmon populations.
+
+Salmon stock recruitment dynamics are frequently modeled with the Ricker curve, which has overcompensation (diminished returns after maximum spawner capacity is reached) and is easily linearizable.
+
+
+
+Methods for estimating time-varying productivity usually entails the use of covariates or the use dynamic linear models witha random walk component on the productivity parameter (Peterman method). 
+
+The most common method for estimating the parameters of a Ricker curve with a random walk on the productivity parameter (alpha) is to apply a Kalman Filter with fixed-interval smoothing (Peterman papers). Harvey (1989) showed that the fixed-interval smoothing method gave the best estimates of the time-varying parameter as well as its variance parameter. However, more recently, with the widespread use of Bayesian techniques to estimate stock-recruitment parameters, it is becoming more common to apply mcmc methods to provide estimates for the Ricker curve with a random walk on productivity. This approach is sometimed referred o as Recursive Bayes (Freshwater and CSAS.)
+
+The objective of this study is to compare the estimates of Kalman Filter with fixed-interval smoothing and recursive Bayes methodologies. 
+
+```{r load, include=FALSE}
+
+library(here)
+library(TMB)
+library(tmbstan)
+library("bayesplot")
+
+#read in data -- for information on length of time series
+sock_dat<- read.csv(here('data','filtered datasets','sockeye_final.csv'))
+sock_info<- read.csv(here('data','sockeye','sockeye_info.csv'))
+
+sock_info<- subset(sock_info, Stock.ID %in% sock_dat$stock.id)
+s <- sock_dat
+
+
+```
+
