@@ -38,8 +38,8 @@ for(i in seq_len(nrow(sock_info))){
   plot(s$logR_S~ s$spawners)
   abline(srm)
 
-  SRdata<-list(obs_logRS=s$logR_S,obs_S=s$spawners, prbeta1=2,
-    prbeta2=2)
+  SRdata<-list(obs_logRS=s$logR_S,obs_S=s$spawners, prbeta1=1.1,
+    prbeta2=1.1)
   
   
   #Model 1 - TMB
@@ -134,6 +134,7 @@ ggsave("../figure/meanfitcomparison.png",
   plot=p,
   dpi = 400)
 
+fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"]
 
 sdRB <- sapply(RB,  function(x)x$sdrep[which(names(x$sdrep[,2])=="alpha"),2])
 lowRBmc <- sapply(RB,  function(x)x$mcmcsummary$summary[grep("alpha\\[",rownames(x$mcmcsummary$summary)),"2.5%"])
@@ -150,14 +151,39 @@ df_ci<- data.frame(alpha=c(unlist(RBalpha), unlist(RBalphamc),  unlist(dlmKFalph
   )
 
 
-p <- ggplot(df_ci) +
-geom_line(aes(x=time,y=alpha,color=type), size=1.5,alpha=.7) +
-geom_ribbon(aes(ymin = low, ymax = high, color=type), alpha=.5)
-theme_bw(14)+
+pci <- ggplot(df_ci) +
+geom_ribbon(aes(x=time,ymin = low, ymax = high, fill=type), alpha=.5) +
+geom_line(aes(x=time,y=alpha,color=type), size=1.5) +
 facet_wrap(~stock, scales="free")+
-scale_colour_viridis_d(end=.8)+
+theme_bw(14)+
+scale_colour_viridis_d(end=.8)+scale_fill_viridis_d(end=.8)+
 theme(legend.position="bottom")
-p
+pci
+
+
+dlmfiltalpha <- sapply(dlmKF,  function(x)x$results$alpha_filt)
+
+
+dlmdf <- data.frame(alpha=c( unlist(dlmKFalpha), unlist(dlmfiltalpha)),
+  low=c(unlist(dlmKFalpha)- 1.96* unlist(sddlm), rep(NA,length(unlist(dlmfiltalpha)))),
+  high=c(unlist(dlmKFalpha)+1.96* unlist(sddlm), rep(NA,length(unlist(dlmfiltalpha)))),
+  type=rep(c("smoothed", "filtered"), each=length(unlist(dlmfiltalpha))),
+  time=sock_dat$broodyear,
+  stock=sock_dat$stock
+  )
+
+
+pdlm <- ggplot(dlmdf) +
+geom_line(aes(x=time,y=alpha,color=type), size=1.5,alpha=.7) +
+geom_ribbon(aes(x=time,ymin = low, ymax = high, fill=type), alpha=.5) +
+facet_wrap(~stock, scales="free")+
+theme_bw(14)+
+scale_colour_viridis_d(end=.8)+scale_fill_viridis_d(end=.8)+
+theme(legend.position="bottom")
+pdlm
+
+
+dlmKF[[1]]$results
 
 
 RB[[3]]$sdrep[which(names(RB[[1]]$sdrep[,2])=="alpha"),2]   
