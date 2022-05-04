@@ -1,8 +1,9 @@
 #Preliminary batched model support for varying dynamics in sockeye
 
 
-
-#remotes::install_github("carrieholt/KF-funcs")
+# I changed the estimation to optim, more of the models converged but estimates are 
+# diverging more frm other tools. 
+remotes::install_github("carrieholt/KF-funcs")
 
 library(KFfuncs)
 library(here)
@@ -15,11 +16,10 @@ sock_info <- read.csv(here('data','sockeye','sockeye_info.csv'))
 sock_info<- subset(sock_info, Stock.ID %in% sock_dat$stock.id)
 
 source(here("code","dlm-wrapper.R"))
+#source("C:/Users/worc/Documents/KF-funcs-appl/HoltMichielsens2020/KFcode.R")
 
 compile("TMBmodels/Ricker_tva_Smax_ratiovar.cpp")
 dyn.load(dynlib("TMBmodels/Ricker_tva_Smax_ratiovar"))
-
-
 
 
 holtKF <- list()
@@ -35,11 +35,11 @@ for(i in seq_len(nrow(sock_info))){
   s <- subset(sock_dat,stock.id==sock_info$Stock.ID[i])
   srm <- lm(s$logR_S~ s$spawners)
 
-  plot(s$logR_S~ s$spawners)
+  plot(s$logR_S~ s$spawners, main=paste(sock_info$Stock[i], i))
   abline(srm)
 
-  SRdata<-list(obs_logRS=s$logR_S,obs_S=s$spawners, prbeta1=1.1,
-    prbeta2=1.1)
+  SRdata<-list(obs_logRS=s$logR_S,obs_S=s$spawners, prbeta1=1.5,
+    prbeta2=1.5)
   
   
   #Model 1 - TMB
@@ -49,10 +49,7 @@ for(i in seq_len(nrow(sock_info))){
     rho=.5,
     logvarphi=0,
     alpha=rep(srm$coefficients[1],length(s$recruits))
-    )
-
-
-    
+    )    
 
   obj <- MakeADFun(SRdata,parameters,DLL="Ricker_tva_Smax_ratiovar",random="alpha")#,lower = -Inf, upper = Inf)
    newtonOption(obj, smartsearch=FALSE)
@@ -62,21 +59,21 @@ for(i in seq_len(nrow(sock_info))){
   sdrep <- summary(sdreport(obj))
   
   #MCMC
-  fitmcmc1 <- tmbstan(obj, chains=3,
-              iter=10000, init="random",
-              lower=c(-10,4,0,-6),
-               upper=c(5,16,1,6),
-               control = list(adapt_delta = 0.98))
+  #fitmcmc1 <- tmbstan(obj, chains=3,
+  #            iter=10000, init="random",
+  #            lower=c(-10,4,0,-6),
+  #             upper=c(5,16,1,6),
+  #             control = list(adapt_delta = 0.98))
   #
   #  mc <- extract(fitmcmc1, pars=names(obj$par),
   #            inc_warmup=TRUE, permuted=FALSE)
-  fit_summary <- summary(fitmcmc1)   
+  #fit_summary <- summary(fitmcmc1)   
   #fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"]
 
-  RB[[i]] <- list(sdrep=sdrep, convergence=opt$convergence, message=opt$message, 
-    mcmc= fitmcmc1, mcmcsummary=  fit_summary )
+  RB[[i]] <- list(sdrep=sdrep, convergence=opt$convergence, message=opt$message)#, 
+  #  mcmc= fitmcmc1, mcmcsummary=  fit_summary )
   RBalpha[[i]] <- sdrep[which(rownames(sdrep)=="alpha"),1]
-  RBalphamc[[i]] <- fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"] 
+  #RBalphamc[[i]] <- fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"] 
   
 
   #Model 2 - tv a and static b
@@ -95,15 +92,15 @@ for(i in seq_len(nrow(sock_info))){
   initial$mean.a <- srm$coefficients[1]
   initial$var.a <- 1
   initial$b <- srm$coefficients[2]
-  initial$ln.sig.e <- log(1)
-  initial$ln.sig.w <- log(1)
-  initial$Ts <- 1
-  initial$EstB <- TRUE
+  initial$ln.sig.e <- log(.5)
+  initial$ln.sig.w <- log(.5)
+  initial$Ts <- 0
+  initial$EstB <- "True"
   
   holtKFfit <- kf.rw(initial=initial,x=s$spawners,y=s$logR_S)
 
-  holtKF[[i]]<-list(alpha=holtKFfit$smoothe.mean.a, sigobs=NA, siga=NA, beta=NA, 
-    smax=NA, convergence=holtKFfit$Report$convergence, message= holtKFfit$Report$message) 
+  holtKF[[i]]<-list(alpha=holtKFfit$smoothe.mean.a, sigobs=holtKFfit$sig.e, siga=holtKFfit$sig.w, beta=holtKFfit$b, 
+    smax=1/holtKFfit$b, convergence=holtKFfit$Report$convergence, message= holtKFfit$Report$message) 
   holtKFalpha[[i]]<-holtKFfit$smoothe.mean.a
 
 }
@@ -122,6 +119,14 @@ df<- data.frame(alpha=c(unlist(RBalpha), unlist(RBalphamc),  unlist(dlmKFalpha),
   time=sock_dat$broodyear,
   stock=sock_dat$stock
   )
+
+
+df<- data.frame(alpha=c(unlist(RBalpha),   unlist(dlmKFalpha), unlist(holtKFalpha)),
+  type=rep(c("RB",  "dlm", "Holt"), each=length(unlist(RBalpha))),
+  time=sock_dat$broodyear,
+  stock=sock_dat$stock
+  )
+
 
 p <- ggplot(df) +
 geom_line(aes(x=time,y=alpha,color=type), size=1.5,alpha=.7) +
@@ -204,6 +209,7 @@ which(names(RB[[1]]$sdrep[,2])=="alpha")
 sapply(RB,  function(x)x[["convergence"]])
 sapply(dlmKF,  function(x)x[["convergence"]])
 sapply(holtKF,  function(x)x[["convergence"]])
+
 
 sapply(RB,  function(x)x[["message"]])
 sapply(dlmKF,  function(x)x[["message"]])
