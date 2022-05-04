@@ -77,11 +77,13 @@ for(i in seq_len(nrow(sock_info))){
     mcmc= fitmcmc1, mcmcsummary=  fit_summary )
   RBalpha[[i]] <- sdrep[which(rownames(sdrep)=="alpha"),1]
   RBalphamc[[i]] <- fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"] 
+  
+
   #Model 2 - tv a and static b
   SRdata2 <- data.frame(byr=s$broodyear,
     spwn=s$spawners,
     rec=s$recruits)
-  avarydlm <-fitDLM(SRdata2, alpha_vary = TRUE, beta_vary = FALSE)
+  avarydlm <-fitDLM(data=SRdata2, alpha_vary = TRUE, beta_vary = FALSE)
   dlmKF[[i]] <- list(results=avarydlm$results, alpha=avarydlm$results$alpha, sigobs=avarydlm$sd.est[1], 
     siga=avarydlm$sd.est[2], beta=-avarydlm$results$beta[1], smax=-1/avarydlm$results$beta[1],
      message=avarydlm$message, convergence=avarydlm$convergence)
@@ -92,10 +94,10 @@ for(i in seq_len(nrow(sock_info))){
   initial <- list()
   initial$mean.a <- srm$coefficients[1]
   initial$var.a <- 1
-  initial$b <- -srm$coefficients[2]
-  initial$ln.sig.e <- log(avarydlm$sd.est[1])
-  initial$ln.sig.w <- log(avarydlm$sd.est[2])
-  initial$Ts <- 0
+  initial$b <- srm$coefficients[2]
+  initial$ln.sig.e <- log(1)
+  initial$ln.sig.w <- log(1)
+  initial$Ts <- 1
   initial$EstB <- TRUE
   
   holtKFfit <- kf.rw(initial=initial,x=s$spawners,y=s$logR_S)

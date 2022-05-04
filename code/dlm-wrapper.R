@@ -46,9 +46,10 @@ fitDLM <- function(data = bt,
     return(mod)
   }
 
+
   # 4.  maximum likelihood optimization of the variance
   dlm_out<-dlmMLE(y=lnRS, build=build_mod, parm=rep(-.1, dlmPars-2), method="Nelder-Mead")
-  exp(dlm_out$par)
+  
   # 5. log-likelihood
   lls <- dlm_out$value
 
@@ -57,7 +58,7 @@ fitDLM <- function(data = bt,
 
   # 7. apply Kalman filter
   outsFilter <- dlmFilter(y=lnRS,mod=dlmMod)
-   outsFilter$m[-1,1,drop=FALSE]
+
   
   alpha_filt <- outsFilter$m[-1,1,drop=FALSE]
   
