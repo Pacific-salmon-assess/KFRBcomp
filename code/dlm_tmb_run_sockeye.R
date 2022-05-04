@@ -28,6 +28,7 @@ RB <- list()
 holtKFalpha <- list()
 dlmKFalpha <- list()
 RBalpha <- list()
+RBalphamc <- list()
 
 for(i in seq_len(nrow(sock_info))){
   
@@ -57,31 +58,31 @@ for(i in seq_len(nrow(sock_info))){
    newtonOption(obj, smartsearch=FALSE)
 
   opt <- nlminb(obj$par,obj$fn,obj$gr)
-
+  obj$rep()
   sdrep <- summary(sdreport(obj))
   
   #MCMC
-  #fitmcmc1 <- tmbstan(obj, chains=3,
-  #            iter=1000, init="random",
-  #            lower=c(-10,-20,0,-6),
-  #             upper=c(5,0,1,6),
-  #             control = list(adapt_delta = 0.98))
+  fitmcmc1 <- tmbstan(obj, chains=3,
+              iter=10000, init="random",
+              lower=c(-10,4,0,-6),
+               upper=c(5,16,1,6),
+               control = list(adapt_delta = 0.98))
   #
   #  mc <- extract(fitmcmc1, pars=names(obj$par),
   #            inc_warmup=TRUE, permuted=FALSE)
-  #
-  #fit_summary <- summary(fitmcmc1)   
-  #fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),]
+  fit_summary <- summary(fitmcmc1)   
+  #fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"]
 
-  RB[[i]] <- list(sdrep=sdrep, convergence=opt$convergence, message=opt$message)
+  RB[[i]] <- list(sdrep=sdrep, convergence=opt$convergence, message=opt$message, 
+    mcmc= fitmcmc1, mcmcsummary=  fit_summary )
   RBalpha[[i]] <- sdrep[which(rownames(sdrep)=="alpha"),1]
-  
+  RBalphamc[[i]] <- fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"] 
   #Model 2 - tv a and static b
   SRdata2 <- data.frame(byr=s$broodyear,
     spwn=s$spawners,
     rec=s$recruits)
   avarydlm <-fitDLM(SRdata2, alpha_vary = TRUE, beta_vary = FALSE)
-  dlmKF[[i]] <- list(alpha=avarydlm$results$alpha, sigobs=avarydlm$sd.est[1], 
+  dlmKF[[i]] <- list(results=avarydlm$results, alpha=avarydlm$results$alpha, sigobs=avarydlm$sd.est[1], 
     siga=avarydlm$sd.est[2], beta=-avarydlm$results$beta[1], smax=-1/avarydlm$results$beta[1],
      message=avarydlm$message, convergence=avarydlm$convergence)
   dlmKFalpha[[i]] <- avarydlm$results$alpha
@@ -106,16 +107,22 @@ for(i in seq_len(nrow(sock_info))){
 }
 
 
+RBalphamc[[3]]
+length(RBalphamc)
+length(unlist(RBalpha))
+length(unlist(RBalphamc))
+length(unlist(dlmKFalpha))
+length(unlist(holtKFalpha))
+RBalphamc[[i]]
 
-
-df<- data.frame(alpha=c(unlist(RBalpha),  unlist(dlmKFalpha), unlist(holtKFalpha)),
-  type=rep(c("RB","dlm", "Holt"), each=length(unlist(RBalpha))),
+df<- data.frame(alpha=c(unlist(RBalpha), unlist(RBalphamc),  unlist(dlmKFalpha), unlist(holtKFalpha)),
+  type=rep(c("RB", "RBmcmcmean", "dlm", "Holt"), each=length(unlist(RBalpha))),
   time=sock_dat$broodyear,
   stock=sock_dat$stock
   )
 
 p <- ggplot(df) +
-geom_line(aes(x=time,y=alpha,color=type,lty=type), size=1.5,alpha=.7) +
+geom_line(aes(x=time,y=alpha,color=type), size=1.5,alpha=.7) +
 theme_bw(14)+
 facet_wrap(~stock, scales="free")+
 scale_colour_viridis_d(end=.8)+
@@ -123,6 +130,47 @@ theme(legend.position="bottom")
 p
 
 
+ggsave("../figure/meanfitcomparison.png",
+  plot=p,
+  dpi = 400)
+
+
+sdRB <- sapply(RB,  function(x)x$sdrep[which(names(x$sdrep[,2])=="alpha"),2])
+lowRBmc <- sapply(RB,  function(x)x$mcmcsummary$summary[grep("alpha\\[",rownames(x$mcmcsummary$summary)),"2.5%"])
+highRBmc <- sapply(RB,  function(x)x$mcmcsummary$summary[grep("alpha\\[",rownames(x$mcmcsummary$summary)),"97.5%"])
+sddlm <- sapply(dlmKF,  function(x)x$results$alpha_se)
+
+
+df_ci<- data.frame(alpha=c(unlist(RBalpha), unlist(RBalphamc),  unlist(dlmKFalpha)),
+  low=c(unlist(RBalpha)-1.96*unlist(sdRB), unlist(lowRBmc),unlist(dlmKFalpha)- 1.96* unlist(sddlm)),
+  high=c(unlist(RBalpha)+1.96*unlist(sdRB), unlist(highRBmc),unlist(dlmKFalpha)+1.96* unlist(sddlm)),
+  type=rep(c("RB", "RBmcmcmean", "dlm"), each=length(unlist(RBalpha))),
+  time=sock_dat$broodyear,
+  stock=sock_dat$stock
+  )
+
+
+p <- ggplot(df_ci) +
+geom_line(aes(x=time,y=alpha,color=type), size=1.5,alpha=.7) +
+geom_ribbon(aes(ymin = low, ymax = high, color=type), alpha=.5)
+theme_bw(14)+
+facet_wrap(~stock, scales="free")+
+scale_colour_viridis_d(end=.8)+
+theme(legend.position="bottom")
+p
+
+
+RB[[3]]$sdrep[which(names(RB[[1]]$sdrep[,2])=="alpha"),2]   
+
+(RB[[1]]$mcmcsummary$summary[,"2.5%"])
+RB[[1]]$mcmcsummary$summary[,"97.5%"]
+
+avarydlm$results$alpha_se
+
+ grep("alpha\\[",rownames(RB[[1]]$mcmcsummary$summary))
+ rownames(RB[[1]]$mcmcsummary$summary) 
+which(names(RB[[1]]$sdrep[,2])=="alpha")
+"alpha"]]
 
 
 sapply(RB,  function(x)x[["convergence"]])
@@ -133,16 +181,15 @@ sapply(RB,  function(x)x[["message"]])
 sapply(dlmKF,  function(x)x[["message"]])
 sapply(holtKF,  function(x)x[["message"]])
 
-
-ggsave("C:/Users/worc/Documents/timevarproject/kf_rb.png",
-  plot=p,
-  dpi = 400)
+names(dlmKF[[1]])
 
 
+sapply(dlmKF,  function(x)x[["convergence"]])
 
 
-
-
+#TODO
+#Compare confidence intervals
+#Compare filtered and smoothed estimates
 
 
   
