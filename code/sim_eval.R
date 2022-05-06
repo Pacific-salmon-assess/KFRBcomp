@@ -3,154 +3,184 @@
 #Catarina Wor
 #May 2022
 #==============================================================
+ #TODO: deal with  excess variability in simulated SRtime-seies
+
+remotes::install_github("carrieholt/KF-funcs")
+
+library(KFfuncs)
+library(here)
+library(TMB)
+library(tmbstan)
+
+source(here("code","dlm-wrapper.R"))
+source(here("code","sim_eval_func.R"))
+
+#source("C:/Users/worc/Documents/KF-funcs-appl/HoltMichielsens2020/KFcode.R")
+
+compile("TMBmodels/Ricker_tva_Smax_ratiovar.cpp")
+dyn.load(dynlib("TMBmodels/Ricker_tva_Smax_ratiovar"))
 
 
-
-
-ao<-3
+ao <- 3
 b<-1/10000
-ER<-0.40
-fec= c(0,.2,.4,.8,1)
-sig <- .5
-siga <-.3
+
 
 ps<-0:35000
-pr<-ao*ps*exp(-b*ps)
-sr <- simulateSRrandom()
-plot(sr$S,log(sr$S/sr$R))
+pr<-ps*exp(ao-b*ps)
 
+sr <- simulateSRrandom(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, siga=.2, nobs=40 )
+sr
 par(mfrow=c(2,1))
-plot(sr$S,sr$R, xlim=c(0,35000), ylim=c(0,35000))
+plot(sr$S,sr$R, xlim=c(0,35000), ylim=c(0,89000))
 lines(ps,pr,col="red")
-plot(log(sr$a),type="b")
+plot(sr$a,type="b")
 
 
-#TODO check this function
-#
+
+#==========================================================
+#simulation estimation calls
+
+nsim <- 1000
+
+Sim<-list()
+#holtKF <- list()
+dlmKF <- list()
+RB <- list()
+#holtKFalpha <- list()
+dlmKFalpha <- list()
+RBalpha <- list()
+#RBalphamc <- list()
 
 
-simulateSRrandom <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, siga=.2, nobs=40 ){
 
-    yrs <- 1:70
-    S <- NULL
-    R <- NULL
-    Robs <- NULL
-    a <- NULL
-    
-    a[1:5] <- ao
-    Seq <- log(ao)/b
-    S[1] <- Seq
-    R[1] <- ao*Seq*exp(-b*Seq)
+for(i in seq_len(nsim)){
   
-    #for(y in 2:length(fec)){
-    #  S[y] <- 0    
-    #  for(j in seq_along(fec)){
-    #    if((y-j) > 0){
-    #      S[y] <- S[y] + R[y-j]*(1-ER)*fec[j]
-    #    }else{
-    #      S[y] <- S[y] + R[1]*(1-ER)*fec[j]
-    #    }
-    #  }
-    #  R[y]<-a[y]*S[y]*exp(-b*S[y])        
-    #}
+  s <- simulateSRrandom(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, siga=.2, nobs=40 )
+  s$extinct<-is.na(s$R)
+  Sim[[i]]<-s
   
-    S[2]<-sum(R[1]*(1-ER)*fec[1],R[1]*(1-ER)*fec[2],R[1]*(1-ER)*fec[3],R[1]*(1-ER)*fec[4],R[1]*(1-ER)*fec[5])
-    R[2]<-ao*S[2]*exp(-b*S[2])
-    S[3]<-sum(R[2]*(1-ER)*fec[1],R[1]*(1-ER)*fec[2],R[1]*(1-ER)*fec[3],R[1]*(1-ER)*fec[4],R[1]*(1-ER)*fec[5])
-    R[3]<-ao*S[3]*exp(-b*S[3])
-    S[4]<-sum(R[3]*(1-ER)*fec[1],R[2]*(1-ER)*fec[2],R[1]*(1-ER)*fec[3],R[1]*(1-ER)*fec[4],R[1]*(1-ER)*fec[5])
-    R[4]<-ao*S[4]*exp(-b*S[4])
-    S[5]<-sum(R[4]*(1-ER)*fec[1],R[3]*(1-ER)*fec[2],R[2]*(1-ER)*fec[3],R[1]*(1-ER)*fec[4],R[1]*(1-ER)*fec[5])
-    R[5]<-ao*S[5]*exp(-b*S[5])
-    
 
-    for(y in 6:max(yrs)){  
-      S[y]<-0
-      for(j in seq_along(fec)){      	
-        S[y] <- S[y] + R[y-j]*(1-ER)*fec[j]   	
-      }        
-      #S[y]<-sum(R[y-1]*(1-ER)*fec[1],R[y-2]*(1-ER)*fec[2],R[y-3]*(1-ER)*fec[3],R[y-4]*(1-ER)*fec[4],R[y-5]*(1-ER)*fec[5])
-      a[y] <- a[y-1]*exp(rnorm(1,0,siga))
-      R[y] <- a[y]*S[y]*exp(-b*S[y]) *exp(rnorm(1,0,sig))
-      
-    }
+  if(sum(is.na(s$R))>0){
+    next;
+  }
+  srm <- lm(s$logR_S~ s$S)
+  #plot(s$logR_S~ s$S, main=paste(i))
+  #abline(srm)
 
-  outdf <- data.frame(R=R,
-	S=S,
-	a=a)
+  SRdata<-list(obs_logRS=s$logR_S,obs_S=s$S, prbeta1=1.5,
+    prbeta2=1.5)
+  
+  
+  #Model 1 - TMB
+  parameters<- list(
+    alphao=srm$coefficients[[1]],
+    logSmax = log(1/ifelse(-srm$coefficients[[2]]<0,1e-08,-srm$coefficients[2])),
+    rho=.5,
+    logvarphi=0,
+    alpha=rep(srm$coefficients[1],length(s$R))
+    )    
 
-  return(outdf[(70-nobs):70,])
+  obj <- MakeADFun(SRdata,parameters,DLL="Ricker_tva_Smax_ratiovar",random="alpha")#,lower = -Inf, upper = Inf)
+   newtonOption(obj, smartsearch=FALSE)
+
+  opt <- nlminb(obj$par,obj$fn,obj$gr)
+  
+  sdrep <- summary(sdreport(obj))
+  
+  #MCMC
+  #fitmcmc1 <- tmbstan(obj, chains=3,
+  #            iter=10000, init="random",
+  #            lower=c(-10,4,0,-6),
+  #             upper=c(5,16,1,6),
+  #             control = list(adapt_delta = 0.98))
+  #
+  #  mc <- extract(fitmcmc1, pars=names(obj$par),
+  #            inc_warmup=TRUE, permuted=FALSE)
+  #fit_summary <- summary(fitmcmc1)   
+  #fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"]
+
+  RB[[i]] <- list(sdrep=sdrep, convergence=opt$convergence, message=opt$message)#, 
+  #  mcmc= fitmcmc1, mcmcsummary=  fit_summary )
+  RBalpha[[i]] <- sdrep[which(rownames(sdrep)=="alpha"),1]
+  #RBalphamc[[i]] <- fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"] 
+  
+
+  #Model 2 - tv a and static b
+  SRdata2 <- data.frame(byr=seq_along(s$S),
+    spwn=s$S,
+    rec=s$R)
+  avarydlm <-fitDLM(data=SRdata2, alpha_vary = TRUE, beta_vary = FALSE)
+  dlmKF[[i]] <- list(results=avarydlm$results, alpha=avarydlm$results$alpha, sigobs=avarydlm$sd.est[1], 
+    siga=avarydlm$sd.est[2], beta=-avarydlm$results$beta[1], smax=-1/avarydlm$results$beta[1],
+     message=avarydlm$message, convergence=avarydlm$convergence)
+  dlmKFalpha[[i]] <- avarydlm$results$alpha
+
+  #Model 3 Carrie's KF - this seem to be broken
+  
+  #initial <- list()
+  #initial$mean.a <- srm$coefficients[1]
+  #initial$var.a <- .5
+  #initial$b <- initial$var.srm$coefficients[2]
+  #initial$ln.sig.e <- log(.5)
+  #initial$ln.sig.w <- log(.5)
+  #initial$Ts <- 0
+  #initial$EstB <- TRUE
+  
+  #holtKFfit <- kf.rw(initial=initial,x=s$S,y=s$logR_S)
+
+  #holtKF[[i]]<-list(alpha=holtKFfit$smoothe.mean.a, sigobs=holtKFfit$sig.e, siga=holtKFfit$sig.w, beta=holtKFfit$b, 
+  #  smax=1/holtKFfit$b, convergence=holtKFfit$Report$convergence, message= holtKFfit$Report$message) 
+  #holtKFalpha[[i]]<-holtKFfit$smoothe.mean.a
+
 }
 
 
-simulateSRtrend <- function(ao=2.5, b=1/10000, ER=0.4, fec=c(0,0,0,1,1), sig=.5, siga=.3, nobs=40, trend="decline" ){
+sima<- lapply(Sim, function(x)x$a)
+valid <- unlist(lapply(Sim, function(x)sum(x$extinct)))<1
 
-    yrs <- 1:100
-    S <- NULL
-    R <- NULL
-    a <- NULL
-   
-    a[1:5] <- ao
-    Seq <- log(ao)/b
-    S[1] <- Seq
-    R[1] <- ao*Seq*exp(-b*Seq)
-    
-    if(trend=="decline"){
-     amin<-ao*.5
-     atrend<-seq(ao,amin, length=nobs+10)
-     length(yrs)-5-(nobs+10)
-     a[6:(length(yrs)-5-(nobs+10))]<-ao
-     a[(length(yrs)-5-(nobs+9)):length(yrs)]<-ao
-    }else if(trend=="increase"){
-     amax<-ao*2
-     atrend<-seq(ao,amax, length=nobs+10)
-     length(yrs)-5-(nobs+10)
-     a[6:(length(yrs)-5-(nobs+10))]<-ao
-     a[(length(yrs)-5-(nobs+9)):length(yrs)]<-ao
-    }else if(trend=="sine"){
+#bias of estimators
+dlmabias<-list()
+rbabias<-list()
+vs <- 0
+for(n in 1:nsim){
+  if(valid[n]){
+    vs<-vs+1
 
-    }else if(trend=="regime"){
+    dlmabias[[n]]<-((dlmKFalpha[[n]]-sima[[n]])/sima[[n]]*100)
+    rbabias[[n]]<-((RBalpha[[n]]-sima[[n]])/sima[[n]]*100)
+  }    
 
-    }
-  
-    for(y in 2:length(fec)){
-      S[y]<-0    
-      for(j in seq_along(fec)){
-        if((y-j)>0){
-          S[y] <- S[y] + R[y-j]*(1-ER)*fec[j]
-        }else{
-          S[y] <- S[y] + R[1]*(1-ER)*fec[j]
-        }
-      }
-      R[y]<-a[y]*S[y]*exp(-b*S[y])        
-    }
-  
-    #S[2]<-sum(R[1]*(1-ER)*fec[1],R[1]*(1-ER)*fec[2],R[1]*(1-ER)*fec[3],R[1]*(1-ER)*fec[4],R[1]*(1-ER)*fec[5])
-    #R[2]<-ao*S[2]*exp(-b*S[2])
-    #S[3]<-sum(R[2]*(1-ER)*fec[1],R[1]*(1-ER)*fec[2],R[1]*(1-ER)*fec[3],R[1]*(1-ER)*fec[4],R[1]*(1-ER)*fec[5])
-    #R[3]<-ao*S[3]*exp(-b*S[3])
-    #S[4]<-sum(R[3]*(1-ER)*fec[1],R[2]*(1-ER)*fec[2],R[1]*(1-ER)*fec[3],R[1]*(1-ER)*fec[4],R[1]*(1-ER)*fec[5])
-    #R[4]<-ao*S[4]*exp(-b*S[4])
-    #S[5]<-sum(R[4]*(1-ER)*fec[1],R[3]*(1-ER)*fec[2],R[2]*(1-ER)*fec[3],R[1]*(1-ER)*fec[4],R[1]*(1-ER)*fec[5])
-    #R[5]<-ao*S[5]*exp(-b*S[5])
-    
-    for(y in 6:max(yrs)){  
-      for(j in seq_along(fec)){      	
-        S[y] <- S[y] + R[y-j]*(1-ER)*fec[j]   	
-      }        
-      #S[y]<-sum(R[y-1]*(1-ER)*fec[1],R[y-2]*(1-ER)*fec[2],R[y-3]*(1-ER)*fec[3],R[y-4]*(1-ER)*fec[4],R[y-5]*(1-ER)*fec[5])
-      a[y] <- a[y-1]*exp(rnorm(1,0,siga))
-      R[y] <- a[y]*S[y]*exp(-b*S[y])
-      Robs[y] <- R[y]*exp(rnorm(1,0,sig))
-    }
-
-  outdf <- data.frame(R=R,
-	Robs=Robs,
-	S=S,
-	a=a)
-
-  return(outdf[(100-nobs):100,])
 }
 
+dfbias <- data.frame(pbias=c(unlist(dlmmeanbias),unlist(rbmeanbias)),
+  fit=c("dlm","RB"))
+
+ggplot(dfbias) +
+geom_boxplot(aes(x=fit, y=pbias))
+
+lapply(Sim, function(x)x$a)
+
+
+
+# look at bias in beta and variance terms
+
+RB[[1]]$sdrep
+
+sdRB <- sapply(RB,  function(x)x$sdrep[which(names(x$sdrep[,2])=="beta"),2])
+sddlm <- sapply(dlmKF,  function(x)x$results$beta)
+
+dlmbbias<-rep(NA,nsim)
+rbbbias<-rep(NA,nsim)
+
+vs <- 0
+for(n in 1:nsim){
+  if(valid[n]){
+    vs<-vs+1
+
+    dlmabias[[n]]<-((dlmKFalpha[[n]]-sima[[n]])/sima[[n]]*100)
+    rbabias[[n]]<-((RBalpha[[n]]-sima[[n]])/sima[[n]]*100)
+  }    
+
+}
 
 
