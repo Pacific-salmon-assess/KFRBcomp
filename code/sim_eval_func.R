@@ -25,11 +25,9 @@
 #plot(log(sr$a),type="b")
 
 
-#TODO check this function
-#
 
 
-simulateSRrandom <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, siga=.2, nobs=40 ){
+simulateSRrandom <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, siga=.2, nobs=40,CapScalar=5 ){
 
     yrs <- 1:100
     S <- NULL
@@ -65,9 +63,12 @@ simulateSRrandom <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, 
       a[y] <- a[y-1] + rnorm(1,0,siga) #-(.5*siga^2)
 
       #R[y] <- S[y]*exp(a[y]-b*S[y]) *exp(qnorm(runif(1, 0.1, 0.95),0,sig))
-      R[y] <- a[y]*S[y]*exp(-b*S[y]) *exp(rnorm(1,0,sig))#-(.5*sig^2)
+      R[y] <- S[y]*exp(a[y]-b*S[y]) *exp(rnorm(1,0,sig))#-(.5*sig^2)
+      if(R[y] > Seq*CapScalar){
+        R[y] <- Seq*CapScalar
+      }
       if(!is.na(R[y]) & R[y]<5){
-      	R[y] <- NA
+      	#R[y] <- NA
       }
       
     }

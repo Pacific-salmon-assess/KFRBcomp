@@ -28,10 +28,11 @@ b<-1/10000
 ps<-0:35000
 pr<-ps*exp(ao-b*ps)
 
-sr <- simulateSRrandom(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, siga=.2, nobs=40 )
+sr <- simulateSRrandom(ao=3, b=1/10000, ER=0.0, fec=c(0,0,0,1,0), sig=.5, siga=.2, nobs=40 )
 sr
 par(mfrow=c(2,1))
 plot(sr$S,sr$R, xlim=c(0,35000), ylim=c(0,89000))
+abline(a=0,b=1)
 lines(ps,pr,col="red")
 plot(sr$a,type="b")
 
@@ -40,10 +41,11 @@ plot(sr$a,type="b")
 #==========================================================
 #simulation estimation calls
 
-nsim <- 1000
+nsim <- 100
 
 Sim<-list()
 #holtKF <- list()
+cta<-list()
 dlmKF <- list()
 RB <- list()
 #holtKFalpha <- list()
@@ -64,8 +66,11 @@ for(i in seq_len(nsim)){
     next;
   }
   srm <- lm(s$logR_S~ s$S)
-  #plot(s$logR_S~ s$S, main=paste(i))
-  #abline(srm)
+  plot(s$logR_S~ s$S, main=paste(i))
+  abline(srm)
+   
+  cta[[i]]<-rep(srm$coefficients[[1]],length(s$R))
+
 
   SRdata<-list(obs_logRS=s$logR_S,obs_S=s$S, prbeta1=1.5,
     prbeta2=1.5)
@@ -139,24 +144,26 @@ sima<- lapply(Sim, function(x)x$a)
 valid <- unlist(lapply(Sim, function(x)sum(x$extinct)))<1
 
 #bias of estimators
+lmabias<-list()
 dlmabias<-list()
 rbabias<-list()
 vs <- 0
 for(n in 1:nsim){
   if(valid[n]){
     vs<-vs+1
-
+    lmabias[[n]]<-((cta[[n]]-sima[[n]])/sima[[n]]*100)
     dlmabias[[n]]<-((dlmKFalpha[[n]]-sima[[n]])/sima[[n]]*100)
     rbabias[[n]]<-((RBalpha[[n]]-sima[[n]])/sima[[n]]*100)
   }    
 
 }
 
-dfbias <- data.frame(pbias=c(unlist(dlmmeanbias),unlist(rbmeanbias)),
-  fit=c("dlm","RB"))
+dfbias <- data.frame(pbias=c(unlist(dlmabias),unlist(rbabias), unlist(lmabias)),
+  fit=c("dlm","RB","lm"))
 
 ggplot(dfbias) +
-geom_boxplot(aes(x=fit, y=pbias))
+geom_boxplot(aes(x=fit, y=pbias))+
+coord_cartesian(ylim = c(-100,100))
 
 lapply(Sim, function(x)x$a)
 
