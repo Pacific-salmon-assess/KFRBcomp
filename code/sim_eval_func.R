@@ -175,6 +175,7 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
   Sim <- list()
   cta <- list()
   ctsmax <- list()
+  ctsig <- list()
   dlmKF <- list()
   RB <- list()
   dlmKFalpha <- list()
@@ -190,6 +191,7 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
     if(sum(is.na(s$R))>0){
       cta[[i]]<-NA
       ctsmax[[i]]<-NA
+      ctsig[[i]]<-NA
       next;
     }
  
@@ -206,6 +208,7 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
    
     cta[[i]]<-rep(srm$coefficients[[1]],length(s$R))
     ctsmax[[i]]<-1/-srm$coefficients[[2]]
+    ctsig[[i]]<-summary(srm)$sigma
 
     SRdata<-list(obs_logRS=s$logR_S,obs_S=s$S, prbeta1=1.5,
     prbeta2=1.5)
@@ -277,6 +280,7 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
 	return(list(Sim = Sim,
     cta = cta,
     ctsmax = ctsmax,
+    ctsig=ctsig,
     dlmKF = dlmKF,
     RB = RB,
     dlmKFalpha = dlmKFalpha,
@@ -286,3 +290,101 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
 
 
   
+
+runtrendsims <- function(nsim=100, ao=3, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40,
+  CapScalar=5, trend="decline",lowsca=.5,hisca=2, ampsc=.5, plot_progress=TRUE){
+    
+  Simtrend <-list()
+  ctatrend <-list()
+  ctsmaxtrend <-list()
+  ctsigtrend <- list()
+  dlmKFtrend <- list()
+  RBtrend <- list()
+  dlmKFalphatrend <- list()
+  RBalphatrend <- list()
+
+
+
+
+  for(i in seq_len(nsim)){
+    
+    s <- simulateSRtrend(ao=3, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40,
+    CapScalar=5, trend="decline",lowsca=.5,hisca=2, ampsc=.5 )
+    s$extinct<-is.na(s$R)
+    Simtrend[[i]]<-s
+    
+  
+    if(sum(is.na(s$R))>0){
+      ctatrend[[i]]<-NA
+      ctsmaxtrend[[i]]<-NA
+      ctsigtrend[[i]]<-NA
+      next;
+    }
+  
+    srm <- lm(s$logR_S~ s$S)
+  
+    if(is.na(srm$coefficients[[2]])){
+      next;
+    }
+    
+    if(plot_progress){
+      plot(s$logR_S~ s$S, main=paste(i))
+      abline(srm)
+    }
+    
+     
+    ctatrend[[i]]<-rep(srm$coefficients[[1]],length(s$R))
+    ctsmaxtrend[[i]]<-1/-srm$coefficients[[2]]
+    ctsigtrend[[i]]<-summary(srm)$sigma
+  
+  
+    SRdata<-list(obs_logRS=s$logR_S,obs_S=s$S, prbeta1=1.5,
+      prbeta2=1.5)
+    
+    
+    #Model 1 - TMB
+    parameters<- list(
+      alphao=srm$coefficients[[1]],
+      logSmax = log(1/ifelse(-srm$coefficients[[2]]<0,1e-08,-srm$coefficients[2])),
+      rho=.5,
+      logvarphi=0,
+      alpha=rep(srm$coefficients[1],length(s$R))
+      )    
+  
+    obj <- MakeADFun(SRdata,parameters,DLL="Ricker_tva_Smax_ratiovar",random="alpha")#,lower = -Inf, upper = Inf)
+     newtonOption(obj, smartsearch=FALSE)
+  
+    opt <- nlminb(obj$par,obj$fn,obj$gr)
+    
+    sdrep <- summary(sdreport(obj))
+    
+  
+    RBtrend[[i]] <- list(sdrep=sdrep, convergence=opt$convergence, message=opt$message)#, 
+    #  mcmc= fitmcmc1, mcmcsummary=  fit_summary )
+    RBalphatrend[[i]] <- sdrep[which(rownames(sdrep)=="alpha"),1]
+    #RBalphamc[[i]] <- fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"] 
+    
+  
+    #Model 2 - tv a and static b
+    SRdata2 <- data.frame(byr=seq_along(s$S),
+      spwn=s$S,
+      rec=s$R)
+    avarydlm <-fitDLM(data=SRdata2, alpha_vary = TRUE, beta_vary = FALSE)
+    dlmKFtrend[[i]] <- list(results=avarydlm$results, alpha=avarydlm$results$alpha, sigobs=avarydlm$sd.est[1], 
+      siga=avarydlm$sd.est[2], beta=-avarydlm$results$beta[1], smax=-1/avarydlm$results$beta[1],
+       message=avarydlm$message, convergence=avarydlm$convergence)
+    dlmKFalphatrend[[i]] <- avarydlm$results$alpha
+  
+  }
+
+  return(list(Simtrend =Simtrend,
+  ctatrend = ctatrend,
+  ctsmaxtrend = ctsmaxtrend,
+  ctsigtrend = ctsigtrend,
+  dlmKFtrend = dlmKFtrend,
+  RBtrend = RBtrend,
+  dlmKFalphatrend = dlmKFalphatrend,
+  RBalphatrend =RBalphatrend ))
+
+
+}
