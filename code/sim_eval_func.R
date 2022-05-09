@@ -10,7 +10,7 @@
 #ao<-3
 #b<-1/10000
 #ER<-0.40
-#fec= c(0,.2,.4,.8,1)
+#fec= c(0,.1,.3,.5,.1)
 #sig <- .5
 #siga <-.3
 #
@@ -60,15 +60,15 @@ simulateSRrandom <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, 
       } 
       #truncated lognrmal error
       #a[y] <- a[y-1] + (qnorm(runif(1, 0.1, 0.9),0,siga))        
-      a[y] <- a[y-1] + rnorm(1,0,siga) #-(.5*siga^2)
+      a[y] <- a[y-1] + rnorm(1,0,siga) -(.5*siga^2)
 
       #R[y] <- S[y]*exp(a[y]-b*S[y]) *exp(qnorm(runif(1, 0.1, 0.95),0,sig))
-      R[y] <- S[y]*exp(a[y]-b*S[y]) *exp(rnorm(1,0,sig))#-(.5*sig^2)
-      if(R[y] > Seq*CapScalar){
+      R[y] <- S[y]*exp(a[y]-b*S[y]) *exp(rnorm(1,0,sig)-(.5*sig^2))#-(.5*sig^2)
+      if(!is.na(R[y]) &  R[y] > Seq*CapScalar){
         R[y] <- Seq*CapScalar
       }
       if(!is.na(R[y]) & R[y]<5){
-      	#R[y] <- NA
+      	R[y] <- NA
       }
       
     }
@@ -83,8 +83,8 @@ simulateSRrandom <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, 
 }
 
 
-simulateSRtrend <- function(ao=2.5, b=1/10000, ER=0.4, fec=c(0,0,0,1,1), sig=.5, 
-	siga=.3, nobs=40, trend="decline",lowsca=.5,hisca=2, ampsc=.5){
+simulateSRtrend <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, 
+	siga=.3, nobs=40, CapScalar=5, trend="decline",lowsca=.5,hisca=2, ampsc=.5){
 
     yrs <- 1:100
     S <- NULL
@@ -92,9 +92,9 @@ simulateSRtrend <- function(ao=2.5, b=1/10000, ER=0.4, fec=c(0,0,0,1,1), sig=.5,
     a <- NULL
    
     a[1:5] <- ao
-    Seq <- log(ao)/b
+    Seq <- ao/b
     S[1] <- Seq
-    R[1] <- ao*Seq*exp(-b*Seq)
+    R[1] <- Seq*exp(ao-b*Seq)
     
     #trends in a
     #start trend 10 yrs before data collection started
@@ -133,27 +133,156 @@ simulateSRtrend <- function(ao=2.5, b=1/10000, ER=0.4, fec=c(0,0,0,1,1), sig=.5,
           S[y] <- S[y] + R[1]*(1-ER)*fec[j]
         }
       }
-      R[y]<-a[y]*S[y]*exp(-b*S[y])        
+      R[y]<-S[y]*exp(a[y]-b*S[y])        
     }
   
     
-    for(y in 6:max(yrs)){  
+    for(y in 6:max(yrs)){ 
+      S[y]<-0 
       for(j in seq_along(fec)){      	
         S[y] <- S[y] + R[y-j]*(1-ER)*fec[j]   	
       }        
       
-      R[y] <- a[y]*S[y]*exp(-b*S[y])*exp(rnorm(1,0,sig))
-      if(R[y]<2){
+      R[y] <- S[y]*exp(a[y]-b*S[y])*exp(rnorm(1,0,sig))
+      
+      if(!is.na(R[y]) & R[y] > Seq*CapScalar){
+        R[y] <- Seq*CapScalar
+      }
+      
+      if(!is.na(R[y]) & R[y]<5){
       	R[y] <- NA
       }
     }
 
   outdf <- data.frame(R=R,
 	S=S,
-	a=a)
+	a=a, 
+	logR_S=log(R/S))
 
-  return(outdf[(100-nobs):100,])
+  return(outdf[(100-nobs+1):100,])
 }
 
 
 
+
+
+runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRUE, 
+	fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40, CapScalar=5){
+
+
+
+  #create empty list
+  Sim <- list()
+  cta <- list()
+  ctsmax <- list()
+  dlmKF <- list()
+  RB <- list()
+  dlmKFalpha <- list()
+  RBalpha <- list()
+
+
+  for(i in seq_len(nsim)){
+  
+    s <- simulateSRrandom(ao=ao, b=b, ER=ER, fec= fec, sig=sig, siga=siga, nobs=nobs, CapScalar=CapScalar )
+    s$extinct<-is.na(s$R)
+    Sim[[i]]<-s
+  
+    if(sum(is.na(s$R))>0){
+      cta[[i]]<-NA
+      ctsmax[[i]]<-NA
+      next;
+    }
+ 
+    srm <- lm(s$logR_S~ s$S)
+
+    if(is.na(srm$coefficients[[2]])){
+      next;
+    }
+
+    if(plot_progress){
+      plot(s$logR_S~ s$S, main=paste(i))
+      abline(srm)
+    }
+   
+    cta[[i]]<-rep(srm$coefficients[[1]],length(s$R))
+    ctsmax[[i]]<-1/-srm$coefficients[[2]]
+
+    SRdata<-list(obs_logRS=s$logR_S,obs_S=s$S, prbeta1=1.5,
+    prbeta2=1.5)
+  
+    #Model 1 - TMB
+    parameters<- list(
+      alphao=srm$coefficients[[1]],
+      logSmax = log(1/ifelse(-srm$coefficients[[2]]<0,1e-08,-srm$coefficients[2])),
+      rho=.5,
+      logvarphi=0,
+      alpha=rep(srm$coefficients[1],length(s$R))
+      )    
+
+    obj <- MakeADFun(SRdata,parameters,DLL="Ricker_tva_Smax_ratiovar",random="alpha")#,lower = -Inf, upper = Inf)
+     newtonOption(obj, smartsearch=FALSE)
+
+    opt <- nlminb(obj$par,obj$fn,obj$gr)
+  
+    sdrep <- summary(sdreport(obj))
+  
+    #MCMC
+    #fitmcmc1 <- tmbstan(obj, chains=3,
+    #            iter=10000, init="random",
+    #            lower=c(-10,4,0,-6),
+    #             upper=c(5,16,1,6),
+    #             control = list(adapt_delta = 0.98))
+    #
+    #  mc <- extract(fitmcmc1, pars=names(obj$par),
+    #            inc_warmup=TRUE, permuted=FALSE)
+    #fit_summary <- summary(fitmcmc1)   
+    #fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"]
+  
+    RB[[i]] <- list(sdrep=sdrep, convergence=opt$convergence, message=opt$message)#, 
+    #  mcmc= fitmcmc1, mcmcsummary=  fit_summary )
+    RBalpha[[i]] <- sdrep[which(rownames(sdrep)=="alpha"),1]
+    #RBalphamc[[i]] <- fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"] 
+  
+
+    #Model 2 - tv a and static b
+    SRdata2 <- data.frame(byr=seq_along(s$S),
+      spwn=s$S,
+      rec=s$R)
+    avarydlm <-fitDLM(data=SRdata2, alpha_vary = TRUE, beta_vary = FALSE)
+    dlmKF[[i]] <- list(results=avarydlm$results, alpha=avarydlm$results$alpha, sigobs=avarydlm$sd.est[1], 
+      siga=avarydlm$sd.est[2], beta=-avarydlm$results$beta[1], smax=-1/avarydlm$results$beta[1],
+       message=avarydlm$message, convergence=avarydlm$convergence)
+    dlmKFalpha[[i]] <- avarydlm$results$alpha
+
+    #Model 3 Carrie's KF - this seem to be broken
+    
+    #initial <- list()
+    #initial$mean.a <- srm$coefficients[1]
+    #initial$var.a <- .5
+    #initial$b <- initial$var.srm$coefficients[2]
+    #initial$ln.sig.e <- log(.5)
+    #initial$ln.sig.w <- log(.5)
+    #initial$Ts <- 0
+    #initial$EstB <- TRUE
+    
+    #holtKFfit <- kf.rw(initial=initial,x=s$S,y=s$logR_S)
+  
+    #holtKF[[i]]<-list(alpha=holtKFfit$smoothe.mean.a, sigobs=holtKFfit$sig.e, siga=holtKFfit$sig.w, beta=holtKFfit$b, 
+    #  smax=1/holtKFfit$b, convergence=holtKFfit$Report$convergence, message= holtKFfit$Report$message) 
+    #holtKFalpha[[i]]<-holtKFfit$smoothe.mean.a
+
+	}
+
+
+	return(list(Sim = Sim,
+    cta = cta,
+    ctsmax = ctsmax,
+    dlmKF = dlmKF,
+    RB = RB,
+    dlmKFalpha = dlmKFalpha,
+    RBalpha = RBalpha))
+
+}
+
+
+  
