@@ -277,14 +277,16 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
 	}
 
 
-	return(list(Sim = Sim,
-    cta = cta,
-    ctsmax = ctsmax,
-    ctsig=ctsig,
-    dlmKF = dlmKF,
-    RB = RB,
-    dlmKFalpha = dlmKFalpha,
-    RBalpha = RBalpha))
+	return(list(Simtrend = Sim,
+    ctatrend = cta,
+    ctsmaxtrend = ctsmax,
+    ctsigtrend=ctsig,
+    dlmKFtrend = dlmKF,
+    RBtrend = RB,
+    dlmKFalphatrend = dlmKFalpha,
+    RBalphatrend = RBalpha))
+
+
 
 }
 
@@ -385,6 +387,66 @@ runtrendsims <- function(nsim=100, ao=3, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1
   RBtrend = RBtrend,
   dlmKFalphatrend = dlmKFalphatrend,
   RBalphatrend =RBalphatrend ))
+
+
+}
+
+
+calculatepbias<- function(simresult){
+
+  nsim <-length(simresult$Simtrend)
+  sima <- lapply(simresult$Simtrend, function(x)x$a)
+  valid <- unlist(lapply(simresult$Simtrend, function(x)sum(x$extinct)))<1
+
+
+
+  #bias of estimators
+  lmabias <- list()
+  dlmabias <- list()
+  rbabias <- list()
+  vs <- 0
+  for(n in 1:nsim){
+    if(valid[n]){
+      vs<-vs+1
+      lmabias[[n]]<-((simresult$ctatrend[[n]]-sima[[n]])/sima[[n]]*100)
+      dlmabias[[n]]<-((simresult$dlmKFalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
+      rbabias[[n]]<-((simresult$RBalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
+    }    
+  }
+
+  dfabias <- data.frame(pbias=c(unlist(dlmabias),unlist(rbabias), unlist(lmabias)),
+    fit=rep(c("dlm","RB","lm"), each=length(unlist(dlmabias))),
+    param="a")
+  
+  # look at bias in beta and variance terms
+  SmaxRB <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,(exp(x$sdrep["logSmax",1])-Smax)/Smax*100))
+  Smaxdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(is.null(x),NA,((1/-x$results$beta[1])-Smax)/Smax*100))
+
+ dfsmaxbias <- data.frame(pbias=c(Smaxdlm, SmaxRB, (unlist(simresult$ctsmaxtrend)-Smax)/Smax*100),
+   fit=rep(c("dlm","RB","lm"), each=length(Smaxdlm)), param="Smax")
+
+  sigRB <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,x$sdrep["sig",1]))
+  sigdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(is.null(x),NA,x$sigobs))
+
+  dfsigbias <- data.frame(pbias=c((sigdlm-sig)/sig*100,(sigRB-sig)/sig*100, (unlist(simresult$ctsigtrend)-sig)/sig*100),
+    fit=rep(c("dlm","RB", "lm"), each=length(sigdlm)),
+    param="sig")
+
+
+  sigaRB <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,x$sdrep["tau",1]))
+  sigadlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(is.null(x),NA,x$siga))
+
+  dfsigabias <- data.frame(pbias=c((sigadlm-siga)/siga*100,(sigaRB-siga)/siga*100),
+    fit=rep(c("dlm","RB"), each=length(sigadlm)),
+    param="siga")
+
+  dfbias<-rbind(dfabias,
+    dfsmaxbias, 
+    dfsigbias,
+    dfsigabias)
+
+
+return(dfbias)
 
 
 }

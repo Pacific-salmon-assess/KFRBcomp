@@ -10,30 +10,50 @@ bibliography: all.bib
 
 Variability  and declines in stock producvity is an increasing  fo managent of Pacific salmon populations.
 
-Salmon stock recruitment dynamics are frequently modeled with the Ricker curve, which has overcompensation (diminished returns after maximum spawner capacity is reached) and is easily linearizable.
 
+Methods for estimating time-varying productivity usually entails the use of covariates or the use of state-space models with a random walk component on the productivity parameter (Peterman's productivity method, Silvar-Viladomiu 2022). 
 
+The most common method for estimating time-varying productivity with the Peterman's productivity method is to apply a Kalman Filter with fixed-interval smoothing (Peterman papers). Harvey (1989) showed that the fixed-interval smoothing method gave the best estimates of the time-varying parameter as well as its variance parameter. However, more recently, other methods for estimation of state-space models are available, including methods that rely on Laplace approximations (e.g., TMB and ADMB) and mcmc methods (e.g. stan). The approaches that do not rely on the Kalman filter are sometimes called the Recursive Bayes (Freshwater and CSAS.)
 
-Methods for estimating time-varying productivity usually entails the use of covariates or the use dynamic linear models witha random walk component on the productivity parameter (Peterman method). 
-
-The most common method for estimating the parameters of a Ricker curve with a random walk on the productivity parameter (alpha) is to apply a Kalman Filter with fixed-interval smoothing (Peterman papers). Harvey (1989) showed that the fixed-interval smoothing method gave the best estimates of the time-varying parameter as well as its variance parameter. However, more recently, with the widespread use of Bayesian techniques to estimate stock-recruitment parameters, it is becoming more common to apply mcmc methods to provide estimates for the Ricker curve with a random walk on productivity. This approach is sometimed referred o as Recursive Bayes (Freshwater and CSAS.)
-
-The objective of this study is to compare the estimates of Kalman Filter with fixed-interval smoothing and recursive Bayes methodologies. 
+Here we compare the performance of two estimators for time-varying productivity within Peterman's productivity method: the Kalman filter and the Recursive Bayes method implemented in TMB. 
 
 ```{r load, include=FALSE}
-
 library(here)
 library(TMB)
 library(tmbstan)
-library("bayesplot")
+library(cowplot)
 
-#read in data -- for information on length of time series
-sock_dat<- read.csv(here('data','filtered datasets','sockeye_final.csv'))
-sock_info<- read.csv(here('data','sockeye','sockeye_info.csv'))
+source(here("code","dlm-wrapper.R"))
+source(here("code","sim_eval_func.R"))
 
-sock_info<- subset(sock_info, Stock.ID %in% sock_dat$stock.id)
-s <- sock_dat
 
+compile("../code/TMBmodels/Ricker_tva_Smax_ratiovar.cpp")
+dyn.load(dynlib("../code/TMBmodels/Ricker_tva_Smax_ratiovar"))
+
+
+ao <- 2.5
+b<-1/30000
 
 ```
 
+# Methods
+
+In order to compare the estimates we designed a simple simulation exercise in which data was simulate based on a Ricker curve over 100 years. In the last 50 years of the time-series the productivity parameter varied following four scenarios: random walk, decline, sine and regime. 
+Add equations
+
+The las 40 years in the time series were used as input to the estimation models: Kalman Filter, linear model  and, recursive Bayes. The Kalman filter was implemented within the dlm R package. The recursive Bayes model was implemented in TMB. A simple time-invariant linear model was also implemented for comparison purposes
+
+# Findings
+Time-varying models are more accurate and precise than the simple linear model
+ 
+The comparison of the estimation methods showed extremely similar results for the estimate sof alphs and Smax generated with the Kalman filter and the Recursive bayes models. 
+
+The standard deviation estimates were less biased for the recursive Bayes model. 
+
+Pattern in distribution of the estimates did not chane across scenarios. 
+
+
+
+```{r comparisonplot, echo=FALSE, out.width='100%',fig.align='center', fig.cap='percent bias for model parameters for three estimation methods: Kalman Filter (dlm), linear model (lm) and, recursive Bayes (RB), and four time-varying productivity scenarios: random- walk (random), linear decline trend (decline), sine fluctuations (sine), regime shifts (regime)'}
+knitr::include_graphics('../figure/simscomp.png')
+```
