@@ -4,12 +4,13 @@
 # I changed the estimation to optim, more of the models converged but estimates are 
 # diverging more frm other tools. 
 # I need to fix the package will put on a todo list
-#remotes::install_github("carrieholt/KF-funcs")
-#library(KFfuncs)
+remotes::install_github("carrieholt/KF-funcs")
 
+library(KFfuncs)
 library(here)
 library(TMB)
 library(tmbstan)
+
 
 sock_dat <- read.csv(here('data','filtered datasets','sockeye_final.csv'))
 sock_info <- read.csv(here('data','sockeye','sockeye_info.csv'))
@@ -24,9 +25,11 @@ dyn.load(dynlib("TMBmodels/Ricker_tva_Smax_ratiovar"))
 
 
 holtKF <- list()
+tmbholtKF <- list()
 dlmKF <- list()
 RB <- list()
 holtKFalpha <- list()
+tmbholtKFalpha <- list()
 dlmKFalpha <- list()
 RBalpha <- list()
 RBalphamc <- list()
@@ -56,25 +59,25 @@ for(i in seq_len(nrow(sock_info))){
    newtonOption(obj, smartsearch=FALSE)
 
   opt <- nlminb(obj$par,obj$fn,obj$gr)
-  obj$rep()
+  #obj$rep()
   sdrep <- summary(sdreport(obj))
   
   #MCMC
-  #fitmcmc1 <- tmbstan(obj, chains=3,
-  #            iter=10000, init="random",
-  #            lower=c(-10,4,0,-6),
-  #             upper=c(5,16,1,6),
-  #             control = list(adapt_delta = 0.98))
-  #
-  #  mc <- extract(fitmcmc1, pars=names(obj$par),
-  #            inc_warmup=TRUE, permuted=FALSE)
-  #fit_summary <- summary(fitmcmc1)   
-  #fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"]
+  fitmcmc1 <- tmbstan(obj, chains=3,
+              iter=10000, init="random",
+              lower=c(-10,4,0,-6),
+               upper=c(5,16,1,6),
+               control = list(adapt_delta = 0.98))
+  
+    mc <- extract(fitmcmc1, pars=names(obj$par),
+              inc_warmup=TRUE, permuted=FALSE)
+  fit_summary <- summary(fitmcmc1)   
+  fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"]
 
-  RB[[i]] <- list(sdrep=sdrep, convergence=opt$convergence, message=opt$message)#, 
-  #  mcmc= fitmcmc1, mcmcsummary=  fit_summary )
+  RB[[i]] <- list(sdrep=sdrep, rep=obj$rep(), convergence=opt$convergence, message=opt$message,
+    mcmc= fitmcmc1, mcmcsummary=  fit_summary )
   RBalpha[[i]] <- sdrep[which(rownames(sdrep)=="alpha"),1]
-  #RBalphamc[[i]] <- fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"] 
+  RBalphamc[[i]] <- fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"] 
   
 
   #Model 2 - tv a and static b
@@ -91,35 +94,85 @@ for(i in seq_len(nrow(sock_info))){
   
   initial <- list()
   initial$mean.a <- srm$coefficients[1]
-  initial$var.a <- 1
+  initial$var.a <- .5
   initial$b <- srm$coefficients[2]
   initial$ln.sig.e <- log(.5)
   initial$ln.sig.w <- log(.5)
   initial$Ts <- 0
-  initial$EstB <- "True"
+  initial$EstB <- TRUE
   
   holtKFfit <- kf.rw(initial=initial,x=s$spawners,y=s$logR_S)
 
-  holtKF[[i]]<-list(alpha=holtKFfit$smoothe.mean.a, sigobs=holtKFfit$sig.e, siga=holtKFfit$sig.w, beta=holtKFfit$b, 
+  holtKF[[i]]<-list(fit=holtKFfit, alpha=holtKFfit$smoothe.mean.a, sigobs=holtKFfit$sig.e, siga=holtKFfit$sig.w, beta=holtKFfit$b, 
     smax=1/holtKFfit$b, convergence=holtKFfit$Report$convergence, message= holtKFfit$Report$message) 
   holtKFalpha[[i]]<-holtKFfit$smoothe.mean.a
+  
+  #Model 3.1 Carrie's KF
+  SRdata2 <- data.frame(S=s$spawners,
+    R=s$recruits)
+  rekf <- kfTMB(data=SRdata2, silent = FALSE, control = TMBcontrol())
+  kfrep <- summary(sdreport(rekf$tmb_obj))
+  
+
+  tmbholtKF[[i]]<-list(obj=rekf$tmb_obj, sdrep=kfrep, rep=rekf$tmb_obj$report(),message=rekf$model$message )
+  tmbholtKFalpha[[i]]<-kfrep[which(rownames(kfrep)=="smoothemeana"),1]
 
 }
 
 
-RBalphamc[[3]]
-length(RBalphamc)
-length(unlist(RBalpha))
-length(unlist(RBalphamc))
-length(unlist(dlmKFalpha))
-length(unlist(holtKFalpha))
-RBalphamc[[i]]
+
 
 df<- data.frame(alpha=c(unlist(RBalpha), unlist(RBalphamc),  unlist(dlmKFalpha), unlist(holtKFalpha)),
   type=rep(c("RB", "RBmcmcmean", "dlm", "Holt"), each=length(unlist(RBalpha))),
   time=sock_dat$broodyear,
   stock=sock_dat$stock
   )
+
+
+
+lowRB <- unlist(lapply(RB, function(x)x$sdrep[which(rownames(x$sdrep)=="alpha"),1]-1.96*x$sdrep[which(rownames(x$sdrep)=="alpha"),2]))
+highRB <- unlist(lapply(RB, function(x)x$sdrep[which(rownames(x$sdrep)=="alpha"),1]+1.96*x$sdrep[which(rownames(x$sdrep)=="alpha"),2]))
+
+lowRBmc <- unlist(lapply(RB,function(x)x$mcmcsummary$summary[grep("alpha\\[",rownames(x$mcmcsummary$summary)),"2.5%"]))
+highRBmc <- unlist(lapply(RB,function(x)x$mcmcsummary$summary[grep("alpha\\[",rownames(x$mcmcsummary$summary)),"97.5%"]))
+
+lowdlm <- unlist(lapply(dlmKF,function(x)(x$results$alpha-1.96*x$results$alpha_se)))
+highdlm <- unlist(lapply(dlmKF,function(x)(x$results$alpha+1.96*x$results$alpha_se)))
+
+
+lowholt <- unlist(lapply(holtKF,function(x)(x$alpha-1.96*sqrt(x$fit$smoothe.var.a))))
+highholt<- unlist(lapply(holtKF,function(x)(x$alpha+1.96*sqrt(x$fit$smoothe.var.a))))
+
+df$lowa<-c(lowRB,lowRBmc,lowdlm,lowholt)
+df$higha<-c(highRB,highRBmc,highdlm,highholt)
+
+
+fitcomp<-list()
+listock<-unique(df$stock)
+
+
+for(n in seq_along(listock)){
+
+  df1<-df[df$stock==listock[n],]
+
+  fitcomp[[n]] <- ggplot(df1) +
+  geom_line(aes(x=time,y=alpha,color=type), size=1.5,alpha=.7) +
+  geom_ribbon(aes(x=time,ymin=lowa,ymax=higha,fill=type), size=1.5,alpha=.3) +
+  theme_bw(14)+
+  facet_wrap(~stock, scales="free")+
+  scale_colour_viridis_d()+scale_fill_viridis_d()+
+  theme(legend.position="bottom")
+}
+
+
+
+
+ggsave(
+      filename = "../figure/fit_comparison.pdf", 
+      plot = gridExtra::marrangeGrob(fitcomp, nrow=1, ncol=1), 
+      width = 12, height = 5
+    )
+
 
 
 df<- data.frame(alpha=c(unlist(RBalpha),   unlist(dlmKFalpha), unlist(holtKFalpha)),
@@ -191,41 +244,10 @@ theme(legend.position="bottom")
 pdlm
 
 
-dlmKF[[1]]$results
 
-
-RB[[3]]$sdrep[which(names(RB[[1]]$sdrep[,2])=="alpha"),2]   
-
-(RB[[1]]$mcmcsummary$summary[,"2.5%"])
-RB[[1]]$mcmcsummary$summary[,"97.5%"]
-
-avarydlm$results$alpha_se
-
- grep("alpha\\[",rownames(RB[[1]]$mcmcsummary$summary))
- rownames(RB[[1]]$mcmcsummary$summary) 
-which(names(RB[[1]]$sdrep[,2])=="alpha")
-"alpha"]]
-
-
-sapply(RB,  function(x)x[["convergence"]])
-sapply(dlmKF,  function(x)x[["convergence"]])
-sapply(holtKF,  function(x)x[["convergence"]])
-
-
-sapply(RB,  function(x)x[["message"]])
-sapply(dlmKF,  function(x)x[["message"]])
-sapply(holtKF,  function(x)x[["message"]])
-
-names(dlmKF[[1]])
-
-
-sapply(dlmKF,  function(x)x[["convergence"]])
 
 
 #TODO
 #Compare confidence intervals
 #Compare filtered and smoothed estimates
 
-
-  
-  

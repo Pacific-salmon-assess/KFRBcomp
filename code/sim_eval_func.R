@@ -180,6 +180,11 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
   RB <- list()
   dlmKFalpha <- list()
   RBalpha <- list()
+  RBalphamc <- list()
+  holtKF <- list()
+  holtKFalpha <- list()
+  tmbholtKF <- list()
+  tmbholtKFalpha <- list()
 
 
   for(i in seq_len(nsim)){
@@ -230,21 +235,20 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
     sdrep <- summary(sdreport(obj))
   
     #MCMC
-    #fitmcmc1 <- tmbstan(obj, chains=3,
-    #            iter=10000, init="random",
-    #            lower=c(-10,4,0,-6),
-    #             upper=c(5,16,1,6),
-    #             control = list(adapt_delta = 0.98))
-    #
-    #  mc <- extract(fitmcmc1, pars=names(obj$par),
-    #            inc_warmup=TRUE, permuted=FALSE)
-    #fit_summary <- summary(fitmcmc1)   
-    #fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"]
+    fitmcmc1 <- tmbstan(obj, chains=3,
+                iter=10000, init="random",
+                lower=c(-10,4,0,-6),
+                 upper=c(5,16,1,6),
+                 control = list(adapt_delta = 0.98))
+    
+      mc <- extract(fitmcmc1, pars=names(obj$par),
+                inc_warmup=TRUE, permuted=FALSE)
+    fit_summary <- summary(fitmcmc1)   
+    fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"]
   
-    RB[[i]] <- list(sdrep=sdrep, convergence=opt$convergence, message=opt$message)#, 
-    #  mcmc= fitmcmc1, mcmcsummary=  fit_summary )
+    RB[[i]] <- list(sdrep=sdrep, convergence=opt$convergence, message=opt$message,  mcmc= fitmcmc1, mcmcsummary=  fit_summary )
     RBalpha[[i]] <- sdrep[which(rownames(sdrep)=="alpha"),1]
-    #RBalphamc[[i]] <- fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"] 
+    RBalphamc[[i]] <- fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"] 
   
 
     #Model 2 - tv a and static b
@@ -259,20 +263,29 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
 
     #Model 3 Carrie's KF - this seem to be broken
     
-    #initial <- list()
-    #initial$mean.a <- srm$coefficients[1]
-    #initial$var.a <- .5
-    #initial$b <- initial$var.srm$coefficients[2]
-    #initial$ln.sig.e <- log(.5)
-    #initial$ln.sig.w <- log(.5)
-    #initial$Ts <- 0
-    #initial$EstB <- TRUE
+    initial <- list()
+    initial$mean.a <- srm$coefficients[1]
+    initial$var.a <- .5
+    initial$b <- srm$coefficients[2]
+    initial$ln.sig.e <- log(.5)
+    initial$ln.sig.w <- log(.5)
+    initial$Ts <- 0
+    initial$EstB <- TRUE
     
-    #holtKFfit <- kf.rw(initial=initial,x=s$S,y=s$logR_S)
+    holtKFfit <- kf.rw(initial=initial,x=s$S,y=s$logR_S)
   
-    #holtKF[[i]]<-list(alpha=holtKFfit$smoothe.mean.a, sigobs=holtKFfit$sig.e, siga=holtKFfit$sig.w, beta=holtKFfit$b, 
-    #  smax=1/holtKFfit$b, convergence=holtKFfit$Report$convergence, message= holtKFfit$Report$message) 
-    #holtKFalpha[[i]]<-holtKFfit$smoothe.mean.a
+    holtKF[[i]]<-list(alpha=holtKFfit$smoothe.mean.a, sigobs=holtKFfit$sig.e, siga=holtKFfit$sig.w, beta=holtKFfit$b, 
+      smax=1/holtKFfit$b, convergence=holtKFfit$Report$convergence, message= holtKFfit$Report$message) 
+    holtKFalpha[[i]]<-holtKFfit$smoothe.mean.a
+
+    #Model 3.1 Carrie's KF TMB
+    
+    rekf <- kfTMB(data=s, silent = FALSE, control = TMBcontrol())
+    kfrep <- summary(sdreport(rekf$tmb_obj))
+  
+
+   tmbholtKF[[i]]<-list(obj=rekf$tmb_obj, sdrep=kfrep, rep=rekf$tmb_obj$report(),message=rekf$model$message )
+   tmbholtKFalpha[[i]]<-kfrep[which(rownames(kfrep)=="smoothemeana"),1]
 
 	}
 
@@ -284,7 +297,13 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
     dlmKFtrend = dlmKF,
     RBtrend = RB,
     dlmKFalphatrend = dlmKFalpha,
-    RBalphatrend = RBalpha))
+    RBalphatrend = RBalpha,
+    RBalphamctrend = RBalphamc,
+    holtKFtrend = holtKF,
+    holtKFalphatrend = holtKFalpha, 
+    tmbholtKFtrend = tmbholtKF,
+    tmbholtKFalphatrend = tmbholtKFalpha
+    ))
 
 
 
@@ -304,7 +323,11 @@ runtrendsims <- function(nsim=100, ao=3, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1
   RBtrend <- list()
   dlmKFalphatrend <- list()
   RBalphatrend <- list()
-
+  RBalphamctrend <- list()
+  holtKFtrend <- list()
+  holtKFalphatrend <- list() 
+  tmbholtKFtrend <- list()
+  tmbholtKFalphatrend <- list()
 
 
 
@@ -386,13 +409,18 @@ runtrendsims <- function(nsim=100, ao=3, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1
   dlmKFtrend = dlmKFtrend,
   RBtrend = RBtrend,
   dlmKFalphatrend = dlmKFalphatrend,
-  RBalphatrend =RBalphatrend ))
+  RBalphatrend = RBalphatrend,
+  RBalphamctrend = RBalphamc,
+  holtKFtrend = holtKF,
+  holtKFalphatrend = holtKFalpha, 
+  tmbholtKFtrend = tmbholtKF,
+  tmbholtKFalphatrend = tmbholtKFalpha ))
 
 
 }
 
 
-calculatepbias<- function(simresult){
+calculatepbias<- function(simresult, Smax, sig, siga){
 
   nsim <-length(simresult$Simtrend)
   sima <- lapply(simresult$Simtrend, function(x)x$a)
@@ -404,40 +432,65 @@ calculatepbias<- function(simresult){
   lmabias <- list()
   dlmabias <- list()
   rbabias <- list()
+  rbmcabias <- list()
+  holtabias <- list()
+  tmbholtabias <- list()
+
   vs <- 0
+
   for(n in 1:nsim){
     if(valid[n]){
       vs<-vs+1
       lmabias[[n]]<-((simresult$ctatrend[[n]]-sima[[n]])/sima[[n]]*100)
       dlmabias[[n]]<-((simresult$dlmKFalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
       rbabias[[n]]<-((simresult$RBalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
+      rbmcabias[[n]]<-((simresult$RBalphamctrend[[n]]-sima[[n]])/sima[[n]]*100)
+      holtabias[[n]]<-((simresult$holtKFalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
+      tmbholtabias[[n]]<-((simresult$tmbholtKFalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
     }    
   }
 
-  dfabias <- data.frame(pbias=c(unlist(dlmabias),unlist(rbabias), unlist(lmabias)),
-    fit=rep(c("dlm","RB","lm"), each=length(unlist(dlmabias))),
+  dfabias <- data.frame(pbias=c(unlist(dlmabias),unlist(rbabias), unlist(lmabias), 
+    unlist(rbmcabias), unlist(holtabias),unlist(tmbholtabias)),
+    fit=rep(c("dlm","RB","lm","RBmcmc","holtKF","tmbholtKF"), each=length(unlist(dlmabias))),
     param="a")
+  
   
   # look at bias in beta and variance terms
   SmaxRB <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,(exp(x$sdrep["logSmax",1])-Smax)/Smax*100))
   Smaxdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(is.null(x),NA,((1/-x$results$beta[1])-Smax)/Smax*100))
+  SmaxRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,(exp(x$mcmcsummary$summary["logSmax","50%"])-Smax)/Smax*100))
+  Smaxholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(is.null(x),NA,((x$smax)-Smax)/Smax*100))
+  Smaxtmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(is.null(x),NA,((1/-x$sdrep["b",1])-Smax)/Smax*100))
 
- dfsmaxbias <- data.frame(pbias=c(Smaxdlm, SmaxRB, (unlist(simresult$ctsmaxtrend)-Smax)/Smax*100),
-   fit=rep(c("dlm","RB","lm"), each=length(Smaxdlm)), param="Smax")
 
-  sigRB <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,x$sdrep["sig",1]))
-  sigdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(is.null(x),NA,x$sigobs))
+ dfsmaxbias <- data.frame(pbias=c(Smaxdlm, SmaxRB, (unlist(simresult$ctsmaxtrend)-Smax)/Smax*100,SmaxRBmc,Smaxholt,Smaxtmbholt),
+   fit=rep(c("dlm","RB","lm","RBmcmc","holtKF","tmbholtKF"), each=length(Smaxdlm)), param="Smax")
 
-  dfsigbias <- data.frame(pbias=c((sigdlm-sig)/sig*100,(sigRB-sig)/sig*100, (unlist(simresult$ctsigtrend)-sig)/sig*100),
-    fit=rep(c("dlm","RB", "lm"), each=length(sigdlm)),
+  sigRB <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,(x$sdrep["sig",1]-sig)/sig*100))
+  sigdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(is.null(x),NA,(x$sigobs-sig)/sig*100))
+  sigRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,
+    (sqrt(x$mcmcsummary$summary["rho","50%"]) * sqrt(1/exp(x$mcmcsummary$summary["logvarphi","50%"]))-sig)/sig*100))
+  sigholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(is.null(x),NA,((x$sigobs)-sig)/sig*100))
+  sigtmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(is.null(x),NA,(x$sdrep["sige",1]-sig)/sig*100))
+
+  dfsigbias <- data.frame(pbias=c(sigdlm,sigRB, (unlist(simresult$ctsigtrend)-sig)/sig*100,
+    sigRBmc,sigholt,sigtmbholt),
+    fit=rep(c("dlm","RB", "lm","RBmcmc","holtKF","tmbholtKF"), each=length(sigdlm)),
     param="sig")
 
 
-  sigaRB <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,x$sdrep["tau",1]))
-  sigadlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(is.null(x),NA,x$siga))
+  sigaRB <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,(x$sdrep["tau",1]-siga)/siga*100))
+  sigadlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(is.null(x),NA,(x$siga-siga)/siga*100))
+  sigaRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,
+    (sqrt(1-x$mcmcsummary$summary["rho","50%"]) * sqrt(1/exp(x$mcmcsummary$summary["logvarphi","50%"]))-siga)/siga*100))
+  sigaholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(is.null(x),NA,((x$siga)-siga)/siga*100))
+  sigatmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(is.null(x),NA,(x$sdrep["sigw",1]-siga)/siga*100))
 
-  dfsigabias <- data.frame(pbias=c((sigadlm-siga)/siga*100,(sigaRB-siga)/siga*100),
-    fit=rep(c("dlm","RB"), each=length(sigadlm)),
+
+
+  dfsigabias <- data.frame(pbias=c(sigadlm,sigaRB,sigaRBmc,sigaholt,sigatmbholt),
+    fit=rep(c("dlm","RB","RBmcmc","holtKF","tmbholtKF"), each=length(sigadlm)),
     param="siga")
 
   dfbias<-rbind(dfabias,

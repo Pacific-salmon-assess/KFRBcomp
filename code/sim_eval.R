@@ -67,17 +67,24 @@ plot(sr$a,type="b")
 
 
 #simulation estimation random walk
-nsim <- 100
+nsim <- 10
 Smax <- 1/b
 sig <- .5
 siga <- .2
 randsim <- runrandomsims(nsim=nsim,ao=ao, b=1/Smax, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=sig, siga=siga, nobs=40, CapScalar=5)
 
+names(randsim)
+dfbiasrand1<-calculatepbias(simresult=randsim,Smax=Smax, sig=sig,siga=siga)
 
-dfbiasrand1<-calculatepbias(randsim)
+
+sapply(randsim$holtKFtrend,  function(x)ifelse(is.null(x),NA,x$message))
+sapply(randsim$dlmKFtrend,  function(x)ifelse(is.null(x),NA,x$convergence))
+sapply(randsim$RBtrend,  function(x)ifelse(is.null(x),NA,x$convergence))
+sapply(randsim$tmbholtKFtrend,  function(x)ifelse(is.null(x),NA,x$message))
 
 
-prand<-ggplot(dfbias) +
+
+prand <- ggplot(dfbiasrand1) +
 geom_boxplot(aes(x=fit, y=pbias))+
 coord_cartesian(ylim = c(-100,100))+
 geom_hline(yintercept=0) +
@@ -102,7 +109,7 @@ decsim <- runtrendsims(nsim=nsim,ao=ao, b=1/Smax, ER=0.0, fec= c(0,.1,.3,.5,.1),
  nobs=40, CapScalar=5,trend="decline",lowsca=.5,hisca=2, ampsc=.5)
 
 
-dfbiasdec<-calculatepbias(decsim)
+dfbiasdec<-calculatepbias(decsim, Smax=Smax)
 
 pdec<-ggplot(dfbiasdec) +
 geom_boxplot(aes(x=fit, y=pbias))+
@@ -152,6 +159,9 @@ facet_wrap(~param)
 allsim<-plot_grid(prand,pdec, psine,pregime, labels = c('random', 'decline','sine','regime'))
 
 ggsave("../figure/simscomp.png")
+
+
+
 #==========================================
 #old code
 

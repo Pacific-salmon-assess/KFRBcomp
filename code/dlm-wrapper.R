@@ -79,7 +79,7 @@ fitDLM <- function(data = bt,
   AICc	<- 2*lls + 2*dlmPars +(2*dlmPars*(dlmPars+1)/(length(data$rec)-dlmPars-1))
   BIC <-BIC <- 2*lls + dlmPars*log((length(data$rec)))
 
-  sd.est = exp(dlm_out$par)  
+  sd.est = sqrt(exp(dlm_out$par)) 
   convergence <- dlm_out$convergence
   message <- dlm_out$message
 
