@@ -166,8 +166,8 @@ simulateSRtrend <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5,
 
 
 
-runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRUE, 
-	fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40, CapScalar=5){
+runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRUE, trend="random walk",
+	fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40, CapScalar=5,lowsca=.5,hisca=2, ampsc=.5 ){
 
 
 
@@ -185,11 +185,36 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
   holtKFalpha <- list()
   tmbholtKF <- list()
   tmbholtKFalpha <- list()
+  stanRB <-list()
+  stanGP <-list()
 
 
   for(i in seq_len(nsim)){
+
+    if(trend=="random walk"){
+       s <- simulateSRrandom(ao=ao, b=b, ER=ER, fec= fec, sig=sig, siga=siga, nobs=nobs, CapScalar=CapScalar )
+
+    }else if(trend=="decline"){
+      s <- simulateSRtrend(ao=ao, b=b, ER=ER, fec= fec, sig=sig, siga=NA, nobs=nobs,
+           CapScalar=CapScalar, trend="decline",lowsca=lowsca,hisca=hisca, ampsc=ampsc )
+   
+    }else if(trend=="increase"){
+      s <- simulateSRtrend(ao=ao, b=b, ER=ER, fec= fec, sig=sig, siga=NA, nobs=nobs,
+           CapScalar=CapScalar, trend="increase",lowsca=lowsca,hisca=hisca, ampsc=ampsc )
+
+    }else if(trend=="sine"){
+      s <- simulateSRtrend(ao=ao, b=b, ER=ER, fec= fec, sig=sig, siga=NA, nobs=nobs,
+           CapScalar=CapScalar, trend="sine",lowsca=lowsca,hisca=hisca, ampsc=ampsc )
+      
+    }else if(trend=="regime"){
+       s <- simulateSRtrend(ao=ao, b=b, ER=ER, fec= fec, sig=sig, siga=NA, nobs=nobs,
+           CapScalar=CapScalar, trend="regime",lowsca=lowsca,hisca=hisca, ampsc=ampsc )
+    }else{
+      stop(paste("trend patten",trend,"not defined"))
+    }
+
   
-    s <- simulateSRrandom(ao=ao, b=b, ER=ER, fec= fec, sig=sig, siga=siga, nobs=nobs, CapScalar=CapScalar )
+    #s <- simulateSRrandom(ao=ao, b=b, ER=ER, fec= fec, sig=sig, siga=siga, nobs=nobs, CapScalar=CapScalar )
     s$extinct<-is.na(s$R)
     Sim[[i]]<-s
   
@@ -197,6 +222,17 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
       cta[[i]]<-NA
       ctsmax[[i]]<-NA
       ctsig[[i]]<-NA
+      dlmKF[[i]]<-NA
+      RB[[i]]<-NA
+      dlmKFalpha[[i]]<-NA
+      RBalpha[[i]]<-NA
+      RBalphamc[[i]]<-NA
+      holtKF[[i]]<-NA
+      holtKFalpha[[i]]<-NA
+      tmbholtKF[[i]]<-NA
+      tmbholtKFalpha[[i]]<-NA
+      stanRB[[i]]<-NA
+      stanGP[[i]]<-NA
       next;
     }
  
@@ -244,7 +280,7 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
       mc <- extract(fitmcmc1, pars=names(obj$par),
                 inc_warmup=TRUE, permuted=FALSE)
     fit_summary <- summary(fitmcmc1)   
-    fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"mean"]
+    
   
     RB[[i]] <- list(sdrep=sdrep, convergence=opt$convergence, message=opt$message,  mcmc= fitmcmc1, mcmcsummary=  fit_summary )
     RBalpha[[i]] <- sdrep[which(rownames(sdrep)=="alpha"),1]
@@ -284,8 +320,34 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
     kfrep <- summary(sdreport(rekf$tmb_obj))
   
 
-   tmbholtKF[[i]]<-list(obj=rekf$tmb_obj, sdrep=kfrep, rep=rekf$tmb_obj$report(),message=rekf$model$message )
-   tmbholtKFalpha[[i]]<-kfrep[which(rownames(kfrep)=="smoothemeana"),1]
+    tmbholtKF[[i]]<-list(obj=rekf$tmb_obj, sdrep=kfrep, rep=rekf$tmb_obj$report(),message=rekf$model$message,
+    convergence=rekf$model$convergence )
+    tmbholtKFalpha[[i]]<-kfrep[which(rownames(kfrep)=="smoothemeana"),1]
+
+    #Model 4 Stan RB
+    stan_rb=rstan::stan(file=here('code','stancode','ricker_linear_varying_a.stan'), data=list(R_S = s$logR_S,
+                                                 N=nrow(s),
+                                                 TT=as.numeric(factor(seq_len(nrow(s)))),
+                                                 S=c((s$S))),
+                                                                                                      
+            pars = c('log_a','b','sigma_e','sigma_a'),
+            control = list(adapt_delta = 0.95,max_treedepth = 15), warmup = 500, chains = 4, iter = 2000, thin = 1)
+
+    #params_stan_rb=rstan::extract(stan_rb)
+
+    stanRB[[i]]<-list(stanfit=stan_rb,mcmcsummary=summary(stan_rb)$summary)
+
+    #Model 4 Stan Gaussian Process    
+    stan_GP=rstan::stan(file=here('code','stancode','ricker_linear_varying_a_GP.stan'),data=list(R_S = s$logR_S,
+                                                                             N=nrow(s),
+                                                                             TT=as.numeric(factor(seq_len(nrow(s)))),
+                                                                             S=c(s$S)),
+            pars = c('log_a','b','sigma_e'),
+            control = list(adapt_delta = 0.95,max_treedepth = 15), warmup = 500, chains = 4, iter = 2000, thin = 1)
+
+
+    stanGP[[i]]<-list(stanfit=stan_GP,mcmcsummary=summary(stan_GP)$summary)
+
 
 	}
 
@@ -302,7 +364,9 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
     holtKFtrend = holtKF,
     holtKFalphatrend = holtKFalpha, 
     tmbholtKFtrend = tmbholtKF,
-    tmbholtKFalphatrend = tmbholtKFalpha
+    tmbholtKFalphatrend = tmbholtKFalpha,
+    stanRBtrend = stanRB,
+    stanGPtrend = stanGP
     ))
 
 
@@ -328,13 +392,14 @@ runtrendsims <- function(nsim=100, ao=3, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1
   holtKFalphatrend <- list() 
   tmbholtKFtrend <- list()
   tmbholtKFalphatrend <- list()
-
+  stanRBtrend <-list()
+  stanGPtrend <-list()
 
 
   for(i in seq_len(nsim)){
     
-    s <- simulateSRtrend(ao=3, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40,
-    CapScalar=5, trend="decline",lowsca=.5,hisca=2, ampsc=.5 )
+    s <- simulateSRtrend(ao=ao, b=b, ER=ER, fec=fec, sig=sig, siga=siga, nobs=nobs,
+    CapScalar=CapScalar, trend=trend,lowsca=lowsca,hisca=hisca, ampsc=ampsc )
     s$extinct<-is.na(s$R)
     Simtrend[[i]]<-s
     
@@ -343,6 +408,17 @@ runtrendsims <- function(nsim=100, ao=3, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1
       ctatrend[[i]]<-NA
       ctsmaxtrend[[i]]<-NA
       ctsigtrend[[i]]<-NA
+      dlmKFtrend[[i]]<-NA
+      RBtrend[[i]]<-NA
+      dlmKFalphatrend[[i]]<-NA
+      RBalphatrend[[i]]<-NA
+      RBalphamctrend[[i]]<-NA
+      holtKFtrend[[i]]<-NA
+      holtKFalphatrend[[i]]<-NA 
+      tmbholtKFtrend[[i]]<-NA
+      tmbholtKFalphatrend[[i]]<-NA
+      stanRBtrend[[i]]<-NA
+      stanGPtrend[[i]]<-NA
       next;
     }
   
@@ -399,6 +475,60 @@ runtrendsims <- function(nsim=100, ao=3, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1
       siga=avarydlm$sd.est[2], beta=-avarydlm$results$beta[1], smax=-1/avarydlm$results$beta[1],
        message=avarydlm$message, convergence=avarydlm$convergence)
     dlmKFalphatrend[[i]] <- avarydlm$results$alpha
+
+    #Model 3 Carrie's KF - this seem to be broken
+    
+    initial <- list()
+    initial$mean.a <- srm$coefficients[1]
+    initial$var.a <- .5
+    initial$b <- srm$coefficients[2]
+    initial$ln.sig.e <- log(.5)
+    initial$ln.sig.w <- log(.5)
+    initial$Ts <- 0
+    initial$EstB <- TRUE
+    
+    holtKFfit <- kf.rw(initial=initial,x=s$S,y=s$logR_S)
+  
+    holtKFtrend[[i]]<-list(alpha=holtKFfit$smoothe.mean.a, sigobs=holtKFfit$sig.e, siga=holtKFfit$sig.w, beta=holtKFfit$b, 
+      smax=1/holtKFfit$b, convergence=holtKFfit$Report$convergence, message= holtKFfit$Report$message) 
+    holtKFalphatrend[[i]]<-holtKFfit$smoothe.mean.a
+
+    #Model 3.1 Carrie's KF TMB
+    
+    rekf <- kfTMB(data=s, silent = FALSE, control = TMBcontrol())
+    kfrep <- summary(sdreport(rekf$tmb_obj))
+    
+
+   tmbholtKFtrend[[i]]<-list(obj=rekf$tmb_obj, sdrep=kfrep, rep=rekf$tmb_obj$report(),message=rekf$model$message,
+   convergence=rekf$model$convergence )
+   tmbholtKFalphatrend[[i]]<-kfrep[which(rownames(kfrep)=="smoothemeana"),1]
+   
+
+   #Model 4 Stan RB
+   stan_rb=rstan::stan(file=here('code','stancode','ricker_linear_varying_a.stan'), data=list(R_S = s$logR_S,
+                                                 N=nrow(s),
+                                                 TT=as.numeric(factor(seq_len(nrow(s)))),
+                                                 S=c((s$S))),
+                                                                                                      
+            pars = c('log_a','b','sigma_e','sigma_a'),
+            control = list(adapt_delta = 0.95,max_treedepth = 15), warmup = 500, chains = 4, iter = 2000, thin = 1)
+
+    #params_stan_rb=rstan::extract(stan_rb)
+
+    stanRBtrend[[i]]<-list(stanfit=stan_rb,mcmcsummary=summary(stan_rb)$summary)
+
+    #Model 4 Stan Gaussian Process    
+    stan_GP=rstan::stan(file=here('code','stancode','ricker_linear_varying_a_GP.stan'),data=list(R_S = s$logR_S,
+                                                                             N=nrow(s),
+                                                                             TT=as.numeric(factor(seq_len(nrow(s)))),
+                                                                             S=c(s$S)),
+            pars = c('log_a','b','sigma_e'),
+            control = list(adapt_delta = 0.95,max_treedepth = 15), warmup = 500, chains = 4, iter = 2000, thin = 1)
+
+
+    stanGPtrend[[i]]<-list(stanfit=stan_GP,mcmcsummary=summary(stan_GP)$summary)
+
+
   
   }
 
@@ -414,7 +544,10 @@ runtrendsims <- function(nsim=100, ao=3, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1
   holtKFtrend = holtKF,
   holtKFalphatrend = holtKFalpha, 
   tmbholtKFtrend = tmbholtKF,
-  tmbholtKFalphatrend = tmbholtKFalpha ))
+  tmbholtKFalphatrend = tmbholtKFalpha,
+  stanRBtrend = stanRBtrend,
+  stanGPtrend = stanGPtrend
+     ))
 
 
 }
@@ -435,6 +568,8 @@ calculatepbias<- function(simresult, Smax, sig, siga){
   rbmcabias <- list()
   holtabias <- list()
   tmbholtabias <- list()
+  stanrbbias <- list()
+  stangpbias <- list()
 
   vs <- 0
 
@@ -456,36 +591,43 @@ calculatepbias<- function(simresult, Smax, sig, siga){
     param="a")
   
   
+(1/-simresult$dlmKFtrend[[5]]$results$beta[1]-Smax)/Smax*100
+
+anyNA(simresult$dlmKFtrend[[5]])
+
   # look at bias in beta and variance terms
-  SmaxRB <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,(exp(x$sdrep["logSmax",1])-Smax)/Smax*100))
-  Smaxdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(is.null(x),NA,((1/-x$results$beta[1])-Smax)/Smax*100))
-  SmaxRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,(exp(x$mcmcsummary$summary["logSmax","50%"])-Smax)/Smax*100))
-  Smaxholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(is.null(x),NA,((x$smax)-Smax)/Smax*100))
-  Smaxtmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(is.null(x),NA,((1/-x$sdrep["b",1])-Smax)/Smax*100))
+  SmaxRB <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(exp(x$sdrep["logSmax",1])-Smax)/Smax*100))
+  Smaxdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,((1/-x$results$beta[1])-Smax)/Smax*100))
+  SmaxRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(exp(x$mcmcsummary$summary["logSmax","50%"])-Smax)/Smax*100))
+  Smaxholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,((x$smax)-Smax)/Smax*100))
+  Smaxtmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,((1/-x$sdrep["b",1])-Smax)/Smax*100))
 
 
  dfsmaxbias <- data.frame(pbias=c(Smaxdlm, SmaxRB, (unlist(simresult$ctsmaxtrend)-Smax)/Smax*100,SmaxRBmc,Smaxholt,Smaxtmbholt),
    fit=rep(c("dlm","RB","lm","RBmcmc","holtKF","tmbholtKF"), each=length(Smaxdlm)), param="Smax")
 
-  sigRB <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,(x$sdrep["sig",1]-sig)/sig*100))
-  sigdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(is.null(x),NA,(x$sigobs-sig)/sig*100))
-  sigRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,
+  sigRB <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["sig",1]-sig)/sig*100))
+  sigdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,(x$sigobs-sig)/sig*100))
+  sigRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,
     (sqrt(x$mcmcsummary$summary["rho","50%"]) * sqrt(1/exp(x$mcmcsummary$summary["logvarphi","50%"]))-sig)/sig*100))
-  sigholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(is.null(x),NA,((x$sigobs)-sig)/sig*100))
-  sigtmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(is.null(x),NA,(x$sdrep["sige",1]-sig)/sig*100))
+  sigholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,((x$sigobs)-sig)/sig*100))
+  sigtmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["sige",1]-sig)/sig*100))
 
   dfsigbias <- data.frame(pbias=c(sigdlm,sigRB, (unlist(simresult$ctsigtrend)-sig)/sig*100,
     sigRBmc,sigholt,sigtmbholt),
     fit=rep(c("dlm","RB", "lm","RBmcmc","holtKF","tmbholtKF"), each=length(sigdlm)),
     param="sig")
+  
+  names(simresult$tmbholtKFtrend[[5]])
+  simresult$tmbholtKFtrend[[5]]$obj
 
-
-  sigaRB <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,(x$sdrep["tau",1]-siga)/siga*100))
-  sigadlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(is.null(x),NA,(x$siga-siga)/siga*100))
-  sigaRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(is.null(x),NA,
+  sigaRB <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["tau",1]-siga)/siga*100))
+  sigadlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,(x$siga-siga)/siga*100))
+  sigaRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,
     (sqrt(1-x$mcmcsummary$summary["rho","50%"]) * sqrt(1/exp(x$mcmcsummary$summary["logvarphi","50%"]))-siga)/siga*100))
-  sigaholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(is.null(x),NA,((x$siga)-siga)/siga*100))
-  sigatmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(is.null(x),NA,(x$sdrep["sigw",1]-siga)/siga*100))
+  sigaholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x)|simresult$holtKFtrend[[5]]$convergence !=0,
+    NA,((x$siga)-siga)/siga*100))
+  sigatmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["sigw",1]-siga)/siga*100))
 
 
 
