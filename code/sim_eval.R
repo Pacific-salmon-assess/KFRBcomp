@@ -67,17 +67,14 @@ plot(sr$a,type="b")
 
 
 #simulation estimation random walk
-nsim <- 2
+nsim <- 100
 Smax <- 1/b
 sig <- .5
 siga <- .2
 randsim <- runrandomsims(nsim=nsim,ao=ao, b=1/Smax, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=sig, siga=siga, nobs=40, CapScalar=5)
-length(randsim)
-eval(parse(text=paste0("randsim$",names(randsim),"[[100]] <- NULL")[5:13]))
 
-randsim$dlmKFtrend[[100]]
 
-?parse
+
 
 dfbiasrand1<-calculatepbias(simresult=randsim,Smax=Smax, sig=sig,siga=siga)
 
