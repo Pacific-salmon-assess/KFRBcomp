@@ -55,6 +55,19 @@ Type dlnorm(Type x, Type meanlog, Type sdlog, int give_log=0){
   if(give_log)return logres; else return exp(logres);
 }
 
+
+template <class Type>
+Type dstudent(Type x, Type mean, Type sigma, Type df, int give_log = 0) {
+  // from metRology::dt.scaled()
+  // dt((x - mean)/sd, df, ncp = ncp, log = TRUE) - log(sd)
+  Type logres = dt((x - mean) / sigma, df, true) - log(sigma);
+  if (give_log)
+    return logres;
+  else
+    return exp(logres);
+}
+
+
 template<class Type>
 Type objective_function<Type>::operator() ()
 {
@@ -104,8 +117,8 @@ Type objective_function<Type>::operator() ()
   Type ans= -dbeta(rho,prbeta1,prbeta2,true);  
   
   //priors on parameters
-  //ans -=dnorm(alphao,Type(0.0),Type(5.0),true);
-  //ans -=dnorm(logSmax,Type(0.0),Type(10.0),true);
+  ans -=dnorm(alphao,Type(0.0),Type(5.0),true);
+  ans -=dstudent(log(beta),Type(-9.0),Type(1.0),Type(5.0),true);
   
   ans+= -dnorm(alpha(0),alphao,tau,true);
 

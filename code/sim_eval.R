@@ -24,14 +24,16 @@ compile("TMBmodels/Ricker_tva_Smax_ratiovar.cpp")
 dyn.load(dynlib("TMBmodels/Ricker_tva_Smax_ratiovar"))
 
 
-ao <- 2.5
+ao <- 3.5
 b<-1/30000
 
 
-ps<-seq(0,100000*5,1000)
+ps<-seq(0,30000*5,1000)
 pr<-ps*exp(ao-b*ps)
+plot(ps, pr)
+abline(1,1)
 
-sr <- simulateSRrandom(ao=2.5, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40, CapScalar=5 )
+sr <- simulateSRrandom(ao=3.5, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40, CapScalar=5 )
 sr
 par(mfrow=c(2,1))
 plot(sr$S,sr$R, xlim=c(0,35000*5), ylim=c(0,180000))
@@ -71,28 +73,48 @@ nsim <- 100
 Smax <- 1/b
 sig <- .5
 siga <- .2
-randsim <- runrandomsims(nsim=nsim,ao=ao, b=1/Smax, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=sig, siga=siga, nobs=40, CapScalar=5)
+randsimtest <- runrandomsims(nsim=nsim,ao=ao, b=1/Smax, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=sig, siga=siga, nobs=40, CapScalar=5,
+  plot_progress=TRUE, trend="random walk", lowsca=.5,hisca=2, ampsc=.5 )
 
+#saveRDS(randsim, "../data/out/randsim.rds")
+#randsim <-readRDS("../data/out/randsim.rds")
 
+#Filter onlyestimates that converged 
 
 
 dfbiasrand1<-calculatepbias(simresult=randsim,Smax=Smax, sig=sig,siga=siga)
 
 
-sapply(randsim$holtKFtrend,  function(x)ifelse(is.null(x),NA,x$message))
-sapply(randsim$dlmKFtrend,  function(x)ifelse(is.null(x),NA,x$convergence))
+randsim$holtKFtrend[[i]]
+
+
+names(randsim)
+
+sapply(randsim$holtKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
+sapply(randsim$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
 sapply(randsim$RBtrend,  function(x)ifelse(is.null(x),NA,x$convergence))
 sapply(randsim$tmbholtKFtrend,  function(x)ifelse(is.null(x),NA,x$message))
 
+dfbiasrand1p<-dfbiasrand1[dfbiasrand1$convergence==0&!is.na(dfbiasrand1$convergence==0),]
+head(dfbiasrand1p)
+#add
 
-
-prand <- ggplot(dfbiasrand1) +
+give.n <- function(x){
+  return(c(y = median(x)*1.05, label = length(x))) 
+  # experiment with the multiplier to find the perfect position
+} 
+prand <- ggplot(dfbiasrand1p) +
 geom_boxplot(aes(x=fit, y=pbias))+
 coord_cartesian(ylim = c(-100,100))+
 geom_hline(yintercept=0) +
 theme_bw(14)+
+#stat_summary(fun.data = give.n, geom = "text", fun = median, 
+#                   position = position_dodge(width = 0.75))+
 facet_wrap(~param)
+prand
 
+
+ggsave("../figure/randsimbias.pdf")
 
 #===============================================================================================
 #Trends sim eval

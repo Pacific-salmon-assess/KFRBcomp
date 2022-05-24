@@ -5,7 +5,7 @@
 #==============================================================
 
 
-
+library(KFfuncs)
 
 #ao<-3
 #b<-1/10000
@@ -61,6 +61,10 @@ simulateSRrandom <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, 
       #truncated lognrmal error
       #a[y] <- a[y-1] + (qnorm(runif(1, 0.1, 0.9),0,siga))        
       a[y] <- a[y-1] + rnorm(1,0,siga) -(.5*siga^2)
+      # avoid alpha that is super negative
+      if(a[y]<.0){
+        a[y]<- .0
+      }
 
       #R[y] <- S[y]*exp(a[y]-b*S[y]) *exp(qnorm(runif(1, 0.1, 0.95),0,sig))
       R[y] <- S[y]*exp(a[y]-b*S[y]) *exp(rnorm(1,0,sig)-(.5*sig^2))#-(.5*sig^2)
@@ -274,11 +278,11 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
     sdrep <- summary(sdreport(obj))
   
     #MCMC
-    fitmcmc1 <- tmbstan(obj, chains=3,
-                iter=10000, init="random",
-                lower=c(-10,4,0,-6),
-                 upper=c(5,16,1,6),
-                 control = list(adapt_delta = 0.98))
+    fitmcmc1 <- tmbstan(obj, chains = 4, iter = 2000,
+                init="random",
+                lower=c(-5,4,0,-6),
+                 upper=c(10,16,1,6),
+                 control = list(adapt_delta = 0.95,max_treedepth = 15), warmup = 500,  thin = 1)
     
       mc <- extract(fitmcmc1, pars=names(obj$par),
                 inc_warmup=TRUE, permuted=FALSE)
@@ -391,8 +395,7 @@ calculatepbias<- function(simresult, Smax, sig, siga){
   sima <- lapply(simresult$Simtrend, function(x)x$a)
   valid <- unlist(lapply(simresult$Simtrend, function(x)sum(x$extinct)))<1
 
-
-
+  
   #bias of estimators
   lmabias <- list()
   dlmabias <- list()
@@ -405,24 +408,18 @@ calculatepbias<- function(simresult, Smax, sig, siga){
 
   vs <- 0
 
-  sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary$summary["logSmax","Rhat"]-1)>.1)))
+  convlm <- sapply(simresult$ctsmaxtrend,  function(x)ifelse(anyNA(x),NA,rep(0,)))
+  convdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
+  convRB <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
+  convholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
+  convholttmb <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
   
-  names(simresult$RBtrend[[2]]) 
-  #convlm <-sapply(simresult$ctsmaxtrend,  function(x)ifelse(anyNA(x),NA,1))
-  #convdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence)
-  #convRB <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,x$convergence)
-  
-  #convholt
-  #convholttmb
-  #convrbstan
-  #convgpstan
-
 
 
   for(n in 1:nsim){
     if(valid[n]){
       vs<-vs+1
-      lmabias[[n]]<-((simresult$ctatrend[[n]]-sima[[n]])/sima[[n]]*100)
+      lmabias[[n]] <-((simresult$ctatrend[[n]]-sima[[n]])/sima[[n]]*100)
       dlmabias[[n]]<-((simresult$dlmKFalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
       rbabias[[n]]<-((simresult$RBalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
       rbmcabias[[n]]<-((simresult$RBalphamctrend[[n]]-sima[[n]])/sima[[n]]*100)
@@ -436,27 +433,28 @@ calculatepbias<- function(simresult, Smax, sig, siga){
   }
  
 
-
-  as.numeric(abs(simresult$RBtrend[[1]]$mcmcsummary$summary[grep("alpha\\[",rownames(simresult$RBtrend[[1]]$mcmcsummary$summary)),"Rhat"]-1)>.1)
-  convsmaxRBmc <-lapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,as.vector(as.numeric(abs(x$mcmcsummary$summary[grep("alpha\\[",rownames(x$mcmcsummary$summary)),"Rhat"]-1)>.1))))
-  convsmaxstanRB <-sapply(simresult$stanRBtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary[grep("log_a\\[",rownames(simresult$stanRBtrend[[n]]$mcmcsummary)),"Rhat"]-1)>.1)))
-  convsmaxstanGP <-sapply(simresult$stanGPtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary[grep("log_a\\[",rownames(simresult$stanGPtrend[[n]]$mcmcsummary)),"Rhat"]-1)>.1)))
+  convaRBmc <- lapply(simresult$RBtrend,  function(x)if(is.na(x[1])){NA}else{as.numeric(abs(x$mcmcsummary$summary[grep("alpha\\[",rownames(x$mcmcsummary$summary)),"Rhat"]-1)>.1)})
+  convastanRB <- sapply(simresult$stanRBtrend, function(x)if(is.na(x[1])){NA}else{as.numeric(abs(x$mcmcsummary[grep("log_a\\[",rownames(simresult$stanRBtrend[[n]]$mcmcsummary)),"Rhat"]-1)>.1)})
+  convastanGP <-sapply(simresult$stanGPtrend,  function(x)if(is.na(x[1])){NA}else{as.numeric(abs(x$mcmcsummary[grep("log_a\\[",rownames(simresult$stanGPtrend[[n]]$mcmcsummary)),"Rhat"]-1)>.1)})
   
 
   
   dfabias <- data.frame(pbias=c(unlist(dlmabias),unlist(rbabias), unlist(lmabias), 
     unlist(rbmcabias), unlist(holtabias),unlist(tmbholtabias),unlist(stanrbabias), unlist(stangpabias)),
     fit=rep(c("dlm","RB","lm","RBmcmc","holtKF","tmbholtKF","stanrb","stanGp"), each=length(unlist(dlmabias))),
+    convergence= c(rep(convdlm[!is.na(convdlm)], each=length(sima[[1]])), rep(convRB[!is.na(convRB)],each=length(sima[[1]])),
+     rep(convlm[!is.na(convlm)], each=length(sima[[1]])), unlist(convaRBmc)[!is.na(unlist(convaRBmc))], 
+     rep(convholt[!is.na(convholt)], each=length(sima[[1]])), rep(convholttmb[!is.na(convholttmb)], each=length(sima[[1]])),
+      unlist(convastanRB)[!is.na(unlist(convastanRB))], unlist(convastanGP)[!is.na(unlist(convastanRB))]),
     param="a")
   
-  names(simresult)
-  1/simresult$stanRBtrend[[1]]$mcmcsummary["b","50%"]
-
+ 
+  
   # look at bias in beta and variance terms
   SmaxRB <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(exp(x$sdrep["logSmax",1])-Smax)/Smax*100))
   Smaxdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,((1/-x$results$beta[1])-Smax)/Smax*100))
   SmaxRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(exp(x$mcmcsummary$summary["logSmax","50%"])-Smax)/Smax*100))
-  Smaxholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,((x$smax)-Smax)/Smax*100))
+  Smaxholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,((-x$smax)-Smax)/Smax*100))
   Smaxtmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,((1/-x$sdrep["b",1])-Smax)/Smax*100)) 
   SmaxstanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(1/x$mcmcsummary["b","50%"]-Smax)/Smax*100))
   SmaxstanGP <- sapply(simresult$stanGPtrend, function(x)ifelse(anyNA(x),NA,(1/x$mcmcsummary["b","50%"]-Smax)/Smax*100))
@@ -469,20 +467,34 @@ calculatepbias<- function(simresult, Smax, sig, siga){
 
  dfsmaxbias <- data.frame(pbias=c(Smaxdlm, SmaxRB, (unlist(simresult$ctsmaxtrend)-Smax)/Smax*100,
   SmaxRBmc, Smaxholt, Smaxtmbholt, SmaxstanRB, SmaxstanGP),
-   fit=rep(c("dlm","RB","lm","RBmcmc","holtKF","tmbholtKF","stanrb","stanGp"), each=length(Smaxdlm)), param="Smax")
+   fit=rep(c("dlm","RB","lm","RBmcmc","holtKF","tmbholtKF","stanrb","stanGp"), each=length(Smaxdlm)), 
+   convergence=c(convdlm, convRB, convlm, convsmaxRBmc, convholt, convholttmb, convsmaxstanRB, convsmaxstanGP),
+   param="Smax")
 
   sigRB <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["sig",1]-sig)/sig*100))
   sigdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,(x$sigobs-sig)/sig*100))
+  
   sigRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,
-    (sqrt(x$mcmcsummary$summary["rho","50%"]) * sqrt(1/exp(x$mcmcsummary$summary["logvarphi","50%"]))-sig)/sig*100))
+    (median(sqrt(as.data.frame(x$mcmc)$"rho") * sqrt(1/exp(as.data.frame(x$mcmc)$"logvarphi")))-sig)/sig*100))
+  
   sigholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,((x$sigobs)-sig)/sig*100))
   sigtmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["sige",1]-sig)/sig*100))
   sigstanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_e","50%"]-sig)/sig*100))
   sigstanGP <- sapply(simresult$stanGPtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_e","50%"]-sig)/sig*100))
 
+  convsigRBmc1 <-sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary$summary["logvarphi","Rhat"]-1)>.1)))
+  convsigRBmc2 <-sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary$summary["rho","Rhat"]-1)>.1)))
+  convsigRBmc <- convsigRBmc1 + convsigRBmc2 
+  
+  convsigstanRB <-sapply(simresult$stanRBtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary["sigma_e","Rhat"]-1)>.1)))
+  convsigstanGP <-sapply(simresult$stanGPtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary["sigma_e","Rhat"]-1)>.1)))
+  
+  
+
   dfsigbias <- data.frame(pbias=c(sigdlm,sigRB, (unlist(simresult$ctsigtrend)-sig)/sig*100,
     sigRBmc,sigholt,sigtmbholt, sigstanRB, sigstanGP),
     fit=rep(c("dlm","RB", "lm","RBmcmc","holtKF","tmbholtKF", "stanrb","stanGp"), each=length(sigdlm)),
+    convergence=c(convdlm, convRB, convlm, convsigRBmc, convholt, convholttmb, convsigstanRB, convsigstanGP),
     param="sig")
   
   
@@ -490,15 +502,22 @@ calculatepbias<- function(simresult, Smax, sig, siga){
   sigaRB <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["tau",1]-siga)/siga*100))
   sigadlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,(x$siga-siga)/siga*100))
   sigaRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,
-    (sqrt(1-x$mcmcsummary$summary["rho","50%"]) * sqrt(1/exp(x$mcmcsummary$summary["logvarphi","50%"]))-siga)/siga*100))
+    (median(sqrt(1-as.data.frame(x$mcmc)$"rho") * sqrt(1/exp(as.data.frame(x$mcmc)$"logvarphi")))-siga)/siga*100))
   sigaholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x), NA,((x$siga)-siga)/siga*100))
   sigatmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["sigw",1]-siga)/siga*100))
   sigastanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_a","50%"]-siga)/siga*100))
 
 
+  convsigastanRB <-sapply(simresult$stanRBtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary["sigma_e","Rhat"]-1)>.1)))
+  convsigastanGP <-sapply(simresult$stanGPtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary["sigma_e","Rhat"]-1)>.1)))
+  
+
+  
+
 
   dfsigabias <- data.frame(pbias=c(sigadlm,sigaRB,sigaRBmc,sigaholt,sigatmbholt,sigastanRB),
     fit=rep(c("dlm","RB","RBmcmc","holtKF","tmbholtKF", "stanrb"), each=length(sigadlm)),
+     convergence=c(convdlm, convRB, convsigRBmc, convholt, convholttmb, convsigastanRB),
     param="siga")
 
   dfbias<-rbind(dfabias,
