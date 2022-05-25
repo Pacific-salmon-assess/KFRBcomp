@@ -15,8 +15,8 @@ library(TMB)
 library(tmbstan)
 library(cowplot)
 
-source(here("code","dlm-wrapper.R"))
-source(here("code","sim_eval_func.R"))
+source("dlm-wrapper.R")
+source("sim_eval_func.R")
 
 #source("C:/Users/worc/Documents/KF-funcs-appl/HoltMichielsens2020/KFcode.R")
 
@@ -73,7 +73,7 @@ nsim <- 100
 Smax <- 1/b
 sig <- .5
 siga <- .2
-randsimtest <- runrandomsims(nsim=nsim,ao=ao, b=1/Smax, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=sig, siga=siga, nobs=40, CapScalar=5,
+randsim <- runrandomsims(nsim=nsim,ao=ao, b=1/Smax, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=sig, siga=siga, nobs=40, CapScalar=5,
   plot_progress=TRUE, trend="random walk", lowsca=.5,hisca=2, ampsc=.5 )
 
 #saveRDS(randsim, "../data/out/randsim.rds")
@@ -81,21 +81,22 @@ randsimtest <- runrandomsims(nsim=nsim,ao=ao, b=1/Smax, ER=0.0, fec= c(0,.1,.3,.
 
 #Filter onlyestimates that converged 
 
-
-dfbiasrand1<-calculatepbias(simresult=randsim,Smax=Smax, sig=sig,siga=siga)
-
-
-randsim$holtKFtrend[[i]]
+#add filtered estimates to the plots
 
 
-names(randsim)
+dfbiasrand1<-calculatepbias(simresult=randsim,Smax=Smax, sig=sig,siga=siga, Bayesstat="mean")
+
 
 sapply(randsim$holtKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
 sapply(randsim$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
-sapply(randsim$RBtrend,  function(x)ifelse(is.null(x),NA,x$convergence))
-sapply(randsim$tmbholtKFtrend,  function(x)ifelse(is.null(x),NA,x$message))
+sapply(randsim$RBtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
+sapply(randsim$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
 
 dfbiasrand1p<-dfbiasrand1[dfbiasrand1$convergence==0&!is.na(dfbiasrand1$convergence==0),]
+dfbiasrand1p<-dfbiasrand1p[dfbiasrand1p$fit!="lm",]
+dfbiasrand1p$fit<-ordered(dfbiasrand1p$fit, c("dlm","tmbholtKF","holtKF", "RB", "RBmcmc","stanrb", "stanGp"))
+
+unique(dfbiasrand1p$param)
 head(dfbiasrand1p)
 #add
 
@@ -103,18 +104,43 @@ give.n <- function(x){
   return(c(y = median(x)*1.05, label = length(x))) 
   # experiment with the multiplier to find the perfect position
 } 
-prand <- ggplot(dfbiasrand1p) +
-geom_boxplot(aes(x=fit, y=pbias))+
+prand <- ggplot(dfbiasrand1p,aes(x=fit, y=pbias)) +
+geom_boxplot()+
 coord_cartesian(ylim = c(-100,100))+
 geom_hline(yintercept=0) +
 theme_bw(14)+
-#stat_summary(fun.data = give.n, geom = "text", fun = median, 
-#                   position = position_dodge(width = 0.75))+
+stat_summary(fun.data = give.n, geom = "text", hjust = 0.5,
+    vjust = 0.9)+
 facet_wrap(~param)
 prand
 
 
+
 ggsave("../figure/randsimbias.pdf")
+
+
+#look at changepoint and bcp
+
+sr <- simulateSRrandom(ao=ao,  b=1/Smax, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=sig, siga=siga, nobs=40, CapScalar=5 )
+sr
+fit1 <- lm(logR_S~S,data=sr)
+names(summary(fit1))
+summary(fit1)$sigma
+plot(resid(fit1))
+
+
+STARS(regLN=10,sig=summary(fit1)$sigma,series=resid(fit1),shift=1)
+
+
+    uu<-changepoint::cpt.meanvar(resid(fit1)[!is.na(resid(fit1))],method="PELT",test.stat="Normal",penalty="AIC",minseglen=10)
+    bpts<-c(1,uu@cpts)
+    sds<-sqrt(uu@param.est$variance)
+    means<-exp(uu@param.est$mean)*exp(uu@param.est$variance/2)
+    tmpFit$PeltMean<-NA
+    tmpFit$PeltSd<-NA
+
+
+
 
 #===============================================================================================
 #Trends sim eval

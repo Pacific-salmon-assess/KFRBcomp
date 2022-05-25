@@ -389,7 +389,7 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
 
   
 
-calculatepbias<- function(simresult, Smax, sig, siga){
+calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
 
   nsim <-length(simresult$Simtrend)
   sima <- lapply(simresult$Simtrend, function(x)x$a)
@@ -429,8 +429,30 @@ calculatepbias<- function(simresult, Smax, sig, siga){
       stanrbabias[[n]]<-(arbsatn-sima[[n]])/sima[[n]]*100
       agpsatn<-as.vector(simresult$stanGPtrend[[n]]$mcmcsummary[grep("log_a\\[",rownames(simresult$stanGPtrend[[n]]$mcmcsummary)), "50%"]) 
       stangpabias[[n]]<-(agpsatn-sima[[n]])/sima[[n]]*100
+
+      if(Bayesstat=="median"){
+        
+        rbmcabias[[n]]<-((simresult$RBalphamctrend[[n]]-sima[[n]])/sima[[n]]*100)
+        arbsatn<-as.vector(simresult$stanRBtrend[[n]]$mcmcsummary[grep("log_a\\[",rownames(simresult$stanRBtrend[[n]]$mcmcsummary)), "50%"]) 
+        stanrbabias[[n]]<-(arbsatn-sima[[n]])/sima[[n]]*100
+        agpsatn<-as.vector(simresult$stanGPtrend[[n]]$mcmcsummary[grep("log_a\\[",rownames(simresult$stanGPtrend[[n]]$mcmcsummary)), "50%"])   
+        stangpabias[[n]]<-(agpsatn-sima[[n]])/sima[[n]]*100
+      
+      }else if(Bayesstat=="mean"){
+        
+        arbsatn<-as.vector(simresult$stanRBtrend[[n]]$mcmcsummary[grep("log_a\\[",rownames(simresult$stanRBtrend[[n]]$mcmcsummary)), "mean"]) 
+        stanrbabias[[n]]<-(arbsatn-sima[[n]])/sima[[n]]*100
+        agpsatn<-as.vector(simresult$stanGPtrend[[n]]$mcmcsummary[grep("log_a\\[",rownames(simresult$stanGPtrend[[n]]$mcmcsummary)), "mean"]) 
+        rbmcabias[[n]]<-((simresult$RBalphamctrend[[n]]-sima[[n]])/sima[[n]]*100)
+        arbmc<-as.vector(simresult$RBtrend[[n]]$mcmcsummary$summary[grep("alpha\\[",rownames(simresult$RBtrend[[n]]$mcmcsummary$summary)),"mean"])
+        rbmcabias[[n]]<-((arbmc)-sima[[n]])/sima[[n]]*100
+      
+      }else{
+        stop(paste("Bayesstat",Bayesstat,"not defined"))
+      }
     }    
   }
+
  
 
   convaRBmc <- lapply(simresult$RBtrend,  function(x)if(is.na(x[1])){NA}else{as.numeric(abs(x$mcmcsummary$summary[grep("alpha\\[",rownames(x$mcmcsummary$summary)),"Rhat"]-1)>.1)})
@@ -453,12 +475,20 @@ calculatepbias<- function(simresult, Smax, sig, siga){
   # look at bias in beta and variance terms
   SmaxRB <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(exp(x$sdrep["logSmax",1])-Smax)/Smax*100))
   Smaxdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,((1/-x$results$beta[1])-Smax)/Smax*100))
-  SmaxRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(exp(x$mcmcsummary$summary["logSmax","50%"])-Smax)/Smax*100))
   Smaxholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,((-x$smax)-Smax)/Smax*100))
   Smaxtmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,((1/-x$sdrep["b",1])-Smax)/Smax*100)) 
-  SmaxstanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(1/x$mcmcsummary["b","50%"]-Smax)/Smax*100))
-  SmaxstanGP <- sapply(simresult$stanGPtrend, function(x)ifelse(anyNA(x),NA,(1/x$mcmcsummary["b","50%"]-Smax)/Smax*100))
   
+  if(Bayesstat=="median"){
+    SmaxRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(exp(x$mcmcsummary$summary["logSmax","50%"])-Smax)/Smax*100))
+    SmaxstanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(1/x$mcmcsummary["b","50%"]-Smax)/Smax*100))
+    SmaxstanGP <- sapply(simresult$stanGPtrend, function(x)ifelse(anyNA(x),NA,(1/x$mcmcsummary["b","50%"]-Smax)/Smax*100))
+  }else if(Bayesstat=="mean"){
+    SmaxRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(exp(x$mcmcsummary$summary["logSmax","mean"])-Smax)/Smax*100))
+    SmaxstanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(1/x$mcmcsummary["b","mean"]-Smax)/Smax*100))
+    SmaxstanGP <- sapply(simresult$stanGPtrend, function(x)ifelse(anyNA(x),NA,(1/x$mcmcsummary["b","mean"]-Smax)/Smax*100))
+  }else{
+    stop(paste("Bayesstat",Bayesstat,"not defined"))
+  }
   convsmaxRBmc <-sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary$summary["logSmax","Rhat"]-1)>.1)))
   convsmaxstanRB <-sapply(simresult$stanRBtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary["b","Rhat"]-1)>.1)))
   convsmaxstanGP <-sapply(simresult$stanGPtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary["b","Rhat"]-1)>.1)))
@@ -481,6 +511,24 @@ calculatepbias<- function(simresult, Smax, sig, siga){
   sigtmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["sige",1]-sig)/sig*100))
   sigstanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_e","50%"]-sig)/sig*100))
   sigstanGP <- sapply(simresult$stanGPtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_e","50%"]-sig)/sig*100))
+
+
+  if(Bayesstat=="median"){
+    sigRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,
+    (median(sqrt(as.data.frame(x$mcmc)$"rho") * sqrt(1/exp(as.data.frame(x$mcmc)$"logvarphi")))-sig)/sig*100))
+    sigstanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_e","50%"]-sig)/sig*100))
+    sigstanGP <- sapply(simresult$stanGPtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_e","50%"]-sig)/sig*100))
+
+  }else if(Bayesstat=="mean"){
+
+    sigRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,
+    (mean(sqrt(as.data.frame(x$mcmc)$"rho") * sqrt(1/exp(as.data.frame(x$mcmc)$"logvarphi")))-sig)/sig*100))
+    sigstanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_e","mean"]-sig)/sig*100))
+    sigstanGP <- sapply(simresult$stanGPtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_e","mean"]-sig)/sig*100))
+
+  }else{
+    stop(paste("Bayesstat",Bayesstat,"not defined"))
+  }
 
   convsigRBmc1 <-sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary$summary["logvarphi","Rhat"]-1)>.1)))
   convsigRBmc2 <-sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary$summary["rho","Rhat"]-1)>.1)))
@@ -507,10 +555,25 @@ calculatepbias<- function(simresult, Smax, sig, siga){
   sigatmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["sigw",1]-siga)/siga*100))
   sigastanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_a","50%"]-siga)/siga*100))
 
-
-  convsigastanRB <-sapply(simresult$stanRBtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary["sigma_e","Rhat"]-1)>.1)))
-  convsigastanGP <-sapply(simresult$stanGPtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary["sigma_e","Rhat"]-1)>.1)))
+  simresult$stanGPtrend[[2]]$mcmcsummary
+  convsigastanRB <-sapply(simresult$stanRBtrend,  function(x)ifelse(anyNA(x),NA,as.numeric(abs(x$mcmcsummary["sigma_a","Rhat"]-1)>.1)))
   
+  if(Bayesstat=="median"){
+    sigaRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,
+    (median(sqrt(1-as.data.frame(x$mcmc)$"rho") * sqrt(1/exp(as.data.frame(x$mcmc)$"logvarphi")))-siga)/siga*100))
+    sigastanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_a","50%"]-siga)/siga*100))
+
+
+
+  }else if(Bayesstat=="mean"){
+    sigaRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,
+    (mean(sqrt(1-as.data.frame(x$mcmc)$"rho") * sqrt(1/exp(as.data.frame(x$mcmc)$"logvarphi")))-siga)/siga*100))
+    sigastanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_a","mean"]-siga)/siga*100))
+
+    
+  }else{
+    stop(paste("Bayesstat",Bayesstat,"not defined"))
+  }
 
   
 
