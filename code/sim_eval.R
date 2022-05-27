@@ -25,21 +25,14 @@ dyn.load(dynlib("TMBmodels/Ricker_tva_Smax_ratiovar"))
 
 
 ao <- 3.5
-b<-1/30000
+b <- 1/30000
 
 
-ps<-seq(0,30000*5,1000)
-pr<-ps*exp(ao-b*ps)
+ps <- seq(0,30000*5,1000)
+pr <- ps*exp(ao-b*ps)
 plot(ps, pr)
 abline(1,1)
 
-sr <- simulateSRrandom(ao=3.5, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40, CapScalar=5 )
-sr
-par(mfrow=c(2,1))
-plot(sr$S,sr$R, xlim=c(0,35000*5), ylim=c(0,180000))
-abline(a=0,b=1)
-lines(ps,pr,col="red")
-plot(sr$a,type="b")
 
 
 
@@ -79,6 +72,10 @@ randsim <- runrandomsims(nsim=nsim,ao=ao, b=1/Smax, ER=0.0, fec= c(0,.1,.3,.5,.1
 #saveRDS(randsim, "../data/out/randsim.rds")
 #randsim <-readRDS("../data/out/randsim.rds")
 
+
+
+randsim$tmbholtKFtrend[[1]]$rep$postmeana
+
 #Filter onlyestimates that converged 
 
 #add filtered estimates to the plots
@@ -87,10 +84,6 @@ randsim <- runrandomsims(nsim=nsim,ao=ao, b=1/Smax, ER=0.0, fec= c(0,.1,.3,.5,.1
 dfbiasrand1<-calculatepbias(simresult=randsim,Smax=Smax, sig=sig,siga=siga, Bayesstat="mean")
 
 
-sapply(randsim$holtKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
-sapply(randsim$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
-sapply(randsim$RBtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
-sapply(randsim$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
 
 dfbiasrand1p<-dfbiasrand1[dfbiasrand1$convergence==0&!is.na(dfbiasrand1$convergence==0),]
 dfbiasrand1p<-dfbiasrand1p[dfbiasrand1p$fit!="lm",]
@@ -100,10 +93,13 @@ unique(dfbiasrand1p$param)
 head(dfbiasrand1p)
 #add
 
+
 give.n <- function(x){
   return(c(y = median(x)*1.05, label = length(x))) 
   # experiment with the multiplier to find the perfect position
 } 
+
+
 prand <- ggplot(dfbiasrand1p,aes(x=fit, y=pbias)) +
 geom_boxplot()+
 coord_cartesian(ylim = c(-100,100))+
@@ -119,7 +115,81 @@ prand
 ggsave("../figure/randsimbias.pdf")
 
 
+
+
+ca <- comparealpha(simresult=randsim)
+names(ca)
+
+
+
+arand <- ggplot(ca,aes(x=fit, y=abias)) +
+geom_boxplot()+
+coord_cartesian(ylim = c(-100,100))+
+geom_hline(yintercept=0) +
+theme_bw(14)+
+stat_summary(fun.data = give.n, geom = "text", hjust = 0.5,
+    vjust = 0.9)
+arand
+
+unique(ca$fit)
+
+filt_diff<-ca$a[ca$fit=="smoothKF"]-ca$a[ca$fit=="filterKF"]
+rb_diff<-ca$a[ca$fit=="smoothKF"]-ca$a[ca$fit=="RB"]
+rbfilt_diff<-ca$a[ca$fit=="RB"]-ca$a[ca$fit=="filterKF"]
+diffca<-data.frame(diff=c(filt_diff,rb_diff,rbfilt_diff),
+  type=rep(c("diff smooth and filt", "diff smooth and rb", "diff rb and filt"),each=length(filt_diff)),
+  yr=1:41,
+  sim=rep(1:100,each=41))
+
+
+
+adiff <- ggplot(diffca,aes(x=type, y=diff)) +
+geom_boxplot()+
+geom_hline(yintercept=0) +
+theme_bw(14)+
+stat_summary(fun.data = give.n, geom = "text", hjust = 0.5,
+    vjust = 0.9)+
+ylab("absolute difference")
+adiff
+
+
+df<-diffca[diffca$type=="diff smooth and filt",]
+df<-diffca[diffca$type=="diff smooth and rb",]
+
+
+linesdiff <- ggplot(diffca,aes(x=yr, y=diff)) +
+geom_line(aes( group=sim), alpha=.7)+
+theme_bw(14) +
+facet_wrap(~type)
+linesdiff
+
+summary(rbfilt_diff)
+quantile(rbfilt_diff, c(0.025,.1,.5,.9,.975), na.rm=TRUE)
+
+length(rbfilt_diff)
+sum(rbfilt_diff>0.,na.rm=TRUE)
+
+summary(rb_diff)
+summary(filt_diff)
 #look at changepoint and bcp
+
+sss<-rep(NA,44)
+rrr<-rep(NA,44)
+
+sss[1:4]<-ao/b
+for(i in 5:44){
+  rrr[i]<-sss[i-4]*exp(ao-b*sss[i-4])*exp(rnorm(1,0,.5)-(.5^2)/2)
+  sss[i]<- rrr[i]
+}
+
+ps<-seq(0,30000*5,1000)
+pr<-ps*exp(ao-b*ps)
+plot(ps, pr,type="l")
+
+points(sss[1:40],rrr[5:44])
+abline(1,1)
+
+
 
 sr <- simulateSRrandom(ao=ao,  b=1/Smax, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=sig, siga=siga, nobs=40, CapScalar=5 )
 sr
@@ -129,11 +199,11 @@ summary(fit1)$sigma
 plot(resid(fit1))
 
 
+#regime shift methods
 STARS(regLN=10,sig=summary(fit1)$sigma,series=resid(fit1),shift=1)
 
-
-    uu<-changepoint::cpt.meanvar(resid(fit1)[!is.na(resid(fit1))],method="PELT",test.stat="Normal",penalty="AIC",minseglen=10)
-    bpts<-c(1,uu@cpts)
+uu<-changepoint::cpt.meanvar(resid(fit1)[!is.na(resid(fit1))],method="PELT",test.stat="Normal",penalty="AIC",minseglen=10)
+bpts<-c(1,uu@cpts)
     sds<-sqrt(uu@param.est$variance)
     means<-exp(uu@param.est$mean)*exp(uu@param.est$variance/2)
     tmpFit$PeltMean<-NA

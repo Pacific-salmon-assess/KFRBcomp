@@ -317,8 +317,10 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
     
     holtKFfit <- kf.rw(initial=initial,x=s$S,y=s$logR_S)
   
-    holtKF[[i]]<-list(alpha=holtKFfit$smoothe.mean.a, sigobs=holtKFfit$sig.e, siga=holtKFfit$sig.w, beta=holtKFfit$b, 
-      smax=1/holtKFfit$b, convergence=holtKFfit$Report$convergence, message= holtKFfit$Report$message) 
+    holtKF[[i]]<-list(alpha=holtKFfit$smoothe.mean.a, alpha.var=holtKFfit$smoothe.var.a,
+     sigobs=holtKFfit$sig.e, siga=holtKFfit$sig.w, beta=holtKFfit$b, 
+      smax=1/holtKFfit$b, convergence=holtKFfit$Report$convergence, message= holtKFfit$Report$message,
+      filter.alpha=holtKFfit$post.mean.a, filter.vara=holtKFfit$post.var.a) 
     holtKFalpha[[i]]<-holtKFfit$smoothe.mean.a
 
     #Model 3.1 Carrie's KF TMB
@@ -593,6 +595,100 @@ return(dfbias)
 
 
 }
+
+
+
+
+
+
+comparealpha<- function(simresult, Bayesstat="median"){
+  
+
+
+  sima <- unlist(lapply(simresult$Simtrend, function(x)x$a))
+  
+  convRB <- unlist(sapply(simresult$RBtrend,  function(x)if(anyNA(x)){rep(NA,length(simresult$Simtrend[[1]]$a))}else{rep(x$convergence,length(simresult$Simtrend[[1]]$a))}))
+  convholttmb <- unlist(sapply(simresult$tmbholtKFtrend,  function(x)if(anyNA(x)){rep(NA,length(simresult$Simtrend[[1]]$a))}else{rep(x$convergence,length(simresult$Simtrend[[1]]$a))}))
+  convdlm <- unlist(sapply(simresult$dlmKFtrend,  function(x)if(anyNA(x)){rep(NA,length(simresult$Simtrend[[1]]$a))}else{rep(x$convergence,length(simresult$Simtrend[[1]]$a))}))
+  convaRBmc <- unlist(sapply(simresult$RBtrend,  function(x)if(is.na(x[1])){rep(NA,length(simresult$Simtrend[[1]]$a))}else{as.numeric(abs(x$mcmcsummary$summary[grep("alpha\\[",rownames(x$mcmcsummary$summary)),"Rhat"]-1)>.1)}))
+  convastanRB <- unlist(sapply(simresult$stanRBtrend, function(x)if(is.na(x[1])){rep(NA,length(simresult$Simtrend[[1]]$a))}else{as.numeric(abs(x$mcmcsummary[grep("log_a\\[",rownames(x$mcmcsummary)),"Rhat"]-1)>.1)}))
+    
+
+  #dlm estimates
+  smootha_dlm <- unlist(lapply(simresult$dlmKFtrend,  
+    function(x)if(!anyNA(x)){x$results$alpha}else{
+      rep(NA,length(simresult$Simtrend[[1]]$a))}))
+  smoothsea_dlm <- unlist(lapply(simresult$dlmKFtrend,  
+    function(x)if(!anyNA(x)){x$results$alpha_se}else{
+      rep(NA,length(simresult$Simtrend[[1]]$a))}))
+  
+  #filtered
+  #need to calculate
+  
+  #holt estimates
+  #smoothed
+  smootha_KFtmb <- unlist(lapply(simresult$tmbholtKFtrend,  
+    function(x)if(!anyNA(x)){x$sdrep[which(rownames(x$sdrep)=="smoothemeana"),1]}else{
+      rep(NA,length(simresult$Simtrend[[1]]$a))}))
+  smoothsea_KFtmb <- unlist(lapply(simresult$tmbholtKFtrend,  
+    function(x)if(!anyNA(x)){sqrt(x$sdrep[which(rownames(x$sdrep)=="smoothevara"),1])}else{
+      rep(NA,length(simresult$Simtrend[[1]]$a))}))
+  
+  #filtered
+  filtera_KFtmb<-unlist(lapply(simresult$tmbholtKFtrend,  
+    function(x)if(!anyNA(x)){x$rep$postmeana}else{rep(NA,length(simresult$Simtrend[[1]]$a))}))
+  filtersea_KFtmb<-unlist(lapply(simresult$tmbholtKFtrend,  
+    function(x)if(!anyNA(x)){sqrt(x$rep$postvara)}else{rep(NA,length(simresult$Simtrend[[1]]$a))}))
+
+
+  #Recursive Bayes TMB 
+  a_RBtmb <- unlist(lapply(simresult$RBtrend,  
+    function(x)if(!anyNA(x)){x$sdrep[which(rownames(x$sdrep)=="alpha"),1]}else{
+      rep(NA,length(simresult$Simtrend[[1]]$a))}))
+  sea_RBtmb <- unlist(lapply(simresult$RBtrend,  
+    function(x)if(!anyNA(x)){x$sdrep[which(rownames(x$sdrep)=="alpha"),2]}else{
+      rep(NA,length(simresult$Simtrend[[1]]$a))}))
+
+  #Recursive Bayes TMB mcmc
+  #Recursive Bayes stan mcmc
+  
+      
+  if(Bayesstat=="median"){
+
+    a_RBmc <- unlist(lapply(simresult$RBtrend,  
+      function(x)if(!anyNA(x)){x$mcmcsummary$summary[grep("alpha\\[",rownames(x$mcmcsummary$summary)),"50%"]}else{
+      rep(NA,length(simresult$Simtrend[[1]]$a))}))
+        
+    a_stan <- unlist(lapply(simresult$stanRBtrend,  
+      function(x)if(!anyNA(x)){x$mcmcsummary[grep("log_a\\[",rownames(x$mcmcsummary)),"50%"]}else{
+      rep(NA,length(simresult$Simtrend[[1]]$a))}))
+
+  }else if(Bayesstat=="mean"){
+        
+    a_RBmc <- unlist(lapply(simresult$RBtrend,  
+      function(x)if(!anyNA(x)){x$mcmcsummary$summary[grep("alpha\\[",rownames(x$mcmcsummary$summary)),"mean"]}else{
+      rep(NA,length(simresult$Simtrend[[1]]$a))}))
+        
+    a_stan <- unlist(lapply(simresult$stanRBtrend,  
+      function(x)if(!anyNA(x)){x$mcmcsummary[grep("log_a\\[",rownames(x$mcmcsummary)),"mean"]}else{
+      rep(NA,length(simresult$Simtrend[[1]]$a))}))
+      
+  }else{
+        stop(paste("Bayesstat",Bayesstat,"not defined"))
+  }
+   
+
+
+  dfa <- data.frame(a=c(smootha_dlm, smootha_KFtmb, filtera_KFtmb, a_RBtmb,  a_RBmc, a_stan ),
+    abias=c((smootha_dlm-sima)/sima*100, (smootha_KFtmb-sima)/sima*100, (filtera_KFtmb-sima)/sima*100, 
+      (a_RBtmb-sima)/sima*100,  (a_RBmc-sima)/sima*100, (a_stan-sima)/sima*100 ),
+    se_a =c(smoothsea_dlm, smoothsea_KFtmb, filtersea_KFtmb, sea_RBtmb,rep(NA,length(a_RBmc)),rep(NA,length(a_stan) )),
+    fit=rep(c("smoothdlm","smoothKF", "filterKF", "RB","RBmcmc", "stanrb"), each=length(smootha_dlm)),
+     convergence=c(convdlm, convholttmb, convholttmb, convRB, convaRBmc, convastanRB))
+
+  return(dfa)      
+}
+
 
 
 #==========================================================

@@ -8,12 +8,10 @@ bibliography: all.bib
 
 # Introduction
 
-Variability  and declines in stock producvity is an increasing  fo managent of Pacific salmon populations.
+Variability and declines in stock producvity is an increasing issue associated with Pacific salmon populations.
+Methods for estimating time-varying productivity usually entails the use of covariates in the stock-recruitment curves or the use of state-space models with a random walk component on the productivity parameter of the recruitment curve (Peterman's productivity method, Silvar-Viladomiu 2022). 
 
-
-Methods for estimating time-varying productivity usually entails the use of covariates or the use of state-space models with a random walk component on the productivity parameter (Peterman's productivity method, Silvar-Viladomiu 2022). 
-
-The most common method for estimating time-varying productivity with the Peterman's productivity method is to apply a Kalman Filter with fixed-interval smoothing (Peterman papers). Harvey (1989) showed that the fixed-interval smoothing method gave the best estimates of the time-varying parameter as well as its variance parameter. However, more recently, other methods for estimation of state-space models are available, including methods that rely on Laplace approximations (e.g., TMB and ADMB) and mcmc methods (e.g. stan). The approaches that do not rely on the Kalman filter are sometimes called the Recursive Bayes (Freshwater and CSAS.)
+The most common method for estimating time-varying productivity with the Peterman's productivity method is to apply a Kalman Filter with fixed-interval smoothing (Peterman papers). Harvey (1989) showed that the fixed-interval smoothing method gave the best estimates of the time-varying parameter as well as its variance parameter. However, more recently, other methods for estimation of state-space models are available, including methods that rely on Laplace approximations (e.g., TMB and ADMB) and mcmc methods (e.g., stan). The approaches that do not rely on the Kalman filter and fixed-interval smoothing are sometimes called the Recursive Bayes methods (Freshwater and CSAS.). Although these methodologies are used interchangeably, they have not been formally compared in the context of estimating time-varying productivity in stock-recruitment curves. 
 
 Here we compare the performance of two estimators for time-varying productivity within Peterman's productivity method: the Kalman filter and the Recursive Bayes method implemented in TMB. 
 

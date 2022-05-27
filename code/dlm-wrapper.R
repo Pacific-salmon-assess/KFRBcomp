@@ -48,7 +48,7 @@ fitDLM <- function(data = bt,
 
 
   # 4.  maximum likelihood optimization of the variance
-  dlm_out<-dlmMLE(y=lnRS, build=build_mod, parm=rep(-.1, dlmPars-2), method="Nelder-Mead")
+  dlm_out<- dlmMLE(y=lnRS, build=build_mod, parm=rep(-.1, dlmPars-2), method="Nelder-Mead")
   
   # 5. log-likelihood
   lls <- dlm_out$value
@@ -60,14 +60,20 @@ fitDLM <- function(data = bt,
   outsFilter <- dlmFilter(y=lnRS,mod=dlmMod)
 
   
-  alpha_filt <- outsFilter$m[-1,1,drop=FALSE]
   
-  beta_filt <- outsFilter$m[-1,2,drop=FALSE]
+  outsFilter$U.C[[1]] %*% diag(outsFilter$D.C[1,]^2) %*% t(outsFilter$U.C[[1]])
 
   
+  alpha_filt <- outsFilter$m[-1,1,drop=FALSE]  
+  beta_filt <- outsFilter$m[-1,2,drop=FALSE]
+  
+  #CW: I am not 100% this is correct
+  alpha_filt_se <- sqrt(array(as.numeric(unlist(dlmSvd2var(outsFilter$U.C, outsFilter$D.C))), dim=c( 2, 2,length(lnRS)+1)))[1,1,-1]
+  beta_filt_se <- sqrt(array(as.numeric(unlist(dlmSvd2var(outsFilter$U.C, outsFilter$D.C))), dim=c( 2, 2,length(lnRS)+1)))[2,2,-1]
+ 
+
   # 8. backward recursive smoothing
   outsSmooth	<- dlmSmooth(outsFilter)
-
   
   # 9. grab parameters, their SEs and calculate AICc
   alpha<- cbind(alpha,outsSmooth$s[-1,1,drop=FALSE])
@@ -84,7 +90,7 @@ fitDLM <- function(data = bt,
   message <- dlm_out$message
 
   # 10. output results
-  results <- cbind(data,alpha, beta,alpha_se,beta_se, alpha_filt)
+  results <- cbind(data,alpha, beta,alpha_se,beta_se, alpha_filt, beta_filt, alpha_filt_se, beta_filt_se)
 
   output <- list(results=results,AICc=AICc, BIC=BIC, sd.est= sd.est, convergence=convergence, message=message)
 
