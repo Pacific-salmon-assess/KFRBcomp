@@ -36,12 +36,43 @@ b<-1/30000
 
 # Methods
 
-In order to compare the estimates we designed a simple simulation exercise in which data was simulate based on a Ricker curve over 100 years. In the last 50 years of the time-series the productivity parameter varied following four scenarios: random walk, decline, sine and regime. 
+## Simulation models
+
+In order to compare the estimates we designed a simple simulation exercise in which data was simulate based on a Ricker curve over 100 years. In the last 40 years of the time-series the productivity parameter varied following four scenarios: random walk, decline, sine and regime. 
 Add equations
 
-The las 40 years in the time series were used as input to the estimation models: Kalman Filter, linear model  and, recursive Bayes. The Kalman filter was implemented within the dlm R package. The recursive Bayes model was implemented in TMB. A simple time-invariant linear model was also implemented for comparison purposes
+The las 40 years in the time series were used as input to the estimation models: Kalman Filter, linear model  and, recursive Bayes. 
+
+The  simlated population was considered to be extinct if the numbers of spawners was less than one. Trials in which the population went extinct were removed from the analysis
+
+## Estimation models
+
+We evaluated 
+
+dlm
+
+KFfuncs
+
+RB 
+
+Rbmc
+
+stan RB
+
+Only  estimates with diagnostics indication convergence were considered in the analyses. 
+
+The Kalman filter was implemented within the dlm R package. The recursive Bayes model was implemented in TMB. A simple time-invariant linear model was also implemented for comparison purposes
 
 # Findings
+
+plots of bias in main parameters
+
+close look in alpha estimates for MLE estimates
+
+close look in alpha quantities for the mcmc estiamtes
+
+estiamtes of Smsy, umsy and Sgen.
+
 Time-varying models are more accurate and precise than the simple linear model
  
 The comparison of the estimation methods showed extremely similar results for the estimate sof alphs and Smax generated with the Kalman filter and the Recursive bayes models. 
@@ -55,3 +86,7 @@ Pattern in distribution of the estimates did not chane across scenarios.
 ```{r comparisonplot, echo=FALSE, out.width='100%',fig.align='center', fig.cap='percent bias for model parameters for three estimation methods: Kalman Filter (dlm), linear model (lm) and, recursive Bayes (RB), and four time-varying productivity scenarios: random- walk (random), linear decline trend (decline), sine fluctuations (sine), regime shifts (regime)'}
 knitr::include_graphics('../figure/simscomp.png')
 ```
+
+# Recommendation
+
+

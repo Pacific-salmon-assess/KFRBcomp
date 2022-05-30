@@ -34,6 +34,9 @@ simulateSRrandom <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, 
     R <- NULL
     Robs <- NULL
     a <- NULL
+    Smsy <- NULL
+    Umsy <- NULL
+    Sgen <- NULL
     
     a[1:5] <- ao
     Seq <- ao/b
@@ -76,11 +79,17 @@ simulateSRrandom <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, 
       }
       
     }
+    Smsy <- (1 - gsl::lambert_W0(exp(1 - a))) /b
+    Umsy <- .5 * a - 0.07 * a^2
+    Sgen <- unlist(mapply(sGenSolver,a=a,Smsy=Smsy, b=b))
 
 
   outdf <- data.frame(R=R,
 	S=S,
 	a=a,
+  Umsy=Umsy,
+  Smsy=Smsy,
+  Sgen=Sgen,
 	logR_S=log(R/S))
 
   return(outdf[(100-nobs):100,])
@@ -94,7 +103,10 @@ simulateSRtrend <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5,
     S <- NULL
     R <- NULL
     a <- NULL
-   
+    Smsy <- NULL
+    Umsy <- NULL
+    Sgen <- NULL
+    
     a[1:5] <- ao
     Seq <- ao/b
     S[1] <- Seq
@@ -127,6 +139,12 @@ simulateSRtrend <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5,
     }
     a[6:(length(yrs)-(nobs+10))]<-ao
     a[trlen] <- atrend
+
+    Smsy <- (1 - gsl::lambert_W0(exp(1 - a))) /b
+    Umsy <- .5 * a - 0.07 * a^2
+    Sgen <- unlist(mapply(sGenSolver,a=a,Smsy=Smsy, b=b))
+
+      
   
     for(y in 2:length(fec)){
       S[y]<-0    
@@ -161,6 +179,9 @@ simulateSRtrend <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5,
   outdf <- data.frame(R=R,
 	S=S,
 	a=a, 
+  Umsy=Umsy,
+  Smsy=Smsy,
+  Sgen=Sgen,
 	logR_S=log(R/S))
 
   return(outdf[(100-nobs+1):100,])
@@ -172,7 +193,6 @@ simulateSRtrend <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5,
 
 runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRUE, trend="random walk",
 	fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40, CapScalar=5,lowsca=.5,hisca=2, ampsc=.5 ){
-
 
 
   #create empty list
@@ -243,7 +263,7 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
       next;
     }
  
-    srm <- lm(s$logR_S~ s$S)
+    srm <- lm(s$logR_S ~ s$S)
 
     if(is.na(srm$coefficients[[2]])){
       next;
@@ -276,6 +296,11 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
     opt <- nlminb(obj$par,obj$fn,obj$gr)
   
     sdrep <- summary(sdreport(obj))
+
+
+    Smsyrb <- (1 - gsl::lambert_W0(exp(1 - sdrep[rownames(sdrep)=="alpha",1]))) /sdrep[rownames(sdrep)=="beta",1]
+    Sgenrb <- unlist(mapply(sGenSolver,a=sdrep[rownames(sdrep)=="alpha",1],
+      Smsy=Smsyrb, b=sdrep[rownames(sdrep=="beta",1]))
   
     #MCMC
     fitmcmc1 <- tmbstan(obj, chains = 4, iter = 2000,
@@ -284,12 +309,13 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
                  upper=c(10,16,1,6),
                  control = list(adapt_delta = 0.95,max_treedepth = 15), warmup = 500,  thin = 1)
     
-      mc <- extract(fitmcmc1, pars=names(obj$par),
+    mc <- extract(fitmcmc1, pars=names(obj$par),
                 inc_warmup=TRUE, permuted=FALSE)
     fit_summary <- summary(fitmcmc1)   
     
   
-    RB[[i]] <- list(sdrep=sdrep, convergence=opt$convergence, message=opt$message,  mcmc= fitmcmc1, mcmcsummary=  fit_summary )
+    RB[[i]] <- list(sdrep=sdrep, convergence=opt$convergence, message=opt$message, 
+     mcmc= fitmcmc1, mcmcsummary=  fit_summary, Sgen=Sgenrb )
     RBalpha[[i]] <- sdrep[which(rownames(sdrep)=="alpha"),1]
     RBalphamc[[i]] <- fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"50%"] 
   
@@ -299,6 +325,13 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
       spwn=s$S,
       rec=s$R)
     avarydlm <-fitDLM(data=SRdata2, alpha_vary = TRUE, beta_vary = FALSE)
+    umsydlm <- .5 * avarydlm$results$alpha - 0.07 * (avarydlm$results$alpha)^2;
+    Smsydlm <- (1 - gsl::lambert_W0(exp(1 - avarydlm$results$alpha))) /-avarydlm$results$beta
+    Sgendlm <- unlist(mapply(sGenSolver,a=avarydlm$results$alpha,
+      Smsy=Smsydlm, b=-avarydlm$results$beta))
+  
+    
+
     dlmKF[[i]] <- list(results=avarydlm$results, alpha=avarydlm$results$alpha, sigobs=avarydlm$sd.est[1], 
       siga=avarydlm$sd.est[2], beta=-avarydlm$results$beta[1], smax=-1/avarydlm$results$beta[1],
        message=avarydlm$message, convergence=avarydlm$convergence)
@@ -327,24 +360,40 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
     
     rekf <- kfTMB(data=s, silent = FALSE, control = TMBcontrol())
     kfrep <- summary(sdreport(rekf$tmb_obj))
+    alphakftmb <- kfrep[which(rownames(kfrep)=="smoothemeana"),1]
+    kfrep[which(rownames(kfrep)=="b"),1]
+
+    umsykftmb <- .5 * alphakftmb - 0.07 * (alphakftmb)^2;
+    Smsykftmb <- (1 - gsl::lambert_W0(exp(1 - alphakftmb)))/-kfrep[which(rownames(kfrep)=="b"),1]
+    Sgenkftmb <- unlist(mapply(sGenSolver,a=alphakftmb,
+      Smsy=Smsykftmb, b=-kfrep[which(rownames(kfrep)=="b"),1]))
   
 
     tmbholtKF[[i]]<-list(obj=rekf$tmb_obj, sdrep=kfrep, rep=rekf$tmb_obj$report(),message=rekf$model$message,
-    convergence=rekf$model$convergence )
+    convergence=rekf$model$convergence, Umsy=umsykftmb, Smsy= Smsykftmb, Sgen=Sgenkftmb)
     tmbholtKFalpha[[i]]<-kfrep[which(rownames(kfrep)=="smoothemeana"),1]
 
     #Model 4 Stan RB
-    stan_rb=rstan::stan(file=here('code','stancode','ricker_linear_varying_a.stan'), data=list(R_S = s$logR_S,
+    stan_rb<-rstan::stan(file=here('code','stancode','ricker_linear_varying_a.stan'), data=list(R_S = s$logR_S,
                                                  N=nrow(s),
                                                  TT=as.numeric(factor(seq_len(nrow(s)))),
-                                                 S=c((s$S))),
-                                                                                                      
+                                                 S=c((s$S))),                                                                                                   
             pars = c('log_a','b','sigma_e','sigma_a'),
             control = list(adapt_delta = 0.95,max_treedepth = 15), warmup = 500, chains = 4, iter = 2000, thin = 1)
 
-    #params_stan_rb=rstan::extract(stan_rb)
+    params_stan_rb=rstan::extract(stan_rb)
+    
+    umsystanrb <- .5 * params_stan_rb$log_a - 0.07 * (params_stan_rb$log_a)^2
+    Smsystanrb <- matrix(NA, nrow=nrow(umsykftmb), ncol=ncol(umsykftmb))
+    Sgenstanrb <- matrix(NA, nrow=nrow(umsykftmb), ncol=ncol(umsykftmb))
 
-    stanRB[[i]]<-list(stanfit=stan_rb,mcmcsummary=summary(stan_rb)$summary)
+    for(i in 1:ncol(Smsykftmb)){
+      Smsystanrb[,i] <- (1 - gsl::lambert_W0(exp(1 - params_stan_rb$log_a[,i])))/params_stan_rb$b
+      Sgenstanrb[,i] <- unlist(mapply(sGenSolver,a=params_stan_rb$log_a[,i],
+      Smsy=Smsykftmb[,i], b=params_stan_rb$b))
+    }
+    
+    stanRB[[i]]<-list(stanfit=stan_rb,mcmcsummary=summary(stan_rb)$summary, umsy=umsystanrb, Smsy=Smsystanrb, Sgen=Sgenstanrb )
     stanRBa[[i]]<-summary(stan_rb)$summary[grep("log_a\\[",rownames(summary(stan_rb)$summary)), "50%"] 
 
 
@@ -356,9 +405,23 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
                                                                              S=c(s$S)),
             pars = c('log_a','b','sigma_e'),
             control = list(adapt_delta = 0.95,max_treedepth = 15), warmup = 500, chains = 4, iter = 2000, thin = 1)
+    
+    params_stan_gp <- rstan::extract(stan_GP)
+    names(params_stan_gp)
+    dim(params_stan_gp$log_a)
 
+    umsyGP <- .5 * params_stan_gp$log_a - 0.07 * (params_stan_gp$log_a)^2
+    SmsyGP <- matrix(NA, nrow=nrow(umsyGP), ncol=ncol(umsyGP))
+    SgenGP <- matrix(NA, nrow=nrow(umsyGP), ncol=ncol(umsyGP))
 
-    stanGP[[i]]<-list(stanfit=stan_GP,mcmcsummary=summary(stan_GP)$summary)
+    for(i in 1:ncol(SmsyGP)){
+      SmsyGP[,i] <- (1 - gsl::lambert_W0(exp(1 - params_stan_gp$log_a[,i])))/params_stan_gp$b
+      SgenGP[,i] <- unlist(mapply(sGenSolver,a=params_stan_gp$log_a[,i],
+      Smsy=SmsyGP[,i], b=params_stan_gp$b))
+    }
+    
+
+    stanGP[[i]]<-list(stanfit=stan_GP,mcmcsummary=summary(stan_GP)$summary, umsy=umsyGP, Smsy=SmsyGP, Sgen=SgenGP)
     stanGPa[[i]]<-summary(stan_GP)$summary[grep("log_a\\[",rownames(summary(stan_GP)$summary)), "50%"] 
 
 
