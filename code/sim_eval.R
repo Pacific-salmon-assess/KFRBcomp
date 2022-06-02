@@ -17,6 +17,7 @@ library(cowplot)
 
 source("dlm-wrapper.R")
 source("sim_eval_func.R")
+source("sgen_func.R")
 
 #source("C:/Users/worc/Documents/KF-funcs-appl/HoltMichielsens2020/KFcode.R")
 

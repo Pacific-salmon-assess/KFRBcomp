@@ -300,7 +300,7 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
 
     Smsyrb <- (1 - gsl::lambert_W0(exp(1 - sdrep[rownames(sdrep)=="alpha",1]))) /sdrep[rownames(sdrep)=="beta",1]
     Sgenrb <- unlist(mapply(sGenSolver,a=sdrep[rownames(sdrep)=="alpha",1],
-      Smsy=Smsyrb, b=sdrep[rownames(sdrep=="beta",1]))
+      Smsy=Smsyrb, b=sdrep[rownames(sdrep)=="beta",1]))
   
     #MCMC
     fitmcmc1 <- tmbstan(obj, chains = 4, iter = 2000,
@@ -309,13 +309,25 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
                  upper=c(10,16,1,6),
                  control = list(adapt_delta = 0.95,max_treedepth = 15), warmup = 500,  thin = 1)
     
-    mc <- extract(fitmcmc1, pars=names(obj$par),
-                inc_warmup=TRUE, permuted=FALSE)
-    fit_summary <- summary(fitmcmc1)   
+    mc <- extract(fitmcmc1, 
+                inc_warmup=FALSE, permuted=FALSE)
     
+    mcmc<-reshape::melt(mc, as.is=TRUE)
+    mcmca<-mcmc[grep("alpha\\[",mcmc$parameters),]
+    mcmca$b <- 1/exp(mcmc$value[mcmc$parameters=="logSmax"])
+    
+    fit_summary <- summary(fitmcmc1)
+
+    umsyrbmcmc <- .5 * mcmca$value - 0.07 * (mcmca$value)^2
+    Smsyrbmcmc <- (1 - gsl::lambert_W0(exp(1 - mcmca$value)))/mcmca$b
+    Sgenrbmcmc <- unlist(mapply(sGenSolver,a=mcmca$value,
+      Smsy=Smsyrbmcmc, b=mcmca$b))
+    mcmcrefs<-data.frame(umsy=umsyrbmcmc,
+      Smsy=Smsyrbmcmc, Sgen=Sgenrbmcmc )
+   
   
     RB[[i]] <- list(sdrep=sdrep, convergence=opt$convergence, message=opt$message, 
-     mcmc= fitmcmc1, mcmcsummary=  fit_summary, Sgen=Sgenrb )
+     mcmc= fitmcmc1, mcmcsummary=  fit_summary, Sgen=Sgenrb, mcmcRP=mcmcrefs )
     RBalpha[[i]] <- sdrep[which(rownames(sdrep)=="alpha"),1]
     RBalphamc[[i]] <- fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"50%"] 
   
@@ -361,7 +373,7 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
     rekf <- kfTMB(data=s, silent = FALSE, control = TMBcontrol())
     kfrep <- summary(sdreport(rekf$tmb_obj))
     alphakftmb <- kfrep[which(rownames(kfrep)=="smoothemeana"),1]
-    kfrep[which(rownames(kfrep)=="b"),1]
+    
 
     umsykftmb <- .5 * alphakftmb - 0.07 * (alphakftmb)^2;
     Smsykftmb <- (1 - gsl::lambert_W0(exp(1 - alphakftmb)))/-kfrep[which(rownames(kfrep)=="b"),1]
@@ -381,16 +393,16 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
             pars = c('log_a','b','sigma_e','sigma_a'),
             control = list(adapt_delta = 0.95,max_treedepth = 15), warmup = 500, chains = 4, iter = 2000, thin = 1)
 
-    params_stan_rb=rstan::extract(stan_rb)
+    params_stan_rb<-rstan::extract(stan_rb)
     
     umsystanrb <- .5 * params_stan_rb$log_a - 0.07 * (params_stan_rb$log_a)^2
-    Smsystanrb <- matrix(NA, nrow=nrow(umsykftmb), ncol=ncol(umsykftmb))
-    Sgenstanrb <- matrix(NA, nrow=nrow(umsykftmb), ncol=ncol(umsykftmb))
+    Smsystanrb <- matrix(NA, nrow=nrow(umsystanrb), ncol=ncol(umsystanrb))
+    Sgenstanrb <- matrix(NA, nrow=nrow(umsystanrb), ncol=ncol(umsystanrb))
 
-    for(i in 1:ncol(Smsykftmb)){
-      Smsystanrb[,i] <- (1 - gsl::lambert_W0(exp(1 - params_stan_rb$log_a[,i])))/params_stan_rb$b
-      Sgenstanrb[,i] <- unlist(mapply(sGenSolver,a=params_stan_rb$log_a[,i],
-      Smsy=Smsykftmb[,i], b=params_stan_rb$b))
+    for(n in 1:ncol(Smsystanrb)){
+      Smsystanrb[,n] <- (1 - gsl::lambert_W0(exp(1 - params_stan_rb$log_a[,n])))/params_stan_rb$b
+      Sgenstanrb[,n] <- unlist(mapply(sGenSolver,a=params_stan_rb$log_a[,n],
+      Smsy=Smsystanrb[,n], b=params_stan_rb$b))
     }
     
     stanRB[[i]]<-list(stanfit=stan_rb,mcmcsummary=summary(stan_rb)$summary, umsy=umsystanrb, Smsy=Smsystanrb, Sgen=Sgenstanrb )
