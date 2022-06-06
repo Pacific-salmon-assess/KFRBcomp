@@ -6,6 +6,8 @@
 
 
 library(KFfuncs)
+compile("TMBmodels/Ricker_tva_Smax_ratiovar.cpp")
+dyn.load(dynlib("TMBmodels/Ricker_tva_Smax_ratiovar"))
 
 #ao<-3
 #b<-1/10000
@@ -79,9 +81,20 @@ simulateSRrandom <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, 
       }
       
     }
-    Smsy <- (1 - gsl::lambert_W0(exp(1 - a))) /b
-    Umsy <- .5 * a - 0.07 * a^2
-    Sgen <- unlist(mapply(sGenSolver,a=a,Smsy=Smsy, b=b))
+
+    for(n in seq_along(a)){
+
+      if(a[n]>0){
+        Smsy[n] <- (1 - gsl::lambert_W0(exp(1 - a[n]))) /b
+        Umsy[n] <- .5 * a[n] - 0.07 * a[n]^2
+        Sgen[n] <- unlist(mapply(sGenSolver,a=a[n],Smsy=Smsy[n], b=b))
+      }else{
+        Smsy[n] <- NA
+        Umsy[n] <- NA
+        Sgen[n] <- NA
+      }
+    } 
+    
 
 
   outdf <- data.frame(R=R,
@@ -134,16 +147,29 @@ simulateSRtrend <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5,
 
     }else if(trend=="regime"){
         
-        atrend<- ao *rep(rep(c(.5,2),each=10),length.out=length(trlen))
+      atrend<- ao *rep(rep(c(.5,2),each=10),length.out=length(trlen))
         
     }
     a[6:(length(yrs)-(nobs+10))]<-ao
     a[trlen] <- atrend
+    
 
-    Smsy <- (1 - gsl::lambert_W0(exp(1 - a))) /b
-    Umsy <- .5 * a - 0.07 * a^2
-    Sgen <- unlist(mapply(sGenSolver,a=a,Smsy=Smsy, b=b))
+    Smsy <- NULL
+    Umsy <- NULL
+    Sgen <- NULL
+    for(n in seq_along(a)){
 
+      if(a[n]>0){
+        Smsy[n] <- (1 - gsl::lambert_W0(exp(1 - a[n]))) /b
+        Umsy[n] <- .5 * a[n] - 0.07 * a[n]^2
+        Sgen[n] <- unlist(mapply(sGenSolver,a=a[n],Smsy=Smsy[n], b=b))
+      }else{
+        Smsy[n] <- NA
+        Umsy[n] <- NA
+        Sgen[n] <- NA
+      }
+    } 
+    
       
   
     for(y in 2:length(fec)){
@@ -205,8 +231,8 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
   dlmKFalpha <- list()
   RBalpha <- list()
   RBalphamc <- list()
-  holtKF <- list()
-  holtKFalpha <- list()
+  #holtKF <- list()
+  #holtKFalpha <- list()
   tmbholtKF <- list()
   tmbholtKFalpha <- list()
   stanRB <-list()
@@ -217,7 +243,7 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
   for(i in seq_len(nsim)){
 
     if(trend=="random walk"){
-       s <- simulateSRrandom(ao=ao, b=b, ER=ER, fec= fec, sig=sig, siga=siga, nobs=nobs, CapScalar=CapScalar )
+      s <- simulateSRrandom(ao=ao, b=b, ER=ER, fec= fec, sig=sig, siga=siga, nobs=nobs, CapScalar=CapScalar )
 
     }else if(trend=="decline"){
       s <- simulateSRtrend(ao=ao, b=b, ER=ER, fec= fec, sig=sig, siga=NA, nobs=nobs,
@@ -252,8 +278,8 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
       dlmKFalpha[[i]]<-NA
       RBalpha[[i]]<-NA
       RBalphamc[[i]]<-NA
-      holtKF[[i]]<-NA
-      holtKFalpha[[i]]<-NA
+      #holtKF[[i]]<-NA
+      #holtKFalpha[[i]]<-NA
       tmbholtKF[[i]]<-NA
       tmbholtKFalpha[[i]]<-NA
       stanRB[[i]]<-NA
@@ -299,8 +325,9 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
 
 
     Smsyrb <- (1 - gsl::lambert_W0(exp(1 - sdrep[rownames(sdrep)=="alpha",1]))) /sdrep[rownames(sdrep)=="beta",1]
-    Sgenrb <- unlist(mapply(sGenSolver,a=sdrep[rownames(sdrep)=="alpha",1],
-      Smsy=Smsyrb, b=sdrep[rownames(sdrep)=="beta",1]))
+    #print("Sgen Recursive Bayes")
+    #Sgenrb <- unlist(mapply(sGenSolver,a=sdrep[rownames(sdrep)=="alpha",1],
+    #  Smsy=Smsyrb, b=sdrep[rownames(sdrep)=="beta",1]))
   
     #MCMC
     fitmcmc1 <- tmbstan(obj, chains = 4, iter = 2000,
@@ -320,53 +347,53 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
 
     umsyrbmcmc <- .5 * mcmca$value - 0.07 * (mcmca$value)^2
     Smsyrbmcmc <- (1 - gsl::lambert_W0(exp(1 - mcmca$value)))/mcmca$b
-    Sgenrbmcmc <- unlist(mapply(sGenSolver,a=mcmca$value,
-      Smsy=Smsyrbmcmc, b=mcmca$b))
+    #print("Sgen Recursive Bayes MCMC")
+    #Sgenrbmcmc <- unlist(mapply(sGenSolver,a=mcmca$value,
+    #  Smsy=Smsyrbmcmc, b=mcmca$b))
     mcmcrefs<-data.frame(umsy=umsyrbmcmc,
-      Smsy=Smsyrbmcmc, Sgen=Sgenrbmcmc )
+      Smsy=Smsyrbmcmc )
    
-  
     RB[[i]] <- list(sdrep=sdrep, convergence=opt$convergence, message=opt$message, 
-     mcmc= fitmcmc1, mcmcsummary=  fit_summary, Sgen=Sgenrb, mcmcRP=mcmcrefs )
+     mcmc= fitmcmc1, mcmcsummary=  fit_summary, mcmcRP=mcmcrefs )
     RBalpha[[i]] <- sdrep[which(rownames(sdrep)=="alpha"),1]
     RBalphamc[[i]] <- fit_summary$summary[grep("alpha\\[",rownames(fit_summary$summary)),"50%"] 
   
-
     #Model 2 - tv a and static b
     SRdata2 <- data.frame(byr=seq_along(s$S),
       spwn=s$S,
       rec=s$R)
     avarydlm <-fitDLM(data=SRdata2, alpha_vary = TRUE, beta_vary = FALSE)
     umsydlm <- .5 * avarydlm$results$alpha - 0.07 * (avarydlm$results$alpha)^2;
-    Smsydlm <- (1 - gsl::lambert_W0(exp(1 - avarydlm$results$alpha))) /-avarydlm$results$beta
-    Sgendlm <- unlist(mapply(sGenSolver,a=avarydlm$results$alpha,
-      Smsy=Smsydlm, b=-avarydlm$results$beta))
-  
+    Smsydlm <- (1 - gsl::lambert_W0(exp(1 - avarydlm$results$alpha))) /-avarydlm$results$beta    
     
+    #print("Sgen KF dlm")    
+    #Sgendlm <- unlist(mapply(sGenSolver,a=avarydlm$results$alpha,
+    #  Smsy=Smsydlm, b=-avarydlm$results$beta))
+   
 
     dlmKF[[i]] <- list(results=avarydlm$results, alpha=avarydlm$results$alpha, sigobs=avarydlm$sd.est[1], 
       siga=avarydlm$sd.est[2], beta=-avarydlm$results$beta[1], smax=-1/avarydlm$results$beta[1],
-       message=avarydlm$message, convergence=avarydlm$convergence)
+       message=avarydlm$message, convergence=avarydlm$convergence, Smsy=Smsydlm, umsy=umsydlm)
     dlmKFalpha[[i]] <- avarydlm$results$alpha
 
     #Model 3 Carrie's KF - this seem to be broken
     
-    initial <- list()
-    initial$mean.a <- srm$coefficients[1]
-    initial$var.a <- .5
-    initial$b <- srm$coefficients[2]
-    initial$ln.sig.e <- log(.5)
-    initial$ln.sig.w <- log(.5)
-    initial$Ts <- 0
-    initial$EstB <- TRUE
-    
-    holtKFfit <- kf.rw(initial=initial,x=s$S,y=s$logR_S)
-  
-    holtKF[[i]]<-list(alpha=holtKFfit$smoothe.mean.a, alpha.var=holtKFfit$smoothe.var.a,
-     sigobs=holtKFfit$sig.e, siga=holtKFfit$sig.w, beta=holtKFfit$b, 
-      smax=1/holtKFfit$b, convergence=holtKFfit$Report$convergence, message= holtKFfit$Report$message,
-      filter.alpha=holtKFfit$post.mean.a, filter.vara=holtKFfit$post.var.a) 
-    holtKFalpha[[i]]<-holtKFfit$smoothe.mean.a
+    #initial <- list()
+    #initial$mean.a <- srm$coefficients[1]
+    #initial$var.a <- .5
+    #initial$b <- srm$coefficients[2]
+    #initial$ln.sig.e <- log(.5)
+    #initial$ln.sig.w <- log(.5)
+    #initial$Ts <- 0
+    #initial$EstB <- TRUE
+    #
+    #holtKFfit <- kf.rw(initial=initial,x=s$S,y=s$logR_S)
+    #
+    #holtKF[[i]]<-list(alpha=holtKFfit$smoothe.mean.a, alpha.var=holtKFfit$smoothe.var.a,
+    # sigobs=holtKFfit$sig.e, siga=holtKFfit$sig.w, beta=holtKFfit$b, 
+    #  smax=1/holtKFfit$b, convergence=holtKFfit$Report$convergence, message= holtKFfit$Report$message,
+    #  filter.alpha=holtKFfit$post.mean.a, filter.vara=holtKFfit$post.var.a) 
+    #holtKFalpha[[i]]<-holtKFfit$smoothe.mean.a
 
     #Model 3.1 Carrie's KF TMB
     
@@ -377,12 +404,13 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
 
     umsykftmb <- .5 * alphakftmb - 0.07 * (alphakftmb)^2;
     Smsykftmb <- (1 - gsl::lambert_W0(exp(1 - alphakftmb)))/-kfrep[which(rownames(kfrep)=="b"),1]
-    Sgenkftmb <- unlist(mapply(sGenSolver,a=alphakftmb,
-      Smsy=Smsykftmb, b=-kfrep[which(rownames(kfrep)=="b"),1]))
+    #print("Sgen KF TMB") 
+    #Sgenkftmb <- unlist(mapply(sGenSolver,a=alphakftmb,
+    #  Smsy=Smsykftmb, b=-kfrep[which(rownames(kfrep)=="b"),1]))
   
 
     tmbholtKF[[i]]<-list(obj=rekf$tmb_obj, sdrep=kfrep, rep=rekf$tmb_obj$report(),message=rekf$model$message,
-    convergence=rekf$model$convergence, Umsy=umsykftmb, Smsy= Smsykftmb, Sgen=Sgenkftmb)
+    convergence=rekf$model$convergence, umsy=umsykftmb, Smsy= Smsykftmb)
     tmbholtKFalpha[[i]]<-kfrep[which(rownames(kfrep)=="smoothemeana"),1]
 
     #Model 4 Stan RB
@@ -397,15 +425,17 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
     
     umsystanrb <- .5 * params_stan_rb$log_a - 0.07 * (params_stan_rb$log_a)^2
     Smsystanrb <- matrix(NA, nrow=nrow(umsystanrb), ncol=ncol(umsystanrb))
-    Sgenstanrb <- matrix(NA, nrow=nrow(umsystanrb), ncol=ncol(umsystanrb))
+    #print("Sgen stan Recursive Bayes")
+    #Sgenstanrb <- matrix(NA, nrow=nrow(umsystanrb), ncol=ncol(umsystanrb))
 
     for(n in 1:ncol(Smsystanrb)){
       Smsystanrb[,n] <- (1 - gsl::lambert_W0(exp(1 - params_stan_rb$log_a[,n])))/params_stan_rb$b
-      Sgenstanrb[,n] <- unlist(mapply(sGenSolver,a=params_stan_rb$log_a[,n],
-      Smsy=Smsystanrb[,n], b=params_stan_rb$b))
+      #Sgenstanrb[,n] <- unlist(mapply(sGenSolver,a=params_stan_rb$log_a[,n],
+      #Smsy=Smsystanrb[,n], b=params_stan_rb$b))
     }
     
-    stanRB[[i]]<-list(stanfit=stan_rb,mcmcsummary=summary(stan_rb)$summary, umsy=umsystanrb, Smsy=Smsystanrb, Sgen=Sgenstanrb )
+    stanRB[[i]]<-list(stanfit=stan_rb,mcmcsummary=summary(stan_rb)$summary, umsy=umsystanrb, 
+      Smsy=Smsystanrb)
     stanRBa[[i]]<-summary(stan_rb)$summary[grep("log_a\\[",rownames(summary(stan_rb)$summary)), "50%"] 
 
 
@@ -419,28 +449,29 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
             control = list(adapt_delta = 0.95,max_treedepth = 15), warmup = 500, chains = 4, iter = 2000, thin = 1)
     
     params_stan_gp <- rstan::extract(stan_GP)
-    names(params_stan_gp)
-    dim(params_stan_gp$log_a)
+    
 
     umsyGP <- .5 * params_stan_gp$log_a - 0.07 * (params_stan_gp$log_a)^2
     SmsyGP <- matrix(NA, nrow=nrow(umsyGP), ncol=ncol(umsyGP))
-    SgenGP <- matrix(NA, nrow=nrow(umsyGP), ncol=ncol(umsyGP))
-
-    for(i in 1:ncol(SmsyGP)){
-      SmsyGP[,i] <- (1 - gsl::lambert_W0(exp(1 - params_stan_gp$log_a[,i])))/params_stan_gp$b
-      SgenGP[,i] <- unlist(mapply(sGenSolver,a=params_stan_gp$log_a[,i],
-      Smsy=SmsyGP[,i], b=params_stan_gp$b))
+    #SgenGP <- matrix(NA, nrow=nrow(umsyGP), ncol=ncol(umsyGP))
+    #print("Sgen stan Gaussian Process")
+    for(n in 1:ncol(SmsyGP)){
+      SmsyGP[,n] <- (1 - gsl::lambert_W0(exp(1 - params_stan_gp$log_a[,n])))/params_stan_gp$b
+    #  SgenGP[,n] <- unlist(mapply(sGenSolver,a=params_stan_gp$log_a[,n],
+    #  Smsy=SmsyGP[,n], b=params_stan_gp$b))
     }
     
 
-    stanGP[[i]]<-list(stanfit=stan_GP,mcmcsummary=summary(stan_GP)$summary, umsy=umsyGP, Smsy=SmsyGP, Sgen=SgenGP)
+    stanGP[[i]]<-list(stanfit=stan_GP,mcmcsummary=summary(stan_GP)$summary, umsy=umsyGP, Smsy=SmsyGP)
     stanGPa[[i]]<-summary(stan_GP)$summary[grep("log_a\\[",rownames(summary(stan_GP)$summary)), "50%"] 
 
 
 	}
 
-
-	return(list(Simtrend = Sim,
+  
+	return(list(
+    s=s, #for testing
+    Simtrend = Sim,
     ctatrend = cta,
     ctsmaxtrend = ctsmax,
     ctsigtrend=ctsig,
@@ -449,8 +480,8 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
     dlmKFalphatrend = dlmKFalpha,
     RBalphatrend = RBalpha,
     RBalphamctrend = RBalphamc,
-    holtKFtrend = holtKF,
-    holtKFalphatrend = holtKFalpha, 
+    #holtKFtrend = holtKF,
+    #holtKFalphatrend = holtKFalpha, 
     tmbholtKFtrend = tmbholtKF,
     tmbholtKFalphatrend = tmbholtKFalpha,
     stanRBtrend = stanRB,

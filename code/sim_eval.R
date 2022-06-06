@@ -15,14 +15,13 @@ library(TMB)
 library(tmbstan)
 library(cowplot)
 
+
 source("dlm-wrapper.R")
 source("sim_eval_func.R")
 source("sgen_func.R")
 
 #source("C:/Users/worc/Documents/KF-funcs-appl/HoltMichielsens2020/KFcode.R")
 
-compile("TMBmodels/Ricker_tva_Smax_ratiovar.cpp")
-dyn.load(dynlib("TMBmodels/Ricker_tva_Smax_ratiovar"))
 
 
 ao <- 3.5
@@ -63,19 +62,22 @@ plot(sr$a,type="b")
 
 
 #simulation estimation random walk
-nsim <- 100
+nsim <- 10
 Smax <- 1/b
 sig <- .5
 siga <- .2
+#ER=0.0
+#nobs=40
+#CapScalar=5
+#fec= c(0,.1,.3,.5,.1)
 randsim <- runrandomsims(nsim=nsim,ao=ao, b=1/Smax, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=sig, siga=siga, nobs=40, CapScalar=5,
   plot_progress=TRUE, trend="random walk", lowsca=.5,hisca=2, ampsc=.5 )
 
+ER=0.0
 #saveRDS(randsim, "../data/out/randsim.rds")
 #randsim <-readRDS("../data/out/randsim.rds")
 
 
-
-randsim$tmbholtKFtrend[[1]]$rep$postmeana
 
 #Filter onlyestimates that converged 
 
