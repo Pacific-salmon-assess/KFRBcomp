@@ -10,6 +10,8 @@
 #use this one instead
 #source("C:/Users/worc/Documents/KF-funcs-appl/HoltMichielsens2020/KFcode.R")
 
+
+
 library(here)
 library(TMB)
 library(tmbstan)
@@ -73,7 +75,7 @@ siga <- .2
 randsim <- runrandomsims(nsim=nsim,ao=ao, b=1/Smax, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=sig, siga=siga, nobs=40, CapScalar=5,
   plot_progress=TRUE, trend="random walk", lowsca=.5,hisca=2, ampsc=.5 )
 
-ER=0.0
+#ER=0.0
 #saveRDS(randsim, "../data/out/randsim.rds")
 #randsim <-readRDS("../data/out/randsim.rds")
 
@@ -85,7 +87,7 @@ ER=0.0
 
 
 dfbiasrand1<-calculatepbias(simresult=randsim,Smax=Smax, sig=sig,siga=siga, Bayesstat="mean")
-
+ head(dfbiasrand1)
 
 
 dfbiasrand1p<-dfbiasrand1[dfbiasrand1$convergence==0&!is.na(dfbiasrand1$convergence==0),]

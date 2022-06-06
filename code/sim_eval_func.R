@@ -509,7 +509,7 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
   dlmabias <- list()
   rbabias <- list()
   rbmcabias <- list()
-  holtabias <- list()
+  #holtabias <- list()
   tmbholtabias <- list()
   stanrbabias <- list()
   stangpabias <- list()
@@ -519,7 +519,7 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
   convlm <- sapply(simresult$ctsmaxtrend,  function(x)ifelse(anyNA(x),NA,rep(0,)))
   convdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
   convRB <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
-  convholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
+  #convholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
   convholttmb <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
   
 
@@ -531,7 +531,7 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
       dlmabias[[n]]<-((simresult$dlmKFalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
       rbabias[[n]]<-((simresult$RBalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
       rbmcabias[[n]]<-((simresult$RBalphamctrend[[n]]-sima[[n]])/sima[[n]]*100)
-      holtabias[[n]]<-((simresult$holtKFalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
+      #holtabias[[n]]<-((simresult$holtKFalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
       tmbholtabias[[n]]<-((simresult$tmbholtKFalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
       arbsatn<-as.vector(simresult$stanRBtrend[[n]]$mcmcsummary[grep("log_a\\[",rownames(simresult$stanRBtrend[[n]]$mcmcsummary)), "50%"]) 
       stanrbabias[[n]]<-(arbsatn-sima[[n]])/sima[[n]]*100
@@ -570,12 +570,15 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
 
   
   dfabias <- data.frame(pbias=c(unlist(dlmabias),unlist(rbabias), unlist(lmabias), 
-    unlist(rbmcabias), unlist(holtabias),unlist(tmbholtabias),unlist(stanrbabias), unlist(stangpabias)),
-    fit=rep(c("dlm","RB","lm","RBmcmc","holtKF","tmbholtKF","stanrb","stanGp"), each=length(unlist(dlmabias))),
-    convergence= c(rep(convdlm[!is.na(convdlm)], each=length(sima[[1]])), rep(convRB[!is.na(convRB)],each=length(sima[[1]])),
-     rep(convlm[!is.na(convlm)], each=length(sima[[1]])), unlist(convaRBmc)[!is.na(unlist(convaRBmc))], 
-     rep(convholt[!is.na(convholt)], each=length(sima[[1]])), rep(convholttmb[!is.na(convholttmb)], each=length(sima[[1]])),
-      unlist(convastanRB)[!is.na(unlist(convastanRB))], unlist(convastanGP)[!is.na(unlist(convastanRB))]),
+    unlist(rbmcabias), unlist(tmbholtabias),unlist(stanrbabias), unlist(stangpabias)),
+    fit=rep(c("dlm","RB","lm","RBmcmc","tmbholtKF","stanrb","stanGp"), each=length(unlist(dlmabias))),
+    convergence= c(rep(convdlm[!is.na(convdlm)], each=length(sima[[1]])),
+     rep(convRB[!is.na(convRB)],each=length(sima[[1]])),
+     rep(convlm[!is.na(convlm)], each=length(sima[[1]])), 
+     unlist(convaRBmc)[!is.na(unlist(convaRBmc))], 
+     rep(convholttmb[!is.na(convholttmb)], each=length(sima[[1]])),
+    unlist(convastanRB)[!is.na(unlist(convastanRB))], 
+    unlist(convastanGP)[!is.na(unlist(convastanRB))]),
     param="a")
   
  
@@ -583,7 +586,7 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
   # look at bias in beta and variance terms
   SmaxRB <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(exp(x$sdrep["logSmax",1])-Smax)/Smax*100))
   Smaxdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,((1/-x$results$beta[1])-Smax)/Smax*100))
-  Smaxholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,((-x$smax)-Smax)/Smax*100))
+  #Smaxholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,((-x$smax)-Smax)/Smax*100))
   Smaxtmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,((1/-x$sdrep["b",1])-Smax)/Smax*100)) 
   
   if(Bayesstat=="median"){
@@ -604,9 +607,9 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
 
 
  dfsmaxbias <- data.frame(pbias=c(Smaxdlm, SmaxRB, (unlist(simresult$ctsmaxtrend)-Smax)/Smax*100,
-  SmaxRBmc, Smaxholt, Smaxtmbholt, SmaxstanRB, SmaxstanGP),
-   fit=rep(c("dlm","RB","lm","RBmcmc","holtKF","tmbholtKF","stanrb","stanGp"), each=length(Smaxdlm)), 
-   convergence=c(convdlm, convRB, convlm, convsmaxRBmc, convholt, convholttmb, convsmaxstanRB, convsmaxstanGP),
+  SmaxRBmc,  Smaxtmbholt, SmaxstanRB, SmaxstanGP),
+   fit=rep(c("dlm","RB","lm","RBmcmc","tmbholtKF","stanrb","stanGp"), each=length(Smaxdlm)), 
+   convergence=c(convdlm, convRB, convlm, convsmaxRBmc, convholttmb, convsmaxstanRB, convsmaxstanGP),
    param="Smax")
 
   sigRB <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["sig",1]-sig)/sig*100))
@@ -615,7 +618,7 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
   sigRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,
     (median(sqrt(as.data.frame(x$mcmc)$"rho") * sqrt(1/exp(as.data.frame(x$mcmc)$"logvarphi")))-sig)/sig*100))
   
-  sigholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,((x$sigobs)-sig)/sig*100))
+  #sigholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,((x$sigobs)-sig)/sig*100))
   sigtmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["sige",1]-sig)/sig*100))
   sigstanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_e","50%"]-sig)/sig*100))
   sigstanGP <- sapply(simresult$stanGPtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_e","50%"]-sig)/sig*100))
@@ -648,9 +651,9 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
   
 
   dfsigbias <- data.frame(pbias=c(sigdlm,sigRB, (unlist(simresult$ctsigtrend)-sig)/sig*100,
-    sigRBmc,sigholt,sigtmbholt, sigstanRB, sigstanGP),
-    fit=rep(c("dlm","RB", "lm","RBmcmc","holtKF","tmbholtKF", "stanrb","stanGp"), each=length(sigdlm)),
-    convergence=c(convdlm, convRB, convlm, convsigRBmc, convholt, convholttmb, convsigstanRB, convsigstanGP),
+    sigRBmc, sigtmbholt, sigstanRB, sigstanGP),
+    fit=rep(c("dlm","RB", "lm","RBmcmc","tmbholtKF", "stanrb","stanGp"), each=length(sigdlm)),
+    convergence=c(convdlm, convRB, convlm, convsigRBmc, convholttmb, convsigstanRB, convsigstanGP),
     param="sig")
   
   
@@ -659,7 +662,7 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
   sigadlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,(x$siga-siga)/siga*100))
   sigaRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,
     (median(sqrt(1-as.data.frame(x$mcmc)$"rho") * sqrt(1/exp(as.data.frame(x$mcmc)$"logvarphi")))-siga)/siga*100))
-  sigaholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x), NA,((x$siga)-siga)/siga*100))
+  #sigaholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x), NA,((x$siga)-siga)/siga*100))
   sigatmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["sigw",1]-siga)/siga*100))
   sigastanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_a","50%"]-siga)/siga*100))
 
@@ -686,9 +689,9 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
   
 
 
-  dfsigabias <- data.frame(pbias=c(sigadlm,sigaRB,sigaRBmc,sigaholt,sigatmbholt,sigastanRB),
-    fit=rep(c("dlm","RB","RBmcmc","holtKF","tmbholtKF", "stanrb"), each=length(sigadlm)),
-     convergence=c(convdlm, convRB, convsigRBmc, convholt, convholttmb, convsigastanRB),
+  dfsigabias <- data.frame(pbias=c(sigadlm, sigaRB, sigaRBmc, sigatmbholt, sigastanRB),
+    fit=rep(c("dlm","RB","RBmcmc", "tmbholtKF", "stanrb"), each=length(sigadlm)),
+     convergence=c(convdlm, convRB, convsigRBmc, convholttmb, convsigastanRB),
     param="siga")
 
   dfbias<-rbind(dfabias,
