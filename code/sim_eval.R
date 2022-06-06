@@ -26,11 +26,11 @@ source("sgen_func.R")
 
 
 
-ao <- 3.5
-b <- 1/30000
+ao <- 1.3
+b <- 1/150000
 
 
-ps <- seq(0,30000*5,1000)
+ps <- seq(0,150000*3,1000)
 pr <- ps*exp(ao-b*ps)
 plot(ps, pr)
 abline(1,1)
@@ -38,7 +38,7 @@ abline(1,1)
 
 
 
-sr <- simulateSRtrend(ao=2.5, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40,
+sr <- simulateSRtrend(ao=1.3, b=1/150000, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40,
     CapScalar=5, trend="sine",lowsca=.5,hisca=2, ampsc=.5 )
 sr
 par(mfrow=c(2,1))
@@ -49,7 +49,7 @@ plot(sr$a,type="b")
 
 
 
-sr <- simulateSRtrend(ao=2.5, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40,
+sr <- simulateSRtrend(ao=1.3, b=1/150000, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40,
     CapScalar=5, trend="regime",lowsca=.5,hisca=2, ampsc=.5 )
 sr
 par(mfrow=c(2,1))
