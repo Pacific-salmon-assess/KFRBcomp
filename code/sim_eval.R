@@ -20,7 +20,7 @@ library(cowplot)
 
 source("dlm-wrapper.R")
 source("sim_eval_func.R")
-source("sgen_func.R")
+source("sgen_functions.R")
 
 #source("C:/Users/worc/Documents/KF-funcs-appl/HoltMichielsens2020/KFcode.R")
 
@@ -35,11 +35,20 @@ pr <- ps*exp(ao-b*ps)
 plot(ps, pr)
 abline(1,1)
 
+c(a1, a2,a3,a4)
+
+0.9647583*(1-0.3636234*(1-0.1476287))
+1*(1-0.9647583*(1-0.3636234*(1-0.1476287)))
 
 
+(1-(0.1476287+0.3636234*(1-0.1476287)))*0.9647583
 
-sr <- simulateSRtrend(ao=1.3, b=1/150000, ER=0.0, fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40,
-    CapScalar=5, trend="sine",lowsca=.5,hisca=2, ampsc=.5 )
+(1-((1-0.1476287)*0.3636234))-0.9647583*(1-((1-0.1476287)*0.3636234))
+
+fec<- c(0.1476287,0.3636234,0.9647583,1)
+#fec= c(0,.1,.3,.5,.1)
+sr <- simulateSRtrend(ao=1.3, b=1/150000, ER=0.0,fec=fec , sig=.5, siga=.2, nobs=40,
+    CapScalar=5, trend="sine", lowsca=.5, hisca=2, ampsc=.5 )
 sr
 par(mfrow=c(2,1))
 plot(sr$S,sr$R, xlim=c(0,35000*5), ylim=c(0,180000))
@@ -372,3 +381,11 @@ coord_cartesian(ylim = c(-100,100))+
 geom_hline(yintercept=0) +
 theme_bw(14)+
 facet_wrap(~param)
+
+
+#=====================
+#From ERa maturity to prop mat at agrepl
+a1=0.1476287
+a2=0.3636234*(1-0.1476287)
+a3=0.9647583*(1-(0.1476287+0.3636234*(1-0.1476287)))
+a4=1-(0.1476287+ 0.3636234*(1-0.1476287) + 0.9647583*(1-(0.1476287+0.3636234*(1-0.1476287))))

@@ -58,7 +58,7 @@ simulateSRrandom <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, 
     }
   
     
-    for(y in 6:max(yrs)){  
+    for(y in (length(fec)+1):max(yrs)){  
       S[y]<-0
       for(j in seq_along(fec)){      	
         S[y] <- S[y] + R[y-j]*(1-ER)*fec[j]   	
@@ -67,8 +67,8 @@ simulateSRrandom <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, 
       #a[y] <- a[y-1] + (qnorm(runif(1, 0.1, 0.9),0,siga))        
       a[y] <- a[y-1] + rnorm(1,0,siga) -(.5*siga^2)
       # avoid alpha that is super negative
-      if(a[y]<.0){
-        a[y]<- .0
+      if(a[y]<0.1){
+        a[y]<- 0.1
       }
 
       #R[y] <- S[y]*exp(a[y]-b*S[y]) *exp(qnorm(runif(1, 0.1, 0.95),0,sig))
@@ -218,7 +218,7 @@ simulateSRtrend <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5,
 
 
 runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRUE, trend="random walk",
-	fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40, CapScalar=5,lowsca=.5,hisca=2, ampsc=.5 ){
+	fec= c(0,.1,.3,.5,.1), sig=.5, siga=.2, nobs=40, CapScalar=5,lowsca=.5,hisca=2, ampsc=.5, seed=sample.int(100000, 1)){
 
 
   #create empty list
@@ -241,6 +241,8 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
   stanGPa <- list()
 
   for(i in seq_len(nsim)){
+
+    set.seed(seed+i)
 
     if(trend=="random walk"){
       s <- simulateSRrandom(ao=ao, b=b, ER=ER, fec= fec, sig=sig, siga=siga, nobs=nobs, CapScalar=CapScalar )
@@ -470,7 +472,8 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
 
   
 	return(list(
-    s=s, #for testing
+    seed=seed,
+    #s=s, #for testing
     Simtrend = Sim,
     ctatrend = cta,
     ctsmaxtrend = ctsmax,
