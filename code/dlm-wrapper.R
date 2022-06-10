@@ -7,6 +7,14 @@
 #
 
 ##require packages
+
+if(!"dlm" %in% rownames(installed.packages())){
+  install.packages("dlm")
+}
+
+if(!"ggpubr" %in% rownames(installed.packages())){
+  install.packages("ggpubr")
+}
 library(dlm)
 library(ggpubr)
 

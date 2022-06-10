@@ -1,18 +1,6 @@
 #!/usr/local/bin/Rscript --slave
 args <- commandArgs(trailingOnly=TRUE)
 
-if(!"TMB" %in% rownames(installed.packages())){
-  install.packages("TMB")
-}
-
-if(!"tmbstan" %in% rownames(installed.packages())){
-  install.packages("tmbstan")
-}
-
-
-
-library(TMB)
-library(tmbstan)
 
 
 source("dlm-wrapper.R")
@@ -25,8 +13,8 @@ source("sgen_functions.R")
 
 simpars <- read.csv("../data/siminput/randomwalka.csv")
 
-fec<-simpars[,grep("fec",names(simpars))]
-fec<-fec[!is.na(fec)]
+fec <- simpars[,grep("fec",names(simpars))]
+fec <- fec[!is.na(fec)]
 
 
 randsim <- runrandomsims(nsim=simpars$nsim,ao=simpars$ao, b= simpars$b, ER= simpars$ER, fec= fec, sig=simpars$sig, siga=simpars$siga, 

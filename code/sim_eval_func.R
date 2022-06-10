@@ -7,21 +7,33 @@
 if(!"remotes" %in% rownames(installed.packages())){
   install.packages("remotes")
 }
-
 if(!"KFfuncs" %in% rownames(installed.packages())){
   remotes::install_github("carrieholt/KF-funcs")
 }
-
 if(!"rstan" %in% rownames(installed.packages())){
   install.packages("rstan")
 }
 if(!"TMB" %in% rownames(installed.packages())){
   install.packages("TMB")
 }
+if(!"gsl" %in% rownames(installed.packages())){
+  install.packages("gsl")
+}
+if(!"tmbstan" %in% rownames(installed.packages())){
+  install.packages("tmbstan")
+}
+if(!"reshape" %in% rownames(installed.packages())){
+  install.packages("reshape")
+}
+
+
+
 
 
 library(KFfuncs)
 library(TMB)
+library(tmbstan)
+library(rstan)
 compile("TMBmodels/Ricker_tva_Smax_ratiovar.cpp")
 dyn.load(dynlib("TMBmodels/Ricker_tva_Smax_ratiovar"))
 
@@ -432,7 +444,7 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
     tmbholtKFalpha[[i]]<-kfrep[which(rownames(kfrep)=="smoothemeana"),1]
 
     #Model 4 Stan RB
-    stan_rb<-rstan::stan(file=here('code','stancode','ricker_linear_varying_a.stan'), data=list(R_S = s$logR_S,
+    stan_rb<-rstan::stan(file="stancode/ricker_linear_varying_a.stan", data=list(R_S = s$logR_S,
                                                  N=nrow(s),
                                                  TT=as.numeric(factor(seq_len(nrow(s)))),
                                                  S=c((s$S))),                                                                                                   
