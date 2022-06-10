@@ -1,10 +1,18 @@
 #!/usr/local/bin/Rscript --slave
 args <- commandArgs(trailingOnly=TRUE)
 
-library(here)
+if(!"TMB" %in% rownames(installed.packages())){
+  install.packages("TMB")
+}
+
+if(!"tmbstan" %in% rownames(installed.packages())){
+  install.packages("tmbstan")
+}
+
+
+
 library(TMB)
 library(tmbstan)
-library(cowplot)
 
 
 source("dlm-wrapper.R")

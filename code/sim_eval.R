@@ -11,12 +11,20 @@
 #source("C:/Users/worc/Documents/KF-funcs-appl/HoltMichielsens2020/KFcode.R")
 
 
+if(!"cowplot" %in% rownames(installed.packages())){
+  install.packages("cowplot")
+}
+if(!"ggplot2" %in% rownames(installed.packages())){
+  install.packages("ggplot2")
+}
+
+
 
 library(here)
-library(TMB)
+
 library(tmbstan)
 library(cowplot)
-
+library(ggplot2)
 
 source("dlm-wrapper.R")
 source("sim_eval_func.R")
