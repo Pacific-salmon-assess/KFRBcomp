@@ -4,8 +4,24 @@
 #May 2022
 #==============================================================
 
+if(!"remotes" %in% rownames(installed.packages())){
+  install.packages("remotes")
+}
+
+if(!"KFfuncs" %in% rownames(installed.packages())){
+  remotes::install_github("carrieholt/KF-funcs")
+}
+
+if(!"rstan" %in% rownames(installed.packages())){
+  install.packages("rstan")
+}
+if(!"TMB" %in% rownames(installed.packages())){
+  install.packages("TMB")
+}
+
 
 library(KFfuncs)
+library(TMB)
 compile("TMBmodels/Ricker_tva_Smax_ratiovar.cpp")
 dyn.load(dynlib("TMBmodels/Ricker_tva_Smax_ratiovar"))
 
