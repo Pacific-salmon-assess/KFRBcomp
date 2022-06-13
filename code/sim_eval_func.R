@@ -26,6 +26,9 @@ if(!"reshape" %in% rownames(installed.packages())){
   install.packages("reshape")
 }
 
+if(!"here" %in% rownames(installed.packages())){
+  install.packages("here")
+}
 
 
 
