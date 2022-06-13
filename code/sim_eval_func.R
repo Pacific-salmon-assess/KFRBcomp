@@ -26,10 +26,6 @@ if(!"reshape" %in% rownames(installed.packages())){
   install.packages("reshape")
 }
 
-if(!"here" %in% rownames(installed.packages())){
-  install.packages("here")
-}
-
 
 
 
@@ -979,7 +975,7 @@ runtrendsims <- function(nsim=100, ao=3, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1
     stanRBtrend[[i]]<-list(stanfit=stan_rb,mcmcsummary=summary(stan_rb)$summary)
 
     #Model 4 Stan Gaussian Process    
-    stan_GP=rstan::stan(file=here('stancode/ricker_linear_varying_a_GP.stan'),data=list(R_S = s$logR_S,
+    stan_GP=rstan::stan(file='stancode/ricker_linear_varying_a_GP.stan',data=list(R_S = s$logR_S,
                                                                              N=nrow(s),
                                                                              TT=as.numeric(factor(seq_len(nrow(s)))),
                                                                              S=c(s$S)),
