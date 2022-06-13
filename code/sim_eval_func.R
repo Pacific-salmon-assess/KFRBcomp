@@ -434,14 +434,12 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
     kfrep <- summary(sdreport(rekf$tmb_obj))
     alphakftmb <- kfrep[which(rownames(kfrep)=="smoothemeana"),1]
     
-
     umsykftmb <- .5 * alphakftmb - 0.07 * (alphakftmb)^2;
     Smsykftmb <- (1 - gsl::lambert_W0(exp(1 - alphakftmb)))/-kfrep[which(rownames(kfrep)=="b"),1]
     #print("Sgen KF TMB") 
     #Sgenkftmb <- unlist(mapply(sGenSolver,a=alphakftmb,
     #  Smsy=Smsykftmb, b=-kfrep[which(rownames(kfrep)=="b"),1]))
   
-
     tmbholtKF[[i]]<-list(obj=rekf$tmb_obj, sdrep=kfrep, rep=rekf$tmb_obj$report(),message=rekf$model$message,
     convergence=rekf$model$convergence, umsy=umsykftmb, Smsy= Smsykftmb)
     tmbholtKFalpha[[i]]<-kfrep[which(rownames(kfrep)=="smoothemeana"),1]
@@ -474,7 +472,7 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
 
 
     #Model 4 Stan Gaussian Process    
-    stan_GP=rstan::stan(file=here('code','stancode','ricker_linear_varying_a_GP.stan'),data=list(R_S = s$logR_S,
+    stan_GP=rstan::stan(file="stancode/ricker_linear_varying_a_GP.stan"),data=list(R_S = s$logR_S,
                                                                              N=nrow(s),
                                                                              TT=as.numeric(factor(seq_len(nrow(s)))),
                                                                              S=c(s$S)),
@@ -968,7 +966,7 @@ runtrendsims <- function(nsim=100, ao=3, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1
    
 
    #Model 4 Stan RB
-   stan_rb=rstan::stan(file=here('code','stancode','ricker_linear_varying_a.stan'), data=list(R_S = s$logR_S,
+   stan_rb=rstan::stan(file="stancode/ricker_linear_varying_a.stan"), data=list(R_S = s$logR_S,
                                                  N=nrow(s),
                                                  TT=as.numeric(factor(seq_len(nrow(s)))),
                                                  S=c((s$S))),
@@ -981,7 +979,7 @@ runtrendsims <- function(nsim=100, ao=3, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1
     stanRBtrend[[i]]<-list(stanfit=stan_rb,mcmcsummary=summary(stan_rb)$summary)
 
     #Model 4 Stan Gaussian Process    
-    stan_GP=rstan::stan(file=here('code','stancode','ricker_linear_varying_a_GP.stan'),data=list(R_S = s$logR_S,
+    stan_GP=rstan::stan(file=here('stancode/ricker_linear_varying_a_GP.stan'),data=list(R_S = s$logR_S,
                                                                              N=nrow(s),
                                                                              TT=as.numeric(factor(seq_len(nrow(s)))),
                                                                              S=c(s$S)),
