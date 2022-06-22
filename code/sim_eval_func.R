@@ -269,7 +269,8 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
 
   for(i in seq_len(nsim)){
 
-    set.seed(seed+i)
+    print(as.numeric(seed))
+    set.seed(as.numeric(seed)+i)
 
     if(trend=="random walk"){
       s <- simulateSRrandom(ao=ao, b=b, ER=ER, fec= fec, sig=sig, siga=siga, nobs=nobs, CapScalar=CapScalar )
@@ -468,7 +469,7 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
 
 
     #Model 4 Stan Gaussian Process    
-    stan_GP=rstan::stan(file="stancode/ricker_linear_varying_a_GP.stan"),data=list(R_S = s$logR_S,
+    stan_GP=rstan::stan(file="stancode/ricker_linear_varying_a_GP.stan",data=list(R_S = s$logR_S,
                                                                              N=nrow(s),
                                                                              TT=as.numeric(factor(seq_len(nrow(s)))),
                                                                              S=c(s$S)),
@@ -962,7 +963,7 @@ runtrendsims <- function(nsim=100, ao=3, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1
    
 
    #Model 4 Stan RB
-   stan_rb=rstan::stan(file="stancode/ricker_linear_varying_a.stan"), data=list(R_S = s$logR_S,
+   stan_rb=rstan::stan(file="stancode/ricker_linear_varying_a.stan", data=list(R_S = s$logR_S,
                                                  N=nrow(s),
                                                  TT=as.numeric(factor(seq_len(nrow(s)))),
                                                  S=c((s$S))),
