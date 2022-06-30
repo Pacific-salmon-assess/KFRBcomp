@@ -390,3 +390,50 @@ a3=0.9647583*(1-(0.1476287+0.3636234*(1-0.1476287)))
 a4=1-(0.1476287+ 0.3636234*(1-0.1476287) + 0.9647583*(1-(0.1476287+0.3636234*(1-0.1476287))))
 
 c(a1, a2,a3,a4)
+
+
+
+
+
+#===========================================================
+#bias correction in multivariate normal
+
+ssig<-.2
+correlCU <- matrix(c(1,  0.318941341, 0.529794097, 0.69835732,  0.451562654,
+0.318941341, 1, -0.034790412,  0.094748559, 0.653483723,
+0.529794097, -0.034790412,  1, 0.491865712, 0.256962437,
+0.69835732,  0.094748559, 0.491865712, 1, 0.400826242,
+0.451562654, 0.653483723, 0.256962437, 0.400826242, 1
+), ncol=5, byrow=T)
+
+correlCU <- matrix(c(1,  0, 0, 0,  0,
+0, 1, 0, 0, 0,
+0, 0, 1, 0, 0,
+0, 0, 0, 1, 0,
+0, 0, 0, 0, 1
+), ncol=5, byrow=T)
+sigaMat <- matrix(as.numeric(ssig), nrow = 1, ncol = 5)
+#calculate shared variance and correct based on correlation
+covMatProd <- (t(sigaMat) %*% sigaMat) * correlCU
+diag(covMatProd) <- as.numeric(ssig^2) #add variance
+
+
+err<-sn::rmst(n = 100000, xi = rep(0,5),
+        alpha = rep(0, 5), nu = 10000,
+        Omega = covMatProd)
+
+apply(exp(err)-(ssig^2)/2,2,mean)
+
+
+
+oo<-matrix(NA,ncol=5,nrow=50)
+oo[1,]<- 0
+
+for(i in 2:50){
+
+  err<-sn::rmst(n = 1, xi = rep(0,5),
+        alpha = rep(0, 5), nu = 10000,
+        Omega = covMatProd)
+  oo[i,]<-oo[i-1,]+err
+}
+matplot(oo, type="b")

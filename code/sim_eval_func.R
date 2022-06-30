@@ -138,7 +138,7 @@ simulateSRrandom <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, 
 
 
 simulateSRtrend <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, 
-	siga=.3, nobs=40, CapScalar=5, trend="decline",lowsca=.5,hisca=2, ampsc=.5){
+	siga=.3, nobs=40, CapScalar=5, trend="decline",lowsca=.5,hisca=2, ampsc=.5, regimelen=10){
 
     yrs <- 1:100
     S <- NULL
@@ -170,12 +170,21 @@ simulateSRtrend <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5,
       atrend<-seq(ao,amax, length=nobs+10)
     
     }else if(trend=="sine"){
-       
+      
+      #ao=1.5
+      #ampsc = .25
+      #sincycle=25
+      #plot(1 + (1*ampsc)* sin(2*pi/(sincycle)*trlen))
+      #lines(ao + (ao*ampsc)* sin(2*pi/(sincycle)*trlen))
+      #abline(h=ao)
+      #abline(h=ao*(1+ampsc))
+      #abline(h=ao*(1-ampsc))
+      
       atrend<- ao + (ao*ampsc)* sin(2*pi/((nobs+10)/2)*trlen)
 
     }else if(trend=="regime"){
         
-      atrend<- ao *rep(rep(c(.5,2),each=10),length.out=length(trlen))
+      atrend<- ao *rep(rep(c(lowsca,hisca),each=regimelen),length.out=length(trlen))
         
     }
     a[6:(length(yrs)-(nobs+10))]<-ao

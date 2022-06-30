@@ -2,7 +2,7 @@
 
 
 # I changed the estimation to optim, more of the models converged but estimates are 
-# diverging more frm other tools. 
+# diverging more from other tools. 
 # I need to fix the package will put on a todo list
 remotes::install_github("carrieholt/KF-funcs")
 
