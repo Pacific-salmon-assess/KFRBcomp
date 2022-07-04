@@ -268,8 +268,8 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
   dlmKFalpha <- list()
   RBalpha <- list()
   RBalphamc <- list()
-  #holtKF <- list()
-  #holtKFalpha <- list()
+  holtKF <- list()
+  holtKFalpha <- list()
   tmbholtKF <- list()
   tmbholtKFalpha <- list()
   stanRB <-list()
@@ -417,22 +417,22 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
 
     #Model 3 Carrie's KF - this seem to be broken
     
-    #initial <- list()
-    #initial$mean.a <- srm$coefficients[1]
-    #initial$var.a <- .5
-    #initial$b <- srm$coefficients[2]
-    #initial$ln.sig.e <- log(.5)
-    #initial$ln.sig.w <- log(.5)
-    #initial$Ts <- 0
-    #initial$EstB <- TRUE
-    #
-    #holtKFfit <- kf.rw(initial=initial,x=s$S,y=s$logR_S)
-    #
-    #holtKF[[i]]<-list(alpha=holtKFfit$smoothe.mean.a, alpha.var=holtKFfit$smoothe.var.a,
-    # sigobs=holtKFfit$sig.e, siga=holtKFfit$sig.w, beta=holtKFfit$b, 
-    #  smax=1/holtKFfit$b, convergence=holtKFfit$Report$convergence, message= holtKFfit$Report$message,
-    #  filter.alpha=holtKFfit$post.mean.a, filter.vara=holtKFfit$post.var.a) 
-    #holtKFalpha[[i]]<-holtKFfit$smoothe.mean.a
+    initial <- list()
+    initial$mean.a <- srm$coefficients[1]
+    initial$var.a <- .5
+    initial$b <- srm$coefficients[2]
+    initial$ln.sig.e <- log(.5)
+    initial$ln.sig.w <- log(.5)
+    initial$Ts <- 0
+    initial$EstB <- TRUE
+    
+    holtKFfit <- kf.rw(initial=initial,x=s$S,y=s$logR_S)
+    
+    holtKF[[i]]<-list(alpha=holtKFfit$smoothe.mean.a, alpha.var=holtKFfit$smoothe.var.a,
+     sigobs=holtKFfit$sig.e, siga=holtKFfit$sig.w, beta=holtKFfit$b, 
+      smax=1/holtKFfit$b, convergence=holtKFfit$Report$convergence, message= holtKFfit$Report$message,
+      filter.alpha=holtKFfit$post.mean.a, filter.vara=holtKFfit$post.var.a) 
+    holtKFalpha[[i]]<-holtKFfit$smoothe.mean.a
 
     #Model 3.1 Carrie's KF TMB
     
@@ -520,8 +520,8 @@ runrandomsims <- function(nsim=100, ao=2.5, b=1/30000, ER=0.0, plot_progress=TRU
     dlmKFalphatrend = dlmKFalpha,
     RBalphatrend = RBalpha,
     RBalphamctrend = RBalphamc,
-    #holtKFtrend = holtKF,
-    #holtKFalphatrend = holtKFalpha, 
+    holtKFtrend = holtKF,
+    holtKFalphatrend = holtKFalpha, 
     tmbholtKFtrend = tmbholtKF,
     tmbholtKFalphatrend = tmbholtKFalpha,
     stanRBtrend = stanRB,
