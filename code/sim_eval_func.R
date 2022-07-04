@@ -7,9 +7,9 @@
 if(!"remotes" %in% rownames(installed.packages())){
   install.packages("remotes")
 }
-if(!"KFfuncs" %in% rownames(installed.packages())){
+#if(!"KFfuncs" %in% rownames(installed.packages())){
   remotes::install_github("carrieholt/KF-funcs")
-}
+#}
 if(!"rstan" %in% rownames(installed.packages())){
   install.packages("rstan")
 }
@@ -549,7 +549,7 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
   dlmabias <- list()
   rbabias <- list()
   rbmcabias <- list()
-  #holtabias <- list()
+  holtabias <- list()
   tmbholtabias <- list()
   stanrbabias <- list()
   stangpabias <- list()
@@ -559,7 +559,7 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
   convlm <- sapply(simresult$ctsmaxtrend,  function(x)ifelse(anyNA(x),NA,rep(0,)))
   convdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
   convRB <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
-  #convholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
+  convholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
   convholttmb <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,x$convergence))
   
 
@@ -571,7 +571,7 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
       dlmabias[[n]]<-((simresult$dlmKFalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
       rbabias[[n]]<-((simresult$RBalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
       rbmcabias[[n]]<-((simresult$RBalphamctrend[[n]]-sima[[n]])/sima[[n]]*100)
-      #holtabias[[n]]<-((simresult$holtKFalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
+      holtabias[[n]]<-((simresult$holtKFalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
       tmbholtabias[[n]]<-((simresult$tmbholtKFalphatrend[[n]]-sima[[n]])/sima[[n]]*100)
       arbsatn<-as.vector(simresult$stanRBtrend[[n]]$mcmcsummary[grep("log_a\\[",rownames(simresult$stanRBtrend[[n]]$mcmcsummary)), "50%"]) 
       stanrbabias[[n]]<-(arbsatn-sima[[n]])/sima[[n]]*100
@@ -626,7 +626,7 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
   # look at bias in beta and variance terms
   SmaxRB <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(exp(x$sdrep["logSmax",1])-Smax)/Smax*100))
   Smaxdlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,((1/-x$results$beta[1])-Smax)/Smax*100))
-  #Smaxholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,((-x$smax)-Smax)/Smax*100))
+  Smaxholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,((-x$smax)-Smax)/Smax*100))
   Smaxtmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,((1/-x$sdrep["b",1])-Smax)/Smax*100)) 
   
   if(Bayesstat=="median"){
@@ -658,7 +658,7 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
   sigRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,
     (median(sqrt(as.data.frame(x$mcmc)$"rho") * sqrt(1/exp(as.data.frame(x$mcmc)$"logvarphi")))-sig)/sig*100))
   
-  #sigholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,((x$sigobs)-sig)/sig*100))
+  sigholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x),NA,((x$sigobs)-sig)/sig*100))
   sigtmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["sige",1]-sig)/sig*100))
   sigstanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_e","50%"]-sig)/sig*100))
   sigstanGP <- sapply(simresult$stanGPtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_e","50%"]-sig)/sig*100))
@@ -702,7 +702,7 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
   sigadlm <- sapply(simresult$dlmKFtrend,  function(x)ifelse(anyNA(x),NA,(x$siga-siga)/siga*100))
   sigaRBmc <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,
     (median(sqrt(1-as.data.frame(x$mcmc)$"rho") * sqrt(1/exp(as.data.frame(x$mcmc)$"logvarphi")))-siga)/siga*100))
-  #sigaholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x), NA,((x$siga)-siga)/siga*100))
+  sigaholt <- sapply(simresult$holtKFtrend,  function(x)ifelse(anyNA(x), NA,((x$siga)-siga)/siga*100))
   sigatmbholt <- sapply(simresult$tmbholtKFtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["sigw",1]-siga)/siga*100))
   sigastanRB <- sapply(simresult$stanRBtrend, function(x)ifelse(anyNA(x),NA,(x$mcmcsummary["sigma_a","50%"]-siga)/siga*100))
 

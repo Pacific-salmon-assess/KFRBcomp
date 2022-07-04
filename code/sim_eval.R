@@ -33,11 +33,11 @@ source("sgen_functions.R")
 #source("C:/Users/worc/Documents/KF-funcs-appl/HoltMichielsens2020/KFcode.R")
 
 
-
 ao <- 1.3
 b <- 1/150000
 
 
+#visual checks of simulated data - skip if you want
 ps <- seq(0,150000*3,1000)
 pr <- ps*exp(ao-b*ps)
 plot(ps, pr)
@@ -69,7 +69,7 @@ plot(sr$a,type="b")
 
 
 #==========================================================
-
+#begin simulation testing
 
 #simulation estimation random walk
 nsim <- 10
