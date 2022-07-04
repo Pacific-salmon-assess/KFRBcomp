@@ -10,7 +10,6 @@
 #use this one instead
 #source("C:/Users/worc/Documents/KF-funcs-appl/HoltMichielsens2020/KFcode.R")
 
-
 if(!"cowplot" %in% rownames(installed.packages())){
   install.packages("cowplot")
 }
@@ -20,7 +19,7 @@ if(!"ggplot2" %in% rownames(installed.packages())){
 
 
 
-library(here)
+
 
 library(tmbstan)
 library(cowplot)
