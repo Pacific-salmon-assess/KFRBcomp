@@ -94,14 +94,14 @@ randsim <- runrandomsims(nsim=nsim,ao=ao, b=1/Smax, ER=0.0, fec= c(0,.1,.3,.5,.1
 
 
 dfbiasrand1<-calculatepbias(simresult=randsim,Smax=Smax, sig=sig,siga=siga, Bayesstat="mean")
- head(dfbiasrand1)
+summary(dfbiasrand1)
 
 
 dfbiasrand1p<-dfbiasrand1[dfbiasrand1$convergence==0&!is.na(dfbiasrand1$convergence==0),]
 dfbiasrand1p<-dfbiasrand1p[dfbiasrand1p$fit!="lm",]
 dfbiasrand1p$fit<-ordered(dfbiasrand1p$fit, c("dlm","tmbholtKF","holtKF", "RB", "RBmcmc","stanrb", "stanGp"))
 
-unique(dfbiasrand1p$param)
+unique(dfbiasrand1p$fit)
 head(dfbiasrand1p)
 #add
 

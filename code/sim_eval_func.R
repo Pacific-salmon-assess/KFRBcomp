@@ -608,12 +608,13 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
 
   
   dfabias <- data.frame(pbias=c(unlist(dlmabias),unlist(rbabias), unlist(lmabias), 
-    unlist(rbmcabias), unlist(tmbholtabias),unlist(stanrbabias), unlist(stangpabias)),
-    fit=rep(c("dlm","RB","lm","RBmcmc","tmbholtKF","stanrb","stanGp"), each=length(unlist(dlmabias))),
+    unlist(rbmcabias), unlist(holtabias),unlist(tmbholtabias),unlist(stanrbabias), unlist(stangpabias)),
+    fit=rep(c("dlm","RB","lm","RBmcmc","holtKF","tmbholtKF","stanrb","stanGp"), each=length(unlist(dlmabias))),
     convergence= c(rep(convdlm[!is.na(convdlm)], each=length(sima[[1]])),
      rep(convRB[!is.na(convRB)],each=length(sima[[1]])),
      rep(convlm[!is.na(convlm)], each=length(sima[[1]])), 
      unlist(convaRBmc)[!is.na(unlist(convaRBmc))], 
+     rep(convholt[!is.na(convholt)], each=length(sima[[1]])),
      rep(convholttmb[!is.na(convholttmb)], each=length(sima[[1]])),
     unlist(convastanRB)[!is.na(unlist(convastanRB))], 
     unlist(convastanGP)[!is.na(unlist(convastanRB))]),
@@ -645,9 +646,9 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
 
 
  dfsmaxbias <- data.frame(pbias=c(Smaxdlm, SmaxRB, (unlist(simresult$ctsmaxtrend)-Smax)/Smax*100,
-  SmaxRBmc,  Smaxtmbholt, SmaxstanRB, SmaxstanGP),
-   fit=rep(c("dlm","RB","lm","RBmcmc","tmbholtKF","stanrb","stanGp"), each=length(Smaxdlm)), 
-   convergence=c(convdlm, convRB, convlm, convsmaxRBmc, convholttmb, convsmaxstanRB, convsmaxstanGP),
+  SmaxRBmc, Smaxholt, Smaxtmbholt, SmaxstanRB, SmaxstanGP),
+   fit=rep(c("dlm","RB","lm","RBmcmc","holtKF","tmbholtKF","stanrb","stanGp"), each=length(Smaxdlm)), 
+   convergence=c(convdlm, convRB, convlm, convsmaxRBmc, convholt, convholttmb, convsmaxstanRB, convsmaxstanGP),
    param="Smax")
 
   sigRB <- sapply(simresult$RBtrend,  function(x)ifelse(anyNA(x),NA,(x$sdrep["sig",1]-sig)/sig*100))
@@ -689,9 +690,9 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
   
 
   dfsigbias <- data.frame(pbias=c(sigdlm,sigRB, (unlist(simresult$ctsigtrend)-sig)/sig*100,
-    sigRBmc, sigtmbholt, sigstanRB, sigstanGP),
-    fit=rep(c("dlm","RB", "lm","RBmcmc","tmbholtKF", "stanrb","stanGp"), each=length(sigdlm)),
-    convergence=c(convdlm, convRB, convlm, convsigRBmc, convholttmb, convsigstanRB, convsigstanGP),
+    sigRBmc,sigholt, sigtmbholt, sigstanRB, sigstanGP),
+    fit=rep(c("dlm","RB", "lm","RBmcmc","holtKF", "tmbholtKF", "stanrb","stanGp"), each=length(sigdlm)),
+    convergence=c(convdlm, convRB, convlm, convsigRBmc, convholt, convholttmb, convsigstanRB, convsigstanGP),
     param="sig")
   
   
@@ -727,9 +728,9 @@ calculatepbias<- function(simresult, Smax, sig, siga, Bayesstat="median"){
   
 
 
-  dfsigabias <- data.frame(pbias=c(sigadlm, sigaRB, sigaRBmc, sigatmbholt, sigastanRB),
-    fit=rep(c("dlm","RB","RBmcmc", "tmbholtKF", "stanrb"), each=length(sigadlm)),
-     convergence=c(convdlm, convRB, convsigRBmc, convholttmb, convsigastanRB),
+  dfsigabias <- data.frame(pbias=c(sigadlm, sigaRB, sigaRBmc,  sigaholt,sigatmbholt, sigastanRB),
+    fit=rep(c("dlm","RB","RBmcmc","holtKF", "tmbholtKF", "stanrb"), each=length(sigadlm)),
+     convergence=c(convdlm, convRB, convsigRBmc, convholt, convholttmb, convsigastanRB),
     param="siga")
 
   dfbias<-rbind(dfabias,
