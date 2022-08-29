@@ -168,6 +168,10 @@ simulateSRtrend <- function(ao=3, b=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5,
       amax<-ao*hisca
       atrend<-seq(ao,amax, length=nobs+10)
     
+    }else if(trend=="stable"){
+    
+      atrend<-rep(ao, length=nobs+10)
+
     }else if(trend=="sine"){
       
       #ao=1.5

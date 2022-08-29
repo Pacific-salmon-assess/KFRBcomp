@@ -92,3 +92,54 @@ win_modeltot<-apply(complfotot,1,which.max)
 
 sum(win_modeltot==1)/length(win_model)
 sum(win_modeltot==2)/length(win_model)
+
+
+
+#simulate from siple Ricker
+
+
+
+for(i in seq_len(nsim)){
+
+#TMB LFO
+
+  s <- simulateSRtrend(ao=ao, b=b, ER=ER, fec= fec, sig=sig, siga=siga, nobs=nobs, CapScalar=CapScalar, 
+   trend="stable")
+  s$extinct<-is.na(s$R)
+
+  if(sum(s$extinct)==0){
+
+    dat <- data.frame(logRS=s$logR_S, 
+      S=s$S)
+
+    staticlfo[[i]] <- tmb_mod_lfo_cv(data=dat, tv.par=c('static') )
+
+    tvlfo[[i]] <- tmb_mod_lfo_cv(data=dat, tv.par=c('alpha'), siglfo = "obs" )
+    tvlfotot[[i]] <- tmb_mod_lfo_cv(data=dat, tv.par=c('alpha'), siglfo = "total" )
+  }else{
+    staticlfo[[i]] <- NA
+    tvlfo[[i]] <- NA
+  }
+
+}
+
+
+
+complfosimple<-cbind(unlist(lapply(staticlfo, sum)),
+unlist(lapply(tvlfo, function(x){sum(x$lastparam)})))
+win_modelsimple<-apply(complfo,1,which.max)
+
+sum(win_modelsimple==1)/length(win_modelsimple)
+sum(win_modelsimple==2)/length(win_modelsimple)
+
+
+complfototsimple<-cbind(unlist(lapply(staticlfo, sum)),
+unlist(lapply(tvlfotot, function(x){sum(x$lastparam)})))
+win_modeltotsimple<-apply(complfototsimple,1,which.max)
+
+
+sum(win_modeltotsimple==1)/length(win_modelsimple)
+sum(win_modeltotsimple==2)/length(win_modelsimple)
+
+
+
