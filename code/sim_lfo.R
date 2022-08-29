@@ -3,12 +3,7 @@
 #Dan Greenberg Catarina Wor
 #August 2022
 #==============================================================
- #TODO: deal with  excess variability in simulated SRtime-seies
-#need to fix this file
-#remotes::install_github("carrieholt/KF-funcs")
-#library(KFfuncs)
-#use this one instead
-#source("C:/Users/worc/Documents/KF-funcs-appl/HoltMichielsens2020/KFcode.R")
+
 remotes::install_git('https://github.com/Pacific-salmon-assess/samEst')
 
 
@@ -49,6 +44,8 @@ fec= c(0,0,0,1,1)
 
 staticlfo <- list()
 tvlfo <- list()
+tvlfotot <- list()
+
 
 
 for(i in seq_len(nsim)){
@@ -65,7 +62,8 @@ for(i in seq_len(nsim)){
 
     staticlfo[[i]] <- tmb_mod_lfo_cv(data=dat, tv.par=c('static') )
 
-    tvlfo[[i]] <- tmb_mod_lfo_cv(data=dat, tv.par=c('alpha') )
+    tvlfo[[i]] <- tmb_mod_lfo_cv(data=dat, tv.par=c('alpha'), siglfo = "obs" )
+    tvlfotot[[i]] <- tmb_mod_lfo_cv(data=dat, tv.par=c('alpha'), siglfo = "total" )
   }else{
     staticlfo[[i]] <- NA
     tvlfo[[i]] <- NA
@@ -76,12 +74,21 @@ for(i in seq_len(nsim)){
 
 unlist(lapply(staticlfo, sum))
 unlist(lapply(tvlfo, function(x){sum(x$lastparam)}))
+unlist(lapply(tvlfotot, function(x){sum(x$lastparam)}))
 
 
-comp<-cbind(unlist(lapply(staticlfo, sum)),
+complfo<-cbind(unlist(lapply(staticlfo, sum)),
 unlist(lapply(tvlfo, function(x){sum(x$lastparam)})))
-win_model<-apply(comp,1,which.max)
+win_model<-apply(complfo,1,which.max)
 
 sum(win_model==1)/length(win_model)
+sum(win_model==2)/length(win_model)
 
 
+complfotot<-cbind(unlist(lapply(staticlfo, sum)),
+unlist(lapply(tvlfotot, function(x){sum(x$lastparam)})))
+win_modeltot<-apply(complfotot,1,which.max)
+
+
+sum(win_modeltot==1)/length(win_model)
+sum(win_modeltot==2)/length(win_model)
