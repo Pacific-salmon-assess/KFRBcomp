@@ -7,9 +7,9 @@
 if(!"remotes" %in% rownames(installed.packages())){
   install.packages("remotes")
 }
-#if(!"KFfuncs" %in% rownames(installed.packages())){
+if(!"KFfuncs" %in% rownames(installed.packages())){
   remotes::install_github("carrieholt/KF-funcs")
-#}
+}
 if(!"rstan" %in% rownames(installed.packages())){
   install.packages("rstan")
 }
