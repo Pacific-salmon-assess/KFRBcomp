@@ -35,7 +35,7 @@ b <- 1/150000
 nsim <- 100
 Smax <- 1/b
 sig <- .5
-siga <- .3
+siga <- .5
 ER=0.0
 nobs=40
 CapScalar=5
@@ -90,8 +90,8 @@ unlist(lapply(tvlfotot, function(x){sum(x$lastparam)})))
 win_modeltot<-apply(complfotot,1,which.max)
 
 
-sum(win_modeltot==1)/length(win_model)
-sum(win_modeltot==2)/length(win_model)
+sum(win_modeltot==1)/length(win_modeltot)
+sum(win_modeltot==2)/length(win_modeltot)
 
 
 
@@ -102,8 +102,8 @@ sum(win_modeltot==2)/length(win_model)
 for(i in seq_len(nsim)){
 
 #TMB LFO
-
-  s <- simulateSRtrend(ao=ao, b=b, ER=ER, fec= fec, sig=sig, siga=siga, nobs=nobs, CapScalar=CapScalar, 
+sigtot<-sqrt(sig^2+siga^2)
+  s <- simulateSRtrend(ao=ao, b=b, ER=ER, fec= fec, sig=sigtot, siga=siga, nobs=nobs, CapScalar=CapScalar, 
    trend="stable")
   s$extinct<-is.na(s$R)
 
@@ -127,7 +127,7 @@ for(i in seq_len(nsim)){
 
 complfosimple<-cbind(unlist(lapply(staticlfo, sum)),
 unlist(lapply(tvlfo, function(x){sum(x$lastparam)})))
-win_modelsimple<-apply(complfo,1,which.max)
+win_modelsimple<-apply(complfosimple,1,which.max)
 
 sum(win_modelsimple==1)/length(win_modelsimple)
 sum(win_modelsimple==2)/length(win_modelsimple)
@@ -138,8 +138,32 @@ unlist(lapply(tvlfotot, function(x){sum(x$lastparam)})))
 win_modeltotsimple<-apply(complfototsimple,1,which.max)
 
 
-sum(win_modeltotsimple==1)/length(win_modelsimple)
-sum(win_modeltotsimple==2)/length(win_modelsimple)
+sum(win_modeltotsimple==1)/length(win_modeltotsimple)
+sum(win_modeltotsimple==2)/length(win_modeltotsimple)
+
+
+
+df<-data.frame( sim=c("sim_tv","sim_tv","sim_tv","sim_tv","sim_simple","sim_simple","sim_simple","sim_simple"),
+  lfo_sig=c("lfosig_obs", "lfosig_obs","lfosig_tot","lfosig_tot","lfosig_obs", "lfosig_obs","lfosig_tot","lfosig_tot"),
+  chosen_est=c("simple","tv","simple","tv","simple","tv","simple","tv"),
+  value=c(sum(win_model==1)/length(win_model)*100,
+        sum(win_model==2)/length(win_model)*100,
+        sum(win_modeltot==1)/length(win_modeltot)*100,
+        sum(win_modeltot==2)/length(win_modeltot)*100,
+        sum(win_modelsimple==1)/length(win_modelsimple)*100,
+        sum(win_modelsimple==2)/length(win_modelsimple)*100,
+        sum(win_modeltotsimple==1)/length(win_modeltotsimple)*100,
+        sum(win_modeltotsimple==2)/length(win_modeltotsimple)*100
+        )
+  )
+
+pp<-ggplot(df)+
+geom_bar(aes(x=chosen_est,y=value, fill=chosen_est),stat="identity")+
+facet_grid(sim~lfo_sig)+
+theme_bw(16) +
+scale_fill_viridis_d(option="A", end=0.7)
+pp
+
 
 
 

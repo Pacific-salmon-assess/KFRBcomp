@@ -1023,3 +1023,88 @@ runtrendsims <- function(nsim=100, ao=3, b=1/30000, ER=0.0, fec= c(0,.1,.3,.5,.1
 
 
 }
+
+
+
+
+
+
+
+simulateSRrandom_tvb <- function(a=3, bo=1/10000, ER=0.4, fec=c(0,0,0,1,0), sig=.5, sigb=.2, nobs=40,CapScalar=5 ){
+
+    yrs <- 1:100
+    S <- NULL
+    R <- NULL
+    Robs <- NULL
+    a <- NULL
+    Smsy <- NULL
+    Umsy <- NULL
+    Sgen <- NULL
+    
+    
+    Seq <- a/b
+    S[1] <- Seq
+    R[1] <- Seq*exp(a-b*Seq)
+  
+    for(y in 2:length(fec)){
+      S[y] <- 0    
+      for(j in seq_along(fec)){
+        if((y-j) > 0){
+          S[y] <- S[y] + R[y-j]*(1-ER)*fec[j]
+        }else{
+          S[y] <- S[y] + R[1]*(1-ER)*fec[j]
+        }
+      }
+      R[y]<-S[y]*exp(a-b*S[y])        
+    }
+  
+    
+    for(y in (length(fec)+1):max(yrs)){  
+      S[y]<-0
+      for(j in seq_along(fec)){       
+        S[y] <- S[y] + R[y-j]*(1-ER)*fec[j]     
+      } 
+      #truncated lognrmal error
+      #a[y] <- a[y-1] + (qnorm(runif(1, 0.1, 0.9),0,siga))        
+      b[y] <- b[y-1] * exp(rnorm(1,0,sigb) -(.5*sigb^2))
+      # avoid alpha that is super negative
+      if(b[y]>1){
+        b[y]<- 0.1
+      }
+
+      #R[y] <- S[y]*exp(a[y]-b*S[y]) *exp(qnorm(runif(1, 0.1, 0.95),0,sig))
+      R[y] <- S[y]*exp(a-b[y]*S[y]) *exp(rnorm(1,0,sig)-(.5*sig^2))#-(.5*sig^2)
+      if(!is.na(R[y]) &  R[y] > Seq*CapScalar){
+        R[y] <- Seq*CapScalar
+      }
+      if(!is.na(R[y]) & R[y]<5){
+        R[y] <- NA
+      }
+      
+    }
+
+    for(n in seq_along(a)){
+
+      if(a[n]>0){
+        Smsy[n] <- (1 - gsl::lambert_W0(exp(1 - a[n]))) /b
+        Umsy[n] <- .5 * a[n] - 0.07 * a[n]^2
+        Sgen[n] <- unlist(mapply(sGenSolver,a=a[n],Smsy=Smsy[n], b=b))
+      }else{
+        Smsy[n] <- NA
+        Umsy[n] <- NA
+        Sgen[n] <- NA
+      }
+    } 
+    
+
+
+  outdf <- data.frame(R=R,
+  S=S,
+  a=a,
+  Umsy=Umsy,
+  Smsy=Smsy,
+  Sgen=Sgen,
+  logR_S=log(R/S))
+
+  return(outdf[(100-nobs):100,])
+}
